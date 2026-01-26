@@ -36,8 +36,8 @@
           rust
           pkg-config
           cargo-tauri
-          nodejs
-          nodePackages.yarn
+          nodejs_22
+          yarn
           dbus
           openssl
           glib
