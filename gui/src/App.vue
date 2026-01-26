@@ -3,7 +3,7 @@
     <b-navbar ref="navs" fixed-top shadow type="is-light">
       <template slot="brand">
         <b-navbar-item href="/">
-          <img src="@/assets/img/logo2.png" alt="v2rayA" class="logo no-select" />
+          <img src="@/assets/img/logo2.png" alt="v2rayB" class="logo no-select" />
         </b-navbar-item>
         <b-navbar-item tag="div">
           <b-tag id="statusTag" class="pointerTag" :type="statusMap[runningState.running]"
@@ -152,7 +152,7 @@ export default {
     let ba = localStorage.getItem("backendAddress");
     if (ba) {
       let u = parseURL(ba);
-      document.title = `v2rayA - ${u.host}:${u.port}`;
+      document.title = `v2rayB - ${u.host}:${u.port}`;
     }
     this.$axios({
       url: apiRoot + "/version",
@@ -429,16 +429,15 @@ export default {
         content: `
 <div class="modal-card" style="margin:auto">
                     <header class="modal-card-head">
-                        <p class="modal-card-title">mzz2017 / v2rayA</p>
+                        <p class="modal-card-title">v2rayB</p>
                     </header>
                     <section class="modal-card-body lazy">
                         ${this.$t(`about`)}
+                        <p style="margin-top: 1em; font-size: 0.9em; color: #888;">Fork of <a href="https://github.com/v2rayA/v2rayA" target="_blank">v2rayA</a> by mzz2017</p>
                     </section>
                     <footer class="modal-card-foot">
                         <a class="is-link" href="https://github.com/v2rayA/v2rayA" target="_blank">
-                          <img class="leave-right" src="https://img.shields.io/github/stars/mzz2017/v2rayA.svg?style=social" alt="stars">
-                          <img class="leave-right" src="https://img.shields.io/github/forks/mzz2017/v2rayA.svg?style=social" alt="forks">
-                          <img class="leave-right" src="https://img.shields.io/github/watchers/mzz2017/v2rayA.svg?style=social" alt="watchers">
+                          Original v2rayA
                         </a>
                     </footer>
                 </div>
