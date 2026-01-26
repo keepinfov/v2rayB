@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <b-navbar ref="navs" fixed-top shadow type="is-light">
+    <b-navbar ref="navs" fixed-top shadow type="is-dark">
       <template slot="brand">
         <b-navbar-item href="/">
           <img src="@/assets/img/logo2.png" alt="v2rayA" class="logo no-select" />
@@ -603,13 +603,13 @@ a.navbar-item.is-active,
 .navbar-link.is-active,
 .is-link,
 a {
-  $success: #506da4;
-  color: $success;
+  $yellow: #F7DF1E;
+  color: $yellow;
 }
 
 .icon-loading_ico-copy {
   font-size: 2.5rem;
-  color: rgba(0, 0, 0, 0.45);
+  color: #F7DF1E;
   animation: loading-rotate 2s infinite linear;
 }
 
@@ -626,7 +626,7 @@ a {
 .about-small {
   font-size: 0.85em;
   text-indent: 1em;
-  color: rgba(0, 0, 0, 0.6);
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .margin-right-2em {
