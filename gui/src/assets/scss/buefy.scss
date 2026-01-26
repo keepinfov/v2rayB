@@ -1,28 +1,65 @@
 // Import Bulma's core
 @import "~bulma/sass/utilities/_all";
 
+// Dark + Yellow Theme (WebSocket-inspired)
+// Primary colors
+$yellow: #F7DF1E;
+$yellow-invert: findColorInvert($yellow);
+
+// Dark scheme colors
+$scheme-main: #1a1a1a;
+$scheme-main-bis: #242424;
+$scheme-main-ter: #2d2d2d;
+$scheme-invert: #ffffff;
+$scheme-invert-bis: #f5f5f5;
+$scheme-invert-ter: #e8e8e8;
+
+// Text colors
+$text: #e0e0e0;
+$text-light: #b0b0b0;
+$text-strong: #ffffff;
+
+// Background
+$background: #1a1a1a;
+$body-background-color: #1a1a1a;
+
 // Set your colors
-$green: $success;
-$green-invert: findColorInvert($green);
-$primary: $warning;
-$primary-invert: findColorInvert($primary);
-$twitter: #4099FF;
-$twitter-invert: findColorInvert($twitter);
-$lightblue: #acd1f0;
-$lightblue-invert: findColorInvert($lightblue);
-$warning: #ff845e;
+$primary: $yellow;
+$primary-invert: $yellow-invert;
+
+$link: $yellow;
+$link-invert: $yellow-invert;
+$link-hover: darken($yellow, 10%);
+
+$info: #60a5fa;
+$info-invert: findColorInvert($info);
+
+$success: #4ade80;
+$success-invert: findColorInvert($success);
+
+$warning: #fb923c;
 $warning-invert: findColorInvert($warning);
 
-$warning: #dc8e47;
-$warning-invert: findColorInvert($warning);
-$info: #4497a5;
-$info-invert: findColorInvert($info);
-$success: #506da4;
-$success-invert: findColorInvert($success);
-$delete: #cd8a7a;
-$delete-invert: findColorInvert($delete);
-$danger: rgba(255, 69, 58, 0.73);
+$danger: #ef4444;
 $danger-invert: findColorInvert($danger);
+
+$light: #2d2d2d;
+$light-invert: #ffffff;
+
+$dark: #e0e0e0;
+$dark-invert: #1a1a1a;
+
+$twitter: #4099FF;
+$twitter-invert: findColorInvert($twitter);
+
+$lightblue: #60a5fa;
+$lightblue-invert: findColorInvert($lightblue);
+
+$delete: #f87171;
+$delete-invert: findColorInvert($delete);
+
+$green: $success;
+$green-invert: $success-invert;
 
 // Setup $colors to use as bulma classes (e.g. 'is-twitter')
 $colors: (
@@ -42,9 +79,88 @@ $colors: (
 );
 
 // Links
-$link: $primary;
-$link-invert: $primary-invert;
 $link-focus-border: $primary;
+
+// Navbar
+$navbar-background-color: #1a1a1a;
+$navbar-item-color: #e0e0e0;
+$navbar-item-hover-color: $yellow;
+$navbar-item-hover-background-color: #2d2d2d;
+$navbar-item-active-color: $yellow;
+
+// Dropdown
+$dropdown-content-background-color: #2d2d2d;
+$dropdown-item-color: #e0e0e0;
+$dropdown-item-hover-color: $yellow;
+$dropdown-item-hover-background-color: #363636;
+$dropdown-item-active-color: $yellow;
+$dropdown-item-active-background-color: #363636;
+$dropdown-divider-background-color: #404040;
+
+// Modal
+$modal-background-background-color: rgba(0, 0, 0, 0.86);
+$modal-card-head-background-color: #2d2d2d;
+$modal-card-body-background-color: #1a1a1a;
+$modal-card-foot-background-color: #2d2d2d;
+$modal-card-title-color: #ffffff;
+
+// Card
+$card-background-color: #2d2d2d;
+$card-header-background-color: #363636;
+$card-header-color: #ffffff;
+$card-content-background-color: #2d2d2d;
+
+// Table
+$table-color: #e0e0e0;
+$table-background-color: #2d2d2d;
+$table-head-cell-color: #ffffff;
+$table-cell-border-color: #404040;
+$table-row-hover-background-color: #363636;
+$table-striped-row-even-background-color: #242424;
+
+// Box
+$box-background-color: #2d2d2d;
+$box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(0, 0, 0, 0.2);
+
+// Input
+$input-background-color: #2d2d2d;
+$input-border-color: #404040;
+$input-color: #e0e0e0;
+$input-placeholder-color: #808080;
+$input-hover-border-color: $yellow;
+$input-focus-border-color: $yellow;
+$input-focus-box-shadow-color: rgba($yellow, 0.25);
+
+// Button
+$button-color: #e0e0e0;
+$button-background-color: #2d2d2d;
+$button-border-color: #404040;
+$button-hover-color: $yellow;
+
+// Tag
+$tag-background-color: #2d2d2d;
+$tag-color: #e0e0e0;
+
+// Panel
+$panel-heading-background-color: #2d2d2d;
+$panel-heading-color: #ffffff;
+
+// Menu
+$menu-item-color: #e0e0e0;
+$menu-item-hover-color: $yellow;
+$menu-item-hover-background-color: #2d2d2d;
+$menu-item-active-color: $yellow;
+$menu-item-active-background-color: #363636;
+$menu-label-color: #b0b0b0;
+
+// Tabs
+$tabs-link-color: #b0b0b0;
+$tabs-link-hover-color: $yellow;
+$tabs-link-active-color: $yellow;
+$tabs-link-active-border-bottom-color: $yellow;
+
+// Progress
+$progress-bar-background-color: #404040;
 
 // Import Bulma and Buefy styles
 @import "~bulma";
