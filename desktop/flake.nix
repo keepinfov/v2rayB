@@ -27,7 +27,7 @@
           gdk-pixbuf
           glib
           dbus
-          openssl_3
+          openssl
           librsvg
           libsoup_3
         ];
@@ -36,10 +36,10 @@
           rust
           pkg-config
           cargo-tauri
-          nodejs_20
-          yarn
+          nodejs
+          nodePackages.yarn
           dbus
-          openssl_3
+          openssl
           glib
           gtk3
           libsoup_3
