@@ -32,12 +32,13 @@
           libsoup_3
         ];
 
+        nodejs = pkgs.nodejs_20;
         packages = with pkgs; [
           rust
           pkg-config
           cargo-tauri
-          nodejs_22
-          yarn
+          nodejs
+          (yarn.override { inherit nodejs; })
           dbus
           openssl
           glib
