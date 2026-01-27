@@ -12,7 +12,7 @@
     </b-sidebar>
     <b-sidebar
       :open="showSidebar"
-      type="is-light"
+      type="is-dark"
       :fullheight="false"
       :fullwidth="false"
       :overlay="false"
@@ -65,8 +65,8 @@
         :style="{
           background: overHeight
             ? isCheckedRowsPingable() || isCheckedRowsDeletable()
-              ? 'rgba(0, 0, 0, 0.1)'
-              : 'rgba(0, 0, 0, 0.05)'
+              ? 'rgba(247, 223, 30, 0.15)'
+              : 'rgba(255, 255, 255, 0.05)'
             : 'transparent',
         }"
         :class="{ 'float-toolbar': overHeight }"
@@ -1626,7 +1626,7 @@ td {
   position: sticky;
   top: 65px;
   z-index: 2;
-  background: rgba(0, 0, 0, 0.05);
+  background: rgba(255, 255, 255, 0.05);
   width: 100%;
   border-radius: 3px;
   pointer-events: none;
@@ -1651,7 +1651,7 @@ td {
 
 .tabs {
   .icon + span {
-    color: #ff6719; //方案1
+    color: #F7DF1E; //方案1 - yellow accent
   }
 
   .icon {
@@ -1660,21 +1660,21 @@ td {
 
     .iconfont {
       font-size: 32px;
-      color: coral;
+      color: #F7DF1E;
     }
   }
 }
 
 tr.is-connected-running {
-  $c: #bbdefb;
+  $c: rgba(247, 223, 30, 0.25);
   background: $c;
-  color: findColorInvert($c);
+  color: #ffffff;
 }
 
 tr.is-connected-not-running {
-  $c: rgba(255, 69, 58, 0.4);
+  $c: rgba(239, 68, 68, 0.35);
   background: $c;
-  color: findColorInvert($c);
+  color: #ffffff;
 }
 
 @keyframes loading-rotate {
@@ -1759,7 +1759,7 @@ $coverBackground: rgba(0, 0, 0, 0.6);
   z-index: 1;
   left: 1px;
   top: 4.25rem;
-  background-color: white;
+  background-color: #2d2d2d;
   width: unset;
   line-height: 0;
   border-radius: 4px;
@@ -1768,7 +1768,7 @@ $coverBackground: rgba(0, 0, 0, 0.6);
 .b-sidebar.node-status-sidebar > .sidebar-content.is-fixed {
   left: 1px;
   top: 4.25rem;
-  background-color: white;
+  background-color: #2d2d2d;
   max-height: calc(100vh - 5rem);
   overflow-y: auto;
 
@@ -1797,12 +1797,12 @@ $coverBackground: rgba(0, 0, 0, 0.6);
 
 tr.highlight-row-connected {
   transition: background-color 0.05s linear;
-  background-color: #a8cff0;
+  background-color: rgba(247, 223, 30, 0.4);
 }
 
 tr.highlight-row-disconnected {
   transition: background-color 0.05s linear;
-  background-color: rgba(255, 69, 58, 0.55);
+  background-color: rgba(239, 68, 68, 0.5);
 }
 
 .click-through {
@@ -1820,7 +1820,7 @@ tr.highlight-row-disconnected {
   white-space: nowrap;
 }
 .latency-valid {
-  color: green;
+  color: #4ade80;
 }
 
 @media screen and (max-width: 1920px) {
