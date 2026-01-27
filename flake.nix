@@ -31,9 +31,13 @@
             "-X github.com/v2rayA/v2rayA/conf.Version=${version}"
           ];
 
+          postInstall = ''
+            mv $out/bin/v2rayA $out/bin/v2rayb
+          '';
+
           meta = {
             description = "v2rayB service with embedded web UI";
-            mainProgram = "v2rayA";
+            mainProgram = "v2rayb";
           };
         };
 
@@ -105,7 +109,8 @@
               after = [ "network.target" ];
               wantedBy = [ "multi-user.target" ];
               serviceConfig = {
-                ExecStart = "${cfg.package}/bin/v2rayA --address ${cfg.address}";
+                ExecStart = "${cfg.package}/bin/v2rayb --address ${cfg.address} --log-disable-timestamp";
+                Environment = [ "V2RAYB_LOG_FILE=/var/log/v2rayb/v2rayb.log" ];
                 Restart = "on-failure";
                 AmbientCapabilities = "CAP_NET_ADMIN CAP_NET_BIND_SERVICE CAP_NET_RAW";
               };

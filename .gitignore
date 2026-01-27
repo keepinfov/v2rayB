@@ -20,10 +20,14 @@ node_modules
 /v2rayA_*
 /V2RayA_*
 /v2raya_*
+/v2rayb_*
+/v2rayB_*
 /installer_*
 /v2rayA
 /V2RayA
 /v2raya
+/v2rayb
+/v2rayB
 /web.tar.gz
 /web/*
 

@@ -11,7 +11,7 @@ COPY --from=v2ray /usr/bin/v2ray /usr/share/v2ray/
 COPY --from=v2ray /usr/local/share/v2ray/* /usr/local/share/v2ray/
 ENV PATH=$PATH:/usr/share/v2ray
 ENV CONFIG=../config.json
-ENV GIN_BIN=../v2rayA
+ENV GIN_BIN=../v2rayB
 ENV GIN_GUILD_ARGS="-o ${GIN_BIN}"
-EXPOSE 2017
-ENTRYPOINT gin -a 2017 -i run
+EXPOSE 50541
+ENTRYPOINT gin -a 50541 -i run

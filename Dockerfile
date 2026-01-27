@@ -17,13 +17,13 @@ ADD service /build/service
 WORKDIR /build/service
 COPY --from=version /build/version ./
 COPY --from=builder-web /build/web server/router/web
-RUN export VERSION=$(cat ./version) && CGO_ENABLED=0 go build -ldflags="-X github.com/v2rayA/v2rayA/conf.Version=${VERSION:1} -s -w" -o v2raya .
+RUN export VERSION=$(cat ./version) && CGO_ENABLED=0 go build -ldflags="-X github.com/v2rayA/v2rayA/conf.Version=${VERSION:1} -s -w" -o v2rayb .
 
 FROM v2fly/v2fly-core
-COPY --from=builder /build/service/v2raya /usr/bin/
+COPY --from=builder /build/service/v2rayb /usr/bin/
 RUN wget -O /usr/local/share/v2ray/LoyalsoldierSite.dat https://raw.githubusercontent.com/mzz2017/dist-v2ray-rules-dat/master/geosite.dat
 RUN apk add --no-cache iptables ip6tables tzdata
 LABEL org.opencontainers.image.source=https://github.com/v2rayA/v2rayA
-EXPOSE 2017
-VOLUME /etc/v2raya
-ENTRYPOINT ["v2raya"]
+EXPOSE 50541
+VOLUME /etc/v2rayb
+ENTRYPOINT ["v2rayb"]

@@ -1,13 +1,13 @@
 #!/bin/bash
-docker stop xray 2>/dev/null
-docker rm xray 2>/dev/null
+docker stop v2rayb 2>/dev/null
+docker rm v2rayb 2>/dev/null
 docker run -d \
   --restart=always \
   --privileged \
   --network=host \
-  --name xray \
-  -e V2RAYA_ADDRESS=0.0.0.0:2017 \
+  --name v2rayb \
+  -e V2RAYB_ADDRESS=0.0.0.0:50541 \
   -v /lib/modules:/lib/modules:ro \
   -v /etc/resolv.conf:/etc/resolv.conf \
-  -v /etc/v2raya:/etc/v2raya \
-  v2raya
+  -v /etc/v2rayb:/etc/v2rayb \
+  v2rayb
