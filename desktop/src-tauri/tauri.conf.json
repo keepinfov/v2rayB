@@ -2,10 +2,7 @@
   "productName": "v2rayB",
   "version": "0.1.0",
   "identifier": "com.v2rayb.desktop",
-  "build": {
-    "beforeBuildCommand": "cd ../../gui && yarn build",
-    "frontendDist": "../../web"
-  },
+  "build": {},
   "app": {
     "windows": [],
     "security": {

@@ -1,14 +1,14 @@
+use std::env;
 use tauri::{webview::WebviewWindowBuilder, WebviewUrl};
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
-    let port: u16 = 9527;
+    let port = env::var("V2RAYB_PORT").unwrap_or_else(|_| "20170".to_string());
+    let url = format!("http://localhost:{}", port);
 
     tauri::Builder::default()
-        .plugin(tauri_plugin_localhost::Builder::new(port).build())
         .setup(move |app| {
-            let url = format!("http://localhost:{}", port).parse().unwrap();
-            WebviewWindowBuilder::new(app, "main".to_string(), WebviewUrl::External(url))
+            WebviewWindowBuilder::new(app, "main", WebviewUrl::External(url.parse().unwrap()))
                 .title("v2rayB")
                 .inner_size(1200.0, 800.0)
                 .build()?;
