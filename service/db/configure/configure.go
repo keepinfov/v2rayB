@@ -37,10 +37,10 @@ func New() *Configure {
 		Setting:          NewSetting(),
 		Accounts:         map[string]string{},
 		Ports: Ports{
-			Socks5:        20170,
+			Socks5:        50542,
 			Socks5WithPac: 0,
-			Http:          20171,
-			HttpWithPac:   20172,
+			Http:          50543,
+			HttpWithPac:   50544,
 			Vmess:         0,
 		},
 		InternalDnsList: nil,
@@ -223,10 +223,10 @@ func GetPortsNotNil() *Ports {
 	_ = db.Get("system", "ports", &p)
 	if p == nil {
 		p = new(Ports)
-		p.Socks5 = 20170
-		p.Http = 20171
+		p.Socks5 = 50542
+		p.Http = 50543
 		p.Socks5WithPac = 0
-		p.HttpWithPac = 20172
+		p.HttpWithPac = 50544
 		p.Vmess = 0
 		p.Api = ApiPort{Port: 0}
 	}

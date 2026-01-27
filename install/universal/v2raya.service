@@ -1,6 +1,6 @@
 [Unit]
-Description=v2rayA Service
-Documentation=https://github.com/v2rayA/v2rayA/wiki
+Description=v2rayB Service
+Documentation=https://github.com/keepinfov/v2rayB
 After=network.target network-online.target nss-lookup.target iptables.service ip6tables.service nftables.service
 Wants=network.target
 
@@ -9,9 +9,9 @@ Type=simple
 User=root
 LimitNPROC=500
 LimitNOFILE=1000000
-ExecStart=/usr/bin/v2raya --log-disable-timestamp
-Environment=V2RAYA_LOG_FILE=/var/log/v2raya/v2raya.log
-EnvironmentFile=-/etc/default/v2raya
+ExecStart=/usr/bin/v2rayb --log-disable-timestamp
+Environment=V2RAYB_LOG_FILE=/var/log/v2rayb/v2rayb.log
+EnvironmentFile=-/etc/default/v2rayb
 Restart=on-failure
 
 [Install]
