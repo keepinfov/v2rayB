@@ -24,8 +24,8 @@ node_modules
 /v2rayA
 /V2RayA
 /v2raya
-/web
 /web.tar.gz
+/web/*
 
 #package
 /.SRCINFO
@@ -36,3 +36,13 @@ node_modules
 
 # Virtualenv
 .env
+
+# Nix
+result
+
+# Build outputs
+/v2rayb-desktop
+
+# Generated files
+desktop/src-tauri/gen/
+gui/package-lock.json
