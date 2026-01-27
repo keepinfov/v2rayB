@@ -29,7 +29,6 @@ node_modules
 /v2rayb
 /v2rayB
 /web.tar.gz
-/web/*
 
 #package
 /.SRCINFO
