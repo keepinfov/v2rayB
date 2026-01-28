@@ -1,0 +1,846 @@
+// v2rayB Component Styles
+@import './variables';
+@import './mixins';
+
+// =============================================================================
+// BUTTONS
+// =============================================================================
+
+.button {
+  @include button-base;
+  background-color: $bg-surface !important;
+  color: $text-primary !important;
+  border-color: $border-default !important;
+  border-radius: $button-radius !important;
+
+  &:hover:not(:disabled) {
+    background-color: $bg-hover !important;
+    border-color: $border-strong !important;
+    transform: translateY(-1px);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+    background-color: $bg-active !important;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 3px $yellow-glow !important;
+  }
+
+  // Primary button
+  &.is-primary {
+    background-color: $yellow-primary !important;
+    color: $yellow-text !important;
+    border-color: $yellow-primary !important;
+
+    &:hover:not(:disabled) {
+      background-color: $yellow-hover !important;
+      border-color: $yellow-hover !important;
+      box-shadow: $shadow-glow;
+    }
+
+    &:active:not(:disabled) {
+      background-color: $yellow-active !important;
+    }
+  }
+
+  // Danger button
+  &.is-danger {
+    background-color: $danger-bg !important;
+    color: $danger-light !important;
+    border-color: $danger-border !important;
+
+    &:hover:not(:disabled) {
+      background-color: $danger !important;
+      color: white !important;
+      border-color: $danger !important;
+    }
+  }
+
+  // Success button
+  &.is-success {
+    background-color: $success-bg !important;
+    color: $success-light !important;
+    border-color: $success-border !important;
+
+    &:hover:not(:disabled) {
+      background-color: $success !important;
+      color: white !important;
+      border-color: $success !important;
+    }
+  }
+
+  // Warning button
+  &.is-warning {
+    background-color: $warning-bg !important;
+    color: $warning-light !important;
+    border-color: $warning-border !important;
+
+    &:hover:not(:disabled) {
+      background-color: $warning !important;
+      color: $yellow-text !important;
+      border-color: $warning !important;
+    }
+  }
+
+  // Info button
+  &.is-info {
+    background-color: $info-bg !important;
+    color: $info-light !important;
+    border-color: $info-border !important;
+
+    &:hover:not(:disabled) {
+      background-color: $info !important;
+      color: white !important;
+      border-color: $info !important;
+    }
+  }
+
+  // Ghost/text button
+  &.is-text,
+  &.is-ghost {
+    background-color: transparent !important;
+    border-color: transparent !important;
+    color: $text-secondary !important;
+
+    &:hover:not(:disabled) {
+      background-color: $bg-hover !important;
+      color: $text-primary !important;
+    }
+  }
+
+  // Light button
+  &.is-light {
+    background-color: $bg-hover !important;
+    color: $text-primary !important;
+    border-color: $border-default !important;
+
+    &:hover:not(:disabled) {
+      background-color: $bg-active !important;
+    }
+  }
+
+  // Outlined buttons
+  &.is-outlined {
+    background-color: transparent !important;
+
+    &.is-primary {
+      color: $yellow-primary !important;
+      border-color: $yellow-primary !important;
+
+      &:hover:not(:disabled) {
+        background-color: $yellow-primary !important;
+        color: $yellow-text !important;
+      }
+    }
+  }
+
+  // Loading state
+  &.is-loading {
+    color: transparent !important;
+    pointer-events: none;
+
+    &::after {
+      border-color: transparent transparent $text-primary $text-primary !important;
+    }
+
+    &.is-primary::after {
+      border-color: transparent transparent $yellow-text $yellow-text !important;
+    }
+  }
+
+  // Size variants
+  &.is-small {
+    height: $button-height-sm;
+    font-size: $font-size-xs;
+    padding: 0 $space-3;
+  }
+
+  &.is-medium {
+    height: $button-height;
+  }
+
+  &.is-large {
+    height: $button-height-lg;
+    font-size: $font-size-lg;
+    padding: 0 $space-6;
+  }
+
+  // Rounded/pill buttons
+  &.is-rounded {
+    border-radius: $button-radius-pill !important;
+    padding: 0 $space-5;
+  }
+}
+
+// Button group
+.buttons {
+  gap: $space-2;
+
+  &.has-addons {
+    .button {
+      &:not(:first-child) {
+        border-top-left-radius: 0 !important;
+        border-bottom-left-radius: 0 !important;
+        margin-left: -1px;
+      }
+
+      &:not(:last-child) {
+        border-top-right-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+      }
+    }
+  }
+}
+
+// =============================================================================
+// INPUTS
+// =============================================================================
+
+.input,
+.textarea {
+  @include input-base;
+  background-color: $input-bg !important;
+  color: $text-primary !important;
+  border-color: $input-border !important;
+  border-radius: $input-radius !important;
+
+  &::placeholder {
+    color: $text-placeholder !important;
+  }
+
+  &:hover:not(:disabled):not(:focus) {
+    border-color: $border-strong !important;
+  }
+
+  &:focus {
+    border-color: $border-focus !important;
+    box-shadow: 0 0 0 3px $yellow-glow !important;
+  }
+
+  &.is-danger {
+    border-color: $danger !important;
+
+    &:focus {
+      box-shadow: 0 0 0 3px rgba($danger, 0.25) !important;
+    }
+  }
+
+  &.is-success {
+    border-color: $success !important;
+
+    &:focus {
+      box-shadow: 0 0 0 3px rgba($success, 0.25) !important;
+    }
+  }
+
+  &:disabled {
+    background-color: $bg-hover !important;
+    opacity: 0.6;
+  }
+}
+
+.textarea {
+  min-height: 120px;
+  padding: $space-3;
+  resize: vertical;
+}
+
+// =============================================================================
+// SELECT
+// =============================================================================
+
+.select {
+  &::after {
+    border-color: $text-secondary !important;
+  }
+
+  select {
+    @include input-base;
+    background-color: $input-bg !important;
+    color: $text-primary !important;
+    border-color: $input-border !important;
+    border-radius: $input-radius !important;
+    padding-right: $space-8;
+
+    &:hover:not(:disabled) {
+      border-color: $border-strong !important;
+    }
+
+    &:focus {
+      border-color: $border-focus !important;
+      box-shadow: 0 0 0 3px $yellow-glow !important;
+    }
+
+    option {
+      background-color: $bg-surface;
+      color: $text-primary;
+    }
+  }
+
+  &.is-fullwidth {
+    width: 100%;
+
+    select {
+      width: 100%;
+    }
+  }
+}
+
+// =============================================================================
+// CHECKBOX & RADIO
+// =============================================================================
+
+.checkbox,
+.radio {
+  color: $text-primary !important;
+  transition: color $transition-normal;
+
+  &:hover {
+    color: $yellow-primary !important;
+  }
+
+  input[type="checkbox"],
+  input[type="radio"] {
+    margin-right: $space-2;
+  }
+}
+
+// Buefy checkbox override
+.b-checkbox.checkbox {
+  input[type="checkbox"] {
+    & + .check {
+      background-color: $bg-surface !important;
+      border-color: $border-default !important;
+      border-radius: $radius-xs !important;
+      transition: all $transition-normal;
+    }
+
+    &:checked + .check {
+      background-color: $yellow-primary !important;
+      border-color: $yellow-primary !important;
+    }
+
+    &:focus + .check {
+      box-shadow: 0 0 0 3px $yellow-glow !important;
+    }
+  }
+
+  .control-label {
+    color: $text-primary;
+  }
+
+  &:hover .check {
+    border-color: $border-strong !important;
+  }
+}
+
+// =============================================================================
+// SWITCH
+// =============================================================================
+
+.switch {
+  input[type="checkbox"] {
+    & + .check {
+      background-color: $bg-active !important;
+      border-radius: $radius-full !important;
+
+      &::before {
+        background-color: $text-secondary !important;
+        border-radius: $radius-full !important;
+      }
+    }
+
+    &:checked + .check {
+      background-color: $yellow-primary !important;
+
+      &::before {
+        background-color: $yellow-text !important;
+      }
+    }
+
+    &:focus + .check {
+      box-shadow: 0 0 0 3px $yellow-glow !important;
+    }
+  }
+
+  .control-label {
+    color: $text-primary;
+  }
+}
+
+// =============================================================================
+// TAGS
+// =============================================================================
+
+.tag {
+  background-color: $bg-surface !important;
+  color: $text-secondary !important;
+  border-radius: $radius-sm !important;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  padding: $space-1 $space-2;
+
+  &.is-primary {
+    background-color: $yellow-muted !important;
+    color: $yellow-primary !important;
+  }
+
+  &.is-success {
+    background-color: $success-bg !important;
+    color: $success-light !important;
+  }
+
+  &.is-danger {
+    background-color: $danger-bg !important;
+    color: $danger-light !important;
+  }
+
+  &.is-warning {
+    background-color: $warning-bg !important;
+    color: $warning-light !important;
+  }
+
+  &.is-info {
+    background-color: $info-bg !important;
+    color: $info-light !important;
+  }
+
+  &.is-dark {
+    background-color: $bg-hover !important;
+    color: $text-primary !important;
+  }
+
+  &.is-rounded {
+    border-radius: $radius-full !important;
+  }
+
+  &.is-medium {
+    font-size: $font-size-sm;
+    padding: $space-2 $space-3;
+  }
+
+  &.is-large {
+    font-size: $font-size-base;
+    padding: $space-2 $space-4;
+  }
+
+  // Delete button in tags
+  .delete {
+    margin-left: $space-2;
+    margin-right: -$space-1;
+  }
+}
+
+.tags {
+  gap: $space-2;
+
+  &.has-addons {
+    .tag {
+      margin-right: 0;
+
+      &:not(:first-child) {
+        border-top-left-radius: 0 !important;
+        border-bottom-left-radius: 0 !important;
+      }
+
+      &:not(:last-child) {
+        border-top-right-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+      }
+    }
+  }
+}
+
+// =============================================================================
+// DROPDOWN
+// =============================================================================
+
+.dropdown-menu {
+  padding-top: $space-2;
+}
+
+.dropdown-content {
+  background-color: $bg-elevated !important;
+  border: 1px solid $border-default;
+  border-radius: $radius-lg !important;
+  box-shadow: $shadow-lg !important;
+  padding: $space-2 !important;
+  min-width: 200px;
+}
+
+.dropdown-item {
+  color: $text-primary !important;
+  padding: $space-2 $space-3 !important;
+  border-radius: $radius-sm !important;
+  transition: all $transition-fast;
+
+  &:hover {
+    background-color: $bg-hover !important;
+    color: $yellow-primary !important;
+  }
+
+  &.is-active {
+    background-color: $yellow-muted !important;
+    color: $yellow-primary !important;
+  }
+}
+
+.dropdown-divider {
+  background-color: $border-subtle !important;
+  margin: $space-2 0 !important;
+}
+
+// =============================================================================
+// TABS
+// =============================================================================
+
+.tabs {
+  ul {
+    border-bottom-color: $border-subtle !important;
+  }
+
+  li {
+    a {
+      color: $text-secondary !important;
+      border-bottom-color: transparent !important;
+      padding: $space-3 $space-4;
+      transition: all $transition-normal;
+      border-radius: $radius-sm $radius-sm 0 0;
+
+      &:hover {
+        color: $text-primary !important;
+        background-color: $bg-hover;
+        border-bottom-color: $border-default !important;
+      }
+    }
+
+    &.is-active a {
+      color: $yellow-primary !important;
+      border-bottom-color: $yellow-primary !important;
+      background-color: transparent;
+    }
+  }
+
+  &.is-boxed {
+    li {
+      a {
+        border-color: transparent !important;
+        border-radius: $radius-md $radius-md 0 0;
+      }
+
+      &.is-active a {
+        background-color: $bg-secondary !important;
+        border-color: $border-subtle $border-subtle transparent !important;
+      }
+    }
+  }
+
+  &.is-toggle {
+    li {
+      a {
+        border-color: $border-default !important;
+        border-radius: 0;
+
+        &:hover {
+          background-color: $bg-hover !important;
+          border-color: $border-strong !important;
+        }
+      }
+
+      &:first-child a {
+        border-radius: $radius-md 0 0 $radius-md;
+      }
+
+      &:last-child a {
+        border-radius: 0 $radius-md $radius-md 0;
+      }
+
+      &.is-active a {
+        background-color: $yellow-primary !important;
+        border-color: $yellow-primary !important;
+        color: $yellow-text !important;
+      }
+    }
+  }
+}
+
+// =============================================================================
+// TABLE
+// =============================================================================
+
+.table {
+  background-color: transparent !important;
+  color: $text-primary !important;
+
+  th {
+    color: $text-secondary !important;
+    background-color: $bg-elevated !important;
+    border-color: $border-subtle !important;
+    font-weight: $font-weight-semibold;
+    font-size: $font-size-sm;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  td {
+    border-color: $border-subtle !important;
+    vertical-align: middle;
+  }
+
+  tr {
+    transition: background-color $transition-fast;
+
+    &:hover {
+      background-color: $table-row-hover !important;
+    }
+
+    &.is-selected {
+      background-color: $yellow-muted !important;
+
+      td {
+        border-color: $yellow-muted !important;
+        color: $text-primary !important;
+      }
+    }
+  }
+
+  &.is-striped {
+    tbody tr:nth-child(even) {
+      background-color: $bg-surface !important;
+    }
+  }
+
+  &.is-hoverable {
+    tbody tr:hover {
+      background-color: $table-row-hover !important;
+    }
+  }
+}
+
+// Table container with rounded corners
+.table-container {
+  @include table-container;
+  @include scrollbar-thin;
+}
+
+// =============================================================================
+// CARD
+// =============================================================================
+
+.card {
+  @include card-base;
+  background-color: $card-bg !important;
+
+  .card-header {
+    background-color: $bg-surface !important;
+    border-bottom: 1px solid $border-subtle;
+    box-shadow: none !important;
+
+    .card-header-title {
+      color: $text-primary !important;
+      font-weight: $font-weight-semibold;
+    }
+
+    .card-header-icon {
+      color: $text-secondary !important;
+    }
+  }
+
+  .card-content {
+    background-color: transparent !important;
+    color: $text-primary;
+  }
+
+  .card-footer {
+    border-top: 1px solid $border-subtle;
+    background-color: $bg-surface;
+
+    .card-footer-item {
+      color: $text-secondary !important;
+
+      &:hover {
+        color: $yellow-primary !important;
+      }
+    }
+  }
+}
+
+// =============================================================================
+// NOTIFICATION / MESSAGE
+// =============================================================================
+
+.notification {
+  background-color: $bg-elevated !important;
+  color: $text-primary !important;
+  border-radius: $radius-lg !important;
+  padding: $space-4 !important;
+
+  &.is-primary {
+    background-color: $yellow-muted !important;
+    color: $yellow-primary !important;
+  }
+
+  &.is-success {
+    background-color: $success-bg !important;
+    color: $success-light !important;
+  }
+
+  &.is-danger {
+    background-color: $danger-bg !important;
+    color: $danger-light !important;
+  }
+
+  &.is-warning {
+    background-color: $warning-bg !important;
+    color: $warning-light !important;
+  }
+
+  &.is-info {
+    background-color: $info-bg !important;
+    color: $info-light !important;
+  }
+
+  .delete {
+    background-color: transparent !important;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.2) !important;
+    }
+  }
+}
+
+.message {
+  background-color: $bg-elevated !important;
+  border-radius: $radius-lg !important;
+
+  .message-header {
+    background-color: $bg-surface !important;
+    color: $text-primary !important;
+    border-radius: $radius-lg $radius-lg 0 0;
+
+    .delete {
+      background-color: transparent !important;
+    }
+  }
+
+  .message-body {
+    color: $text-primary !important;
+    border-color: $border-subtle !important;
+    border-radius: 0 0 $radius-lg $radius-lg;
+  }
+
+  &.is-primary .message-header {
+    background-color: $yellow-muted !important;
+    color: $yellow-primary !important;
+  }
+
+  &.is-danger .message-header {
+    background-color: $danger-bg !important;
+    color: $danger-light !important;
+  }
+}
+
+// =============================================================================
+// PROGRESS
+// =============================================================================
+
+.progress {
+  background-color: $bg-surface !important;
+  border-radius: $radius-full !important;
+
+  &::-webkit-progress-bar {
+    background-color: $bg-surface;
+    border-radius: $radius-full;
+  }
+
+  &::-webkit-progress-value {
+    background-color: $yellow-primary;
+    border-radius: $radius-full;
+  }
+
+  &::-moz-progress-bar {
+    background-color: $yellow-primary;
+    border-radius: $radius-full;
+  }
+
+  &.is-success::-webkit-progress-value {
+    background-color: $success;
+  }
+
+  &.is-danger::-webkit-progress-value {
+    background-color: $danger;
+  }
+}
+
+// =============================================================================
+// TOOLTIP
+// =============================================================================
+
+.b-tooltip {
+  .tooltip-content {
+    background-color: $bg-base !important;
+    color: $text-primary !important;
+    border: 1px solid $border-default;
+    border-radius: $radius-md !important;
+    box-shadow: $shadow-lg !important;
+    padding: $space-2 $space-3 !important;
+    font-size: $font-size-sm;
+  }
+
+  &.is-primary .tooltip-content {
+    background-color: $yellow-primary !important;
+    color: $yellow-text !important;
+    border-color: $yellow-primary;
+  }
+}
+
+// =============================================================================
+// LOADING
+// =============================================================================
+
+.loading-overlay {
+  .loading-background {
+    background-color: rgba($bg-base, 0.8) !important;
+  }
+
+  .loading-icon::after {
+    border-color: transparent transparent $yellow-primary $yellow-primary !important;
+  }
+}
+
+// =============================================================================
+// PAGINATION
+// =============================================================================
+
+.pagination {
+  .pagination-previous,
+  .pagination-next,
+  .pagination-link {
+    background-color: $bg-surface !important;
+    color: $text-primary !important;
+    border-color: $border-default !important;
+    border-radius: $radius-md !important;
+    transition: all $transition-normal;
+
+    &:hover {
+      background-color: $bg-hover !important;
+      border-color: $border-strong !important;
+    }
+
+    &.is-current {
+      background-color: $yellow-primary !important;
+      border-color: $yellow-primary !important;
+      color: $yellow-text !important;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+    }
+  }
+
+  .pagination-ellipsis {
+    color: $text-muted !important;
+  }
+}

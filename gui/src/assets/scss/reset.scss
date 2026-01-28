@@ -1,50 +1,58 @@
+// v2rayB Reset & Base Styles
+@import "./variables";
 @import "../iconfont/fonts/font_ex";
 
 // Dark theme body styles
 body {
-  background-color: #1a1a1a;
-  color: #e0e0e0;
+  background-color: $bg-primary;
+  color: $text-primary;
+  font-family: $font-family-base;
+  line-height: $line-height-normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-body.has-navbar-fixed-top, html.has-navbar-fixed-top{
-  padding-top:2.25rem;
+body.has-navbar-fixed-top,
+html.has-navbar-fixed-top {
+  padding-top: $navbar-height;
 }
 
 // Dark scrollbar styles
 body::-webkit-scrollbar {
-  width: 1em;
+  width: 10px;
 }
 
 body::-webkit-scrollbar-track {
-  background-color: #1a1a1a;
+  background-color: $bg-primary;
 }
 
 body::-webkit-scrollbar-thumb {
-  background-color: #404040;
-  border-radius: 4px;
-  border: 2px solid #1a1a1a;
+  background-color: $border-default;
+  border-radius: $radius-full;
+  border: 2px solid $bg-primary;
+  transition: background-color $transition-normal;
 }
 
 body::-webkit-scrollbar-thumb:hover {
-  background-color: #F7DF1E;
+  background-color: $yellow-primary;
 }
 
 nav::-webkit-scrollbar {
-  height: 0.75em;
+  height: 6px;
 }
 
 nav::-webkit-scrollbar-track {
-  background-color: #1a1a1a;
-  border-radius: 5px;
+  background-color: transparent;
+  border-radius: $radius-full;
 }
 
 nav::-webkit-scrollbar-thumb {
-  background-color: #404040;
-  border-radius: 5px;
+  background-color: $border-default;
+  border-radius: $radius-full;
 }
 
 nav::-webkit-scrollbar-thumb:hover {
-  background-color: #F7DF1E;
+  background-color: $yellow-primary;
 }
 
 // Generic scrollbar for dark theme
@@ -54,68 +62,86 @@ nav::-webkit-scrollbar-thumb:hover {
 }
 
 *::-webkit-scrollbar-track {
-  background-color: #1a1a1a;
+  background-color: transparent;
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: #404040;
-  border-radius: 4px;
+  background-color: $border-default;
+  border-radius: $radius-full;
 }
 
 *::-webkit-scrollbar-thumb:hover {
-  background-color: #F7DF1E;
+  background-color: $yellow-primary;
 }
 
 code {
-  color: #F7DF1E !important;
-  background-color: #2d2d2d;
-  padding: 0.1em 0.3em;
-  border-radius: 3px;
+  color: $yellow-primary !important;
+  background-color: $bg-surface;
+  padding: 0.15em 0.4em;
+  border-radius: $radius-xs;
+  font-family: $font-family-mono;
+  font-size: 0.9em;
 }
 
-html{
-  background-color: #1a1a1a;
+pre {
+  background-color: $bg-base !important;
+  color: $text-primary;
+  padding: $space-4;
+  border-radius: $radius-md;
+  overflow-x: auto;
+
+  code {
+    background-color: transparent;
+    padding: 0;
+  }
+}
+
+html {
+  background-color: $bg-primary;
 
   @media screen and (max-width: 1400px) {
-      font-size:0.9em;
+    font-size: 0.95em;
     @media screen and (max-width: 767px) {
-      font-size:0.8em;
+      font-size: 0.9em;
       @media screen and (max-width: 350px) {
-        font-size:0.7em;
+        font-size: 0.85em;
       }
     }
   }
 }
 
-.routinga-animation-content{
+.routinga-animation-content {
   width: 100%;
   height: 100%;
   max-height: 100%;
   max-width: unset !important;
 }
 
-.modal-close:not(:hover){
-  filter: drop-shadow(0 0 5px #000);
+.modal-close:not(:hover) {
+  filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
 }
 
 .icon-camera {
   font-size: 1.5em;
 }
 
-.control:last-of-type:not(:first-of-type) > *:first-child{
-  border-radius: 0 4px 4px 0 !important;
+.control:last-of-type:not(:first-of-type) > *:first-child {
+  border-radius: 0 $radius-md $radius-md 0 !important;
 }
 
 @font-face {
-  font-family: sarasa inter regular;
-  src: url("~@/assets/font/Inter-Regular.woff2")
+  font-family: "Inter";
+  src: url("~@/assets/font/Inter-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
 .code-font {
-  font-family: sarasa inter regular, Consolas, monospace, Monaco, Menlo, Courier New;
+  font-family: $font-family-mono;
 }
 
-.noscroll{
+.noscroll {
   overflow: hidden;
 }
 
@@ -125,6 +151,88 @@ html{
 
 // Selection color
 ::selection {
-  background-color: rgba(247, 223, 30, 0.3);
-  color: #ffffff;
+  background-color: $yellow-glow;
+  color: $text-primary;
+}
+
+// Utility classes
+.text-primary {
+  color: $text-primary !important;
+}
+
+.text-secondary {
+  color: $text-secondary !important;
+}
+
+.text-muted {
+  color: $text-muted !important;
+}
+
+.text-accent {
+  color: $yellow-primary !important;
+}
+
+.text-success {
+  color: $success-light !important;
+}
+
+.text-danger {
+  color: $danger-light !important;
+}
+
+.text-warning {
+  color: $warning-light !important;
+}
+
+.bg-base {
+  background-color: $bg-base !important;
+}
+
+.bg-primary {
+  background-color: $bg-primary !important;
+}
+
+.bg-secondary {
+  background-color: $bg-secondary !important;
+}
+
+.bg-elevated {
+  background-color: $bg-elevated !important;
+}
+
+.bg-surface {
+  background-color: $bg-surface !important;
+}
+
+// Spacing utilities
+.gap-1 { gap: $space-1; }
+.gap-2 { gap: $space-2; }
+.gap-3 { gap: $space-3; }
+.gap-4 { gap: $space-4; }
+
+// Border radius utilities
+.rounded-sm { border-radius: $radius-sm !important; }
+.rounded-md { border-radius: $radius-md !important; }
+.rounded-lg { border-radius: $radius-lg !important; }
+.rounded-xl { border-radius: $radius-xl !important; }
+.rounded-full { border-radius: $radius-full !important; }
+
+// Truncate text
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Visually hidden (for accessibility)
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
