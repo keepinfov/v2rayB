@@ -10,7 +10,7 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs { inherit system; };
-        version = "2.0.0";
+        version = "2.2.8";
 
         # Build the web GUI with yarn
         gui = pkgs.stdenv.mkDerivation {
