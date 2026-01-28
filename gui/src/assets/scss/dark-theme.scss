@@ -1,67 +1,100 @@
 // v2rayB Dark Theme - WebSocket inspired (dark gray-black + yellow)
 // Modern design inspired by exteragram.app
 
+@import './variables';
+
 :root {
   // Background colors
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #252525;
-  --bg-tertiary: #2d2d2d;
-  --bg-elevated: #333333;
+  --bg-base: #{$bg-base};
+  --bg-primary: #{$bg-primary};
+  --bg-secondary: #{$bg-secondary};
+  --bg-elevated: #{$bg-elevated};
+  --bg-surface: #{$bg-surface};
+  --bg-hover: #{$bg-hover};
+  --bg-active: #{$bg-active};
 
   // Border colors
-  --border-color: #3d3d3d;
-  --border-light: #454545;
+  --border-subtle: #{$border-subtle};
+  --border-default: #{$border-default};
+  --border-strong: #{$border-strong};
+  --border-focus: #{$border-focus};
 
   // Accent colors (WebSocket yellow)
-  --accent-primary: #f5c211;
-  --accent-hover: #ffd43b;
-  --accent-muted: rgba(245, 194, 17, 0.2);
+  --accent-primary: #{$yellow-primary};
+  --accent-hover: #{$yellow-hover};
+  --accent-active: #{$yellow-active};
+  --accent-muted: #{$yellow-muted};
+  --accent-glow: #{$yellow-glow};
+  --accent-text: #{$yellow-text};
 
   // Text colors
-  --text-primary: #ffffff;
-  --text-secondary: #a0a0a0;
-  --text-muted: #6b6b6b;
-  --text-on-accent: #1a1a1a;
+  --text-primary: #{$text-primary};
+  --text-secondary: #{$text-secondary};
+  --text-muted: #{$text-muted};
+  --text-disabled: #{$text-disabled};
+  --text-placeholder: #{$text-placeholder};
 
   // Semantic colors
-  --color-success: #4ade80;
-  --color-success-bg: rgba(74, 222, 128, 0.15);
-  --color-danger: #f87171;
-  --color-danger-bg: rgba(248, 113, 113, 0.15);
-  --color-warning: #fbbf24;
-  --color-warning-bg: rgba(251, 191, 36, 0.15);
-  --color-info: #60a5fa;
-  --color-info-bg: rgba(96, 165, 250, 0.15);
+  --color-success: #{$success};
+  --color-success-light: #{$success-light};
+  --color-success-bg: #{$success-bg};
+  --color-danger: #{$danger};
+  --color-danger-light: #{$danger-light};
+  --color-danger-bg: #{$danger-bg};
+  --color-warning: #{$warning};
+  --color-warning-light: #{$warning-light};
+  --color-warning-bg: #{$warning-bg};
+  --color-info: #{$info};
+  --color-info-light: #{$info-light};
+  --color-info-bg: #{$info-bg};
 
-  // Component specific
-  --card-bg: var(--bg-secondary);
-  --card-border: var(--border-color);
-  --input-bg: var(--bg-tertiary);
-  --input-border: var(--border-color);
-  --input-focus-border: var(--accent-primary);
-  --modal-bg: var(--bg-secondary);
-  --dropdown-bg: var(--bg-elevated);
-  --table-row-hover: var(--bg-tertiary);
-  --table-row-selected: var(--accent-muted);
+  // Spacing
+  --space-1: #{$space-1};
+  --space-2: #{$space-2};
+  --space-3: #{$space-3};
+  --space-4: #{$space-4};
+  --space-5: #{$space-5};
+  --space-6: #{$space-6};
+  --space-8: #{$space-8};
+
+  // Border radius
+  --radius-xs: #{$radius-xs};
+  --radius-sm: #{$radius-sm};
+  --radius-md: #{$radius-md};
+  --radius-lg: #{$radius-lg};
+  --radius-xl: #{$radius-xl};
+  --radius-2xl: #{$radius-2xl};
+  --radius-full: #{$radius-full};
 
   // Shadows
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
-
-  // Border radius (modern rounded style)
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
-  --radius-full: 9999px;
+  --shadow-sm: #{$shadow-sm};
+  --shadow-md: #{$shadow-md};
+  --shadow-lg: #{$shadow-lg};
+  --shadow-xl: #{$shadow-xl};
+  --shadow-glow: #{$shadow-glow};
 
   // Transitions
-  --transition-fast: 150ms ease;
-  --transition-normal: 250ms ease;
+  --transition-fast: #{$transition-fast};
+  --transition-normal: #{$transition-normal};
+  --transition-slow: #{$transition-slow};
+
+  // Component specific
+  --navbar-height: #{$navbar-height};
+  --navbar-bg: #{$navbar-bg};
+  --modal-backdrop-bg: #{$modal-backdrop-bg};
+  --card-bg: #{$card-bg};
+  --card-border: #{$card-border};
+  --card-radius: #{$card-radius};
+  --input-bg: #{$input-bg};
+  --input-border: #{$input-border};
+  --input-radius: #{$input-radius};
+  --table-bg: #{$table-bg};
+  --table-row-hover: #{$table-row-hover};
 }
 
 // Global dark background
-html, body {
+html,
+body {
   background-color: var(--bg-primary) !important;
   color: var(--text-primary) !important;
 }
@@ -77,11 +110,12 @@ html, body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--border-light);
+  background: var(--border-default);
   border-radius: var(--radius-full);
+  transition: background 0.2s ease;
 
   &:hover {
-    background: var(--text-muted);
+    background: var(--accent-primary);
   }
 }
 
@@ -89,4 +123,10 @@ html, body {
 ::selection {
   background: var(--accent-muted);
   color: var(--text-primary);
+}
+
+// Focus outline for accessibility
+:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
 }

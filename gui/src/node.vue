@@ -1604,6 +1604,11 @@ td {
 
 <style lang="scss">
 @import "~bulma/sass/utilities/all";
+@import "./assets/scss/variables";
+
+// =============================================================================
+// MODERN TOOLBAR
+// =============================================================================
 
 #toolbar {
   @media screen and (max-width: 450px) {
@@ -1621,15 +1626,23 @@ td {
     margin-bottom: 0;
   }
 
-  padding: 0.75em 0.75em;
-  margin-bottom: 1rem;
+  padding: $space-4;
+  margin-bottom: $space-4;
   position: sticky;
   top: 65px;
   z-index: 2;
-  background: rgba(255, 255, 255, 0.05);
+  background: $bg-elevated;
+  border: 1px solid $border-subtle;
   width: 100%;
-  border-radius: 3px;
+  border-radius: $radius-lg;
   pointer-events: none;
+  box-shadow: $shadow-md;
+  backdrop-filter: blur(8px);
+  transition: all $transition-normal;
+
+  &.float-toolbar {
+    background: rgba($bg-elevated, 0.95);
+  }
 
   * {
     pointer-events: auto;
@@ -1637,45 +1650,441 @@ td {
 
   .right {
     position: absolute;
-    right: 0.75rem;
-    top: 0.75em;
-    /*max-width: 70%;*/
+    right: $space-4;
+    top: $space-4;
   }
-
-  transition: all 200ms linear;
 
   button {
-    transition: all 100ms ease-in-out;
-  }
-}
+    border-radius: $radius-md !important;
+    transition: all $transition-normal;
+    font-weight: $font-weight-medium;
 
-.tabs {
-  .icon + span {
-    color: #F7DF1E; //方案1 - yellow accent
-  }
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: $shadow-md;
+    }
 
-  .icon {
-    display: none; //方案1
-    margin: 0 0 0 -0.5em !important;
+    &:active {
+      transform: translateY(0);
+    }
 
-    .iconfont {
-      font-size: 32px;
-      color: #F7DF1E;
+    &.is-info {
+      background-color: $yellow-primary !important;
+      border-color: $yellow-primary !important;
+      color: $yellow-text !important;
+
+      &:hover {
+        background-color: $yellow-hover !important;
+        border-color: $yellow-hover !important;
+      }
+    }
+
+    &.is-delete,
+    &.button.is-delete {
+      background-color: transparent !important;
+      border-color: $danger !important;
+      color: $danger-light !important;
+
+      &:hover {
+        background-color: $danger-bg !important;
+      }
     }
   }
 }
 
+// =============================================================================
+// MODERN TABS
+// =============================================================================
+
+.main-tabs {
+  .tabs {
+    margin-bottom: $space-4;
+
+    ul {
+      border-bottom: 2px solid $border-subtle;
+
+      li {
+        a {
+          color: $text-muted;
+          border: none;
+          border-bottom: 2px solid transparent;
+          margin-bottom: -2px;
+          padding: $space-3 $space-4;
+          border-radius: $radius-md $radius-md 0 0;
+          transition: all $transition-normal;
+          font-weight: $font-weight-medium;
+          font-size: $font-size-sm;
+
+          &:hover {
+            color: $text-primary;
+            background: $bg-hover;
+            border-bottom-color: $border-default;
+          }
+        }
+
+        &.is-active a {
+          color: $yellow-primary !important;
+          border-bottom-color: $yellow-primary !important;
+          background: transparent;
+        }
+      }
+    }
+
+    // Toggle rounded style override
+    &.is-toggle-rounded ul {
+      border-bottom: none;
+
+      li {
+        a {
+          border: 1px solid $border-default;
+          border-radius: 0;
+          margin-bottom: 0;
+          background: $bg-surface;
+
+          &:hover {
+            background: $bg-hover;
+            border-color: $border-strong;
+          }
+        }
+
+        &:first-child a {
+          border-radius: $radius-full 0 0 $radius-full;
+        }
+
+        &:last-child a {
+          border-radius: 0 $radius-full $radius-full 0;
+        }
+
+        &.is-active a {
+          background: $yellow-primary !important;
+          border-color: $yellow-primary !important;
+          color: $yellow-text !important;
+        }
+      }
+    }
+  }
+
+  .icon + span {
+    color: $yellow-primary;
+  }
+
+  .icon {
+    display: none;
+    margin: 0 0 0 -0.5em !important;
+
+    .iconfont {
+      font-size: 32px;
+      color: $yellow-primary;
+    }
+  }
+}
+
+// =============================================================================
+// MODERN TABLES
+// =============================================================================
+
+.b-table {
+  .table-wrapper {
+    background: $bg-elevated;
+    border-radius: $radius-lg;
+    overflow: hidden;
+    border: 1px solid $border-subtle;
+    box-shadow: $shadow-sm;
+  }
+
+  table {
+    background: transparent;
+
+    thead {
+      tr {
+        th {
+          background: $bg-surface !important;
+          color: $text-secondary !important;
+          border-bottom: 1px solid $border-subtle !important;
+          font-weight: $font-weight-semibold;
+          font-size: $font-size-sm;
+          text-transform: uppercase;
+          letter-spacing: 0.03em;
+          padding: $space-3 $space-4;
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        background: transparent;
+        transition: all $transition-normal;
+
+        &:hover {
+          background: $bg-hover !important;
+        }
+
+        td {
+          border-bottom: 1px solid $border-subtle !important;
+          color: $text-primary;
+          padding: $space-3 $space-4;
+          vertical-align: middle !important;
+        }
+      }
+    }
+  }
+
+  // Checkbox styling
+  .checkbox input[type="checkbox"] {
+    + .check {
+      border-color: $border-default;
+      border-radius: $radius-sm;
+      background: $bg-surface;
+      transition: all $transition-normal;
+
+      &:hover {
+        border-color: $yellow-primary;
+      }
+    }
+
+    &:checked + .check {
+      background: $yellow-primary;
+      border-color: $yellow-primary;
+
+      &::after {
+        border-color: $yellow-text;
+      }
+    }
+  }
+}
+
+// Connected row states
 tr.is-connected-running {
-  $c: rgba(247, 223, 30, 0.25);
-  background: $c;
-  color: #ffffff;
+  background: $yellow-muted !important;
+  color: $text-primary;
+
+  td {
+    color: $text-primary !important;
+  }
 }
 
 tr.is-connected-not-running {
-  $c: rgba(239, 68, 68, 0.35);
-  background: $c;
-  color: #ffffff;
+  background: $danger-bg !important;
+  color: $text-primary;
+
+  td {
+    color: $text-primary !important;
+  }
 }
+
+tr.highlight-row-connected {
+  transition: background-color 0.05s linear;
+  background-color: rgba($yellow-primary, 0.35) !important;
+}
+
+tr.highlight-row-disconnected {
+  transition: background-color 0.05s linear;
+  background-color: rgba($danger, 0.4) !important;
+}
+
+// =============================================================================
+// TABLE ACTION BUTTONS
+// =============================================================================
+
+.operate-box {
+  display: flex;
+  gap: $space-2;
+  flex-wrap: wrap;
+
+  .button {
+    border-radius: $radius-md !important;
+    font-size: $font-size-xs !important;
+    padding: $space-1 $space-3;
+    transition: all $transition-normal;
+
+    &:hover {
+      transform: translateY(-1px);
+    }
+
+    &.is-warning {
+      &:not(.is-outlined) {
+        background: $yellow-primary !important;
+        border-color: $yellow-primary !important;
+        color: $yellow-text !important;
+      }
+
+      &.is-outlined {
+        border-color: $yellow-primary !important;
+        color: $yellow-primary !important;
+
+        &:hover {
+          background: $yellow-muted !important;
+        }
+      }
+    }
+
+    &.is-info {
+      &.is-outlined {
+        border-color: $info !important;
+        color: $info-light !important;
+
+        &:hover {
+          background: $info-bg !important;
+        }
+      }
+    }
+
+    &.is-success {
+      &.is-outlined {
+        border-color: $success !important;
+        color: $success-light !important;
+
+        &:hover {
+          background: $success-bg !important;
+        }
+      }
+    }
+  }
+}
+
+// =============================================================================
+// WELCOME CARD
+// =============================================================================
+
+.welcome-driver {
+  background: $bg-elevated !important;
+  border: 1px solid $border-subtle;
+  border-radius: $radius-lg !important;
+  overflow: hidden;
+  box-shadow: $shadow-md;
+
+  .card-header {
+    background: $bg-surface !important;
+    border-bottom: 1px solid $border-subtle;
+
+    .card-header-title {
+      color: $text-primary !important;
+      font-weight: $font-weight-semibold;
+    }
+
+    .card-header-icon {
+      color: $text-secondary;
+    }
+  }
+
+  .card-content {
+    background: $bg-elevated;
+    color: $text-secondary;
+    padding: $space-5;
+
+    .content p {
+      margin-bottom: $space-3;
+    }
+  }
+
+  .card-footer {
+    background: $bg-surface;
+    border-top: 1px solid $border-subtle;
+
+    .card-footer-item {
+      color: $yellow-primary;
+      font-weight: $font-weight-medium;
+      transition: all $transition-normal;
+
+      &:hover {
+        background: $yellow-muted;
+      }
+    }
+  }
+}
+
+// =============================================================================
+// SIDEBAR
+// =============================================================================
+
+.b-sidebar.node-status-sidebar-reduced > .sidebar-content.is-fixed {
+  z-index: 1;
+  left: $space-2;
+  top: 4.25rem;
+  background-color: $bg-elevated;
+  border: 1px solid $border-subtle;
+  width: unset;
+  line-height: 0;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-lg;
+  transition: all $transition-normal;
+
+  &:hover {
+    border-color: $yellow-primary;
+  }
+}
+
+.b-sidebar.node-status-sidebar > .sidebar-content.is-fixed {
+  left: $space-2;
+  top: 4.25rem;
+  background-color: $bg-elevated;
+  border: 1px solid $border-subtle;
+  border-radius: $radius-lg;
+  max-height: calc(100vh - 5rem);
+  overflow-y: auto;
+  box-shadow: $shadow-xl;
+  padding: $space-3;
+
+  .message {
+    cursor: pointer;
+    border-radius: $radius-md;
+    margin-bottom: $space-2 !important;
+    transition: all $transition-normal;
+
+    &:hover {
+      transform: translateX(2px);
+    }
+
+    &.is-primary {
+      background: $yellow-muted;
+
+      .message-header {
+        background: $yellow-primary;
+        color: $yellow-text;
+      }
+    }
+
+    &.is-success {
+      background: $success-bg;
+
+      .message-header {
+        background: $success;
+        color: white;
+      }
+    }
+
+    &.is-danger {
+      background: $danger-bg;
+
+      .message-header {
+        background: $danger;
+        color: white;
+      }
+    }
+  }
+
+  .tabs:not(:last-child),
+  .pagination:not(:last-child),
+  .message:not(:last-child),
+  .level:not(:last-child),
+  .breadcrumb:not(:last-child),
+  .highlight:not(:last-child),
+  .block:not(:last-child),
+  .title:not(:last-child),
+  .subtitle:not(:last-child),
+  .table-container:not(:last-child),
+  .table:not(:last-child),
+  .progress:not(:last-child),
+  .notification:not(:last-child),
+  .content:not(:last-child),
+  .box:not(:last-child) {
+    margin-bottom: $space-2;
+  }
+}
+
+// =============================================================================
+// LOADING ANIMATION
+// =============================================================================
 
 @keyframes loading-rotate {
   from {
@@ -1685,6 +2094,10 @@ tr.is-connected-not-running {
     transform: rotate(360deg);
   }
 }
+
+// =============================================================================
+// UTILITY CLASSES
+// =============================================================================
 
 .not-show {
   opacity: 0;
@@ -1718,7 +2131,7 @@ table th {
   min-width: 300px !important;
 }
 
-$coverBackground: rgba(0, 0, 0, 0.6);
+$coverBackground: rgba(0, 0, 0, 0.7);
 .tag-cover {
   height: 100%;
   width: 100%;
@@ -1726,11 +2139,12 @@ $coverBackground: rgba(0, 0, 0, 0.6);
   top: 0;
   left: 0;
   background-color: $coverBackground !important;
-  transition: all 0.5s ease;
+  transition: all $transition-normal;
   cursor: pointer;
   text-align: center;
   line-height: 22px;
   user-select: none;
+  border-radius: $radius-sm;
 }
 
 #tag-cover-text {
@@ -1744,83 +2158,36 @@ $coverBackground: rgba(0, 0, 0, 0.6);
   justify-content: center;
   align-items: center;
   z-index: 1;
-  font-size: 12px;
+  font-size: $font-size-xs;
   pointer-events: none;
 }
 
 .mobile-small {
   @media screen and (max-width: 450px) {
-    border-radius: 2px;
-    font-size: 0.65rem;
+    border-radius: $radius-xs;
+    font-size: $font-size-xs;
   }
-}
-
-.b-sidebar.node-status-sidebar-reduced > .sidebar-content.is-fixed {
-  z-index: 1;
-  left: 1px;
-  top: 4.25rem;
-  background-color: #2d2d2d;
-  width: unset;
-  line-height: 0;
-  border-radius: 4px;
-}
-
-.b-sidebar.node-status-sidebar > .sidebar-content.is-fixed {
-  left: 1px;
-  top: 4.25rem;
-  background-color: #2d2d2d;
-  max-height: calc(100vh - 5rem);
-  overflow-y: auto;
-
-  .message {
-    cursor: pointer;
-  }
-
-  .tabs:not(:last-child),
-  .pagination:not(:last-child),
-  .message:not(:last-child),
-  .level:not(:last-child),
-  .breadcrumb:not(:last-child),
-  .highlight:not(:last-child),
-  .block:not(:last-child),
-  .title:not(:last-child),
-  .subtitle:not(:last-child),
-  .table-container:not(:last-child),
-  .table:not(:last-child),
-  .progress:not(:last-child),
-  .notification:not(:last-child),
-  .content:not(:last-child),
-  .box:not(:last-child) {
-    margin-bottom: 0.25rem;
-  }
-}
-
-tr.highlight-row-connected {
-  transition: background-color 0.05s linear;
-  background-color: rgba(247, 223, 30, 0.4);
-}
-
-tr.highlight-row-disconnected {
-  transition: background-color 0.05s linear;
-  background-color: rgba(239, 68, 68, 0.5);
 }
 
 .click-through {
   pointer-events: none;
 }
+
 .address-column {
   max-width: 350px !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
 }
+
 .latency-column {
   max-width: 120px !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
   white-space: nowrap;
 }
+
 .latency-valid {
-  color: #4ade80;
+  color: $success-light;
 }
 
 @media screen and (max-width: 1920px) {
@@ -1830,5 +2197,18 @@ tr.highlight-row-disconnected {
   .address-column {
     max-width: 150px !important;
   }
+}
+
+// =============================================================================
+// FIELD LABELS
+// =============================================================================
+
+.field > .label {
+  color: $text-secondary !important;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: $space-3;
 }
 </style>

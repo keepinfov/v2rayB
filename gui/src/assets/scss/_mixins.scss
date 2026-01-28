@@ -1,0 +1,323 @@
+// v2rayB Design System Mixins
+@import './variables';
+
+// =============================================================================
+// LAYOUT MIXINS
+// =============================================================================
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-start {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+// =============================================================================
+// CARD STYLES
+// =============================================================================
+
+@mixin card-base {
+  background: $card-bg;
+  border: 1px solid $card-border;
+  border-radius: $card-radius;
+}
+
+@mixin card-elevated {
+  @include card-base;
+  box-shadow: $shadow-md;
+}
+
+@mixin card-interactive {
+  @include card-base;
+  transition: all $transition-normal;
+
+  &:hover {
+    border-color: $border-strong;
+    transform: translateY(-2px);
+    box-shadow: $shadow-lg;
+  }
+}
+
+// =============================================================================
+// BUTTON MIXINS
+// =============================================================================
+
+@mixin button-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-2;
+  height: $button-height;
+  padding: 0 $space-4;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  border-radius: $button-radius;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all $transition-normal;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+@mixin button-primary {
+  @include button-base;
+  background: $yellow-primary;
+  color: $yellow-text;
+  border-color: $yellow-primary;
+
+  &:hover:not(:disabled) {
+    background: $yellow-hover;
+    border-color: $yellow-hover;
+    transform: translateY(-1px);
+    box-shadow: $shadow-glow;
+  }
+
+  &:active:not(:disabled) {
+    background: $yellow-active;
+    transform: translateY(0);
+  }
+}
+
+@mixin button-secondary {
+  @include button-base;
+  background: $bg-surface;
+  color: $text-primary;
+  border-color: $border-default;
+
+  &:hover:not(:disabled) {
+    background: $bg-hover;
+    border-color: $border-strong;
+  }
+
+  &:active:not(:disabled) {
+    background: $bg-active;
+  }
+}
+
+@mixin button-ghost {
+  @include button-base;
+  background: transparent;
+  color: $text-secondary;
+  border-color: transparent;
+
+  &:hover:not(:disabled) {
+    background: $bg-hover;
+    color: $text-primary;
+  }
+}
+
+@mixin button-danger {
+  @include button-base;
+  background: $danger-bg;
+  color: $danger-light;
+  border-color: $danger-border;
+
+  &:hover:not(:disabled) {
+    background: $danger;
+    color: white;
+    border-color: $danger;
+  }
+}
+
+@mixin button-pill {
+  border-radius: $button-radius-pill;
+}
+
+// =============================================================================
+// INPUT MIXINS
+// =============================================================================
+
+@mixin input-base {
+  width: 100%;
+  height: $input-height;
+  padding: 0 $space-3;
+  background: $input-bg;
+  color: $text-primary;
+  border: 1px solid $input-border;
+  border-radius: $input-radius;
+  font-size: $font-size-base;
+  transition: all $transition-normal;
+
+  &::placeholder {
+    color: $text-placeholder;
+  }
+
+  &:hover:not(:disabled):not(:focus) {
+    border-color: $border-strong;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $border-focus;
+    box-shadow: 0 0 0 3px $yellow-glow;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+// =============================================================================
+// MODAL MIXINS
+// =============================================================================
+
+@mixin modal-card {
+  background: $modal-card-bg;
+  border-radius: $modal-card-radius;
+  box-shadow: $shadow-xl;
+  overflow: hidden;
+}
+
+@mixin modal-header {
+  @include flex-between;
+  padding: $space-4 $space-5;
+  background: $bg-elevated;
+  border-bottom: 1px solid $border-subtle;
+}
+
+@mixin modal-body {
+  padding: $space-5;
+}
+
+@mixin modal-footer {
+  @include flex-between;
+  padding: $space-4 $space-5;
+  background: $bg-elevated;
+  border-top: 1px solid $border-subtle;
+  gap: $space-3;
+}
+
+// =============================================================================
+// TABLE MIXINS
+// =============================================================================
+
+@mixin table-container {
+  background: $table-bg;
+  border: 1px solid $table-border;
+  border-radius: $table-radius;
+  overflow: hidden;
+}
+
+@mixin table-row-hover {
+  transition: background $transition-fast;
+
+  &:hover {
+    background: $table-row-hover;
+  }
+}
+
+// =============================================================================
+// UTILITY MIXINS
+// =============================================================================
+
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin backdrop-blur {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+@mixin scrollbar-thin {
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $border-default;
+    border-radius: $radius-full;
+
+    &:hover {
+      background: $border-strong;
+    }
+  }
+}
+
+@mixin focus-ring {
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px $bg-primary, 0 0 0 4px $yellow-primary;
+  }
+}
+
+// =============================================================================
+// ANIMATION MIXINS
+// =============================================================================
+
+@mixin hover-lift {
+  transition: transform $transition-normal, box-shadow $transition-normal;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-lg;
+  }
+}
+
+@mixin hover-scale {
+  transition: transform $transition-normal;
+
+  &:hover {
+    transform: scale(1.02);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+@mixin press-effect {
+  transition: transform $transition-fast;
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+// =============================================================================
+// RESPONSIVE MIXINS
+// =============================================================================
+
+@mixin mobile {
+  @media screen and (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media screen and (max-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media screen and (min-width: 1025px) {
+    @content;
+  }
+}

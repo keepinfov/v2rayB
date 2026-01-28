@@ -520,6 +520,8 @@ export default {
 </style>
 
 <style lang="scss" scoped>
+@import "assets/scss/variables";
+
 #app {
   margin: 0;
 }
@@ -532,10 +534,20 @@ export default {
   min-height: 2.5rem;
   margin-left: 1em;
   margin-right: 1em;
+  transition: transform $transition-normal;
+
+  &:hover {
+    transform: scale(1.05);
+  }
 }
 
 .navbar-item .iconfont {
-  margin-right: 0.15em;
+  margin-right: 0.3em;
+  transition: transform $transition-normal;
+}
+
+.navbar-item:hover .iconfont {
+  transform: scale(1.1);
 }
 
 .pointerTag:hover {
@@ -544,42 +556,188 @@ export default {
 </style>
 
 <style lang="scss">
-html {
-  //  &::-webkit-scrollbar {
-  //    // 去掉讨厌的滚动条
-  //    display: none;
-  //  }
+@import "assets/scss/variables";
+@import "assets/scss/mixins";
 
+// =============================================================================
+// MODERN NAVBAR STYLES
+// =============================================================================
+
+.navbar.is-dark {
+  background-color: rgba($bg-primary, 0.85) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid $border-subtle;
+  box-shadow: $shadow-md;
+  transition: all $transition-normal;
+}
+
+.navbar-brand,
+.navbar-menu {
+  background-color: transparent !important;
+}
+
+// Navbar items styling
+.navbar-item {
+  color: $text-secondary !important;
+  border-radius: $radius-md;
+  margin: 0 2px;
+  padding: 0.5rem 0.85rem;
+  transition: all $transition-normal;
+
+  &:hover,
+  &:focus {
+    background-color: $bg-hover !important;
+    color: $yellow-primary !important;
+  }
+
+  &.is-active {
+    color: $yellow-primary !important;
+  }
+
+  .iconfont {
+    font-size: 1.15em;
+    margin-right: 0.35em;
+    transition: transform $transition-normal;
+  }
+
+  &:hover .iconfont {
+    transform: translateY(-1px);
+  }
+}
+
+// Status tag pill styling
+.navbar .tag,
+#statusTag {
+  border-radius: $radius-full !important;
+  padding: 0 1em;
+  min-width: 5em;
+  font-weight: $font-weight-medium;
+  font-size: $font-size-sm;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  transition: all $transition-normal;
+  box-shadow: $shadow-sm;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: $shadow-md;
+  }
+
+  &.is-success {
+    background-color: $success !important;
+    color: white !important;
+    box-shadow: 0 0 12px rgba($success, 0.3);
+  }
+
+  &.is-danger {
+    background-color: $danger !important;
+    color: white !important;
+    box-shadow: 0 0 12px rgba($danger, 0.3);
+  }
+
+  &.is-info {
+    background-color: $yellow-primary !important;
+    color: $yellow-text !important;
+    box-shadow: 0 0 12px rgba($yellow-primary, 0.3);
+  }
+
+  &.is-light {
+    background-color: $bg-surface !important;
+    color: $text-secondary !important;
+  }
+}
+
+// Dropdown styling
+.navbar .dropdown-menu {
+  margin-top: 8px !important;
+  padding: 0;
+}
+
+.navbar .dropdown-content {
+  background-color: $bg-elevated !important;
+  border: 1px solid $border-subtle;
+  border-radius: $radius-lg !important;
+  box-shadow: $shadow-xl !important;
+  padding: $space-2 !important;
+  overflow: hidden;
+}
+
+.navbar .dropdown-item {
+  color: $text-primary !important;
+  border-radius: $radius-md;
+  padding: $space-2 $space-3;
+  transition: all $transition-normal;
+
+  &:hover {
+    background-color: $bg-hover !important;
+    color: $yellow-primary !important;
+  }
+
+  &:active {
+    background-color: $yellow-muted !important;
+  }
+}
+
+.navbar .dropdown-divider,
+.navbar hr.dropdown-divider {
+  background-color: $border-subtle !important;
+  margin: $space-2 0;
+}
+
+// User menu dropdown
+.menudropdown {
+  .dropdown-trigger .navbar-item {
+    border-radius: $radius-md;
+    padding: 0.5rem 0.75rem;
+
+    &:hover {
+      background-color: $bg-hover !important;
+    }
+  }
+
+  .dropdown-item {
+    font-size: $font-size-sm;
+  }
+}
+
+// =============================================================================
+// MAIN APP LAYOUT
+// =============================================================================
+
+html {
   #app {
     height: calc(100vh - 3.25rem);
-    /*overflow-y: auto;*/
-    //overflow-scrolling: touch;
-    //-webkit-overflow-scrolling: touch;
   }
 }
 
 @media screen and (max-width: 1023px) {
   .dropdown.is-mobile-modal .dropdown-menu {
-    // 修复modal模糊问题
     left: 0 !important;
     right: 0 !important;
     margin: auto;
     transform: unset !important;
   }
+
+  .navbar-menu {
+    background-color: $bg-elevated !important;
+    border-radius: 0 0 $radius-lg $radius-lg;
+    box-shadow: $shadow-lg;
+    padding: $space-3;
+  }
 }
 
+// =============================================================================
+// UTILITY CLASSES
+// =============================================================================
+
 .dropdown-item:focus {
-  // 不要丑丑的outline
   outline: none !important;
 }
 
 .no-select {
   user-select: none;
   -webkit-user-drag: none;
-}
-
-.menudropdown .dropdown-item {
-  font-size: 0.8em;
 }
 
 .leave-right {
@@ -592,6 +750,7 @@ html {
   }
 }
 
+// Yellow accent for links and active states
 a.navbar-item:focus,
 a.navbar-item:focus-within,
 a.navbar-item:hover,
@@ -602,20 +761,23 @@ a.navbar-item.is-active,
 .navbar-link.is-active,
 .is-link,
 a {
-  $yellow: #F7DF1E;
-  color: $yellow;
+  color: $yellow-primary;
 }
 
+// Loading spinner
 .icon-loading_ico-copy {
   font-size: 2.5rem;
-  color: #F7DF1E;
+  color: $yellow-primary;
   animation: loading-rotate 2s infinite linear;
+  filter: drop-shadow(0 0 8px rgba($yellow-primary, 0.4));
 }
 
+// Modal z-index
 .modal-custom-ports {
   z-index: 999;
 }
 
+// About modal
 .after-line-dot5 {
   p {
     margin-bottom: 0.5em;
@@ -623,11 +785,12 @@ a {
 }
 
 .about-small {
-  font-size: 0.85em;
+  font-size: $font-size-sm;
   text-indent: 1em;
-  color: rgba(255, 255, 255, 0.6);
+  color: $text-muted;
 }
 
+// Spacing utilities
 .margin-right-2em {
   margin-right: 2em;
 }
@@ -640,10 +803,14 @@ a {
   padding-right: 2rem !important;
 }
 
+// Status tag sizing
 #statusTag {
-  width: 5em;
+  width: 5.5em;
+  text-align: center;
+  justify-content: center;
 }
 
+// Outbound dropdown
 .dropdown-menu .is-fullwidth {
   width: 100%;
 }
@@ -653,10 +820,26 @@ a {
   right: -1.5rem;
   top: 0;
   font-size: 1rem;
+  color: $text-muted;
+  transition: all $transition-normal;
+
+  &:hover {
+    color: $yellow-primary;
+    transform: rotate(90deg);
+  }
+}
+
+.outbound-dropdown {
+  position: relative;
+
+  &:hover {
+    padding-right: 2.5rem !important;
+  }
 }
 
 .navbar-item .dropdown-menu .dropdown-content {
   max-height: calc(100vh - 60px);
   overflow-y: auto;
+  @include scrollbar-thin;
 }
 </style>

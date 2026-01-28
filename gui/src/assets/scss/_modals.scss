@@ -1,0 +1,415 @@
+// v2rayB Modal Styles
+@import './variables';
+@import './mixins';
+
+// =============================================================================
+// MODAL BACKDROP
+// =============================================================================
+
+.modal-background {
+  background-color: $modal-backdrop-bg !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+// =============================================================================
+// MODAL CARD
+// =============================================================================
+
+.modal-card {
+  @include modal-card;
+  max-width: 90vw;
+  max-height: 90vh;
+  margin: 0 auto;
+
+  @include mobile {
+    max-width: 95vw;
+    max-height: 95vh;
+    border-radius: $radius-lg;
+  }
+}
+
+// Modal card sizing
+.modal-card-small {
+  width: 400px;
+}
+
+.modal-card-medium {
+  width: 560px;
+}
+
+.modal-card-large {
+  width: 720px;
+}
+
+.modal-card-xl {
+  width: 900px;
+}
+
+.modal-card-full {
+  width: calc(100vw - 40px);
+  height: calc(100vh - 40px);
+}
+
+// =============================================================================
+// MODAL HEADER
+// =============================================================================
+
+.modal-card-head {
+  @include modal-header;
+  min-height: 56px;
+  padding: $space-4 $space-5 !important;
+  background-color: $bg-elevated !important;
+  border-bottom: 1px solid $border-subtle !important;
+  border-radius: $modal-card-radius $modal-card-radius 0 0;
+
+  .modal-card-title {
+    color: $text-primary !important;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    line-height: 1.4;
+    flex-grow: 1;
+  }
+
+  // Close button in header
+  .delete {
+    background-color: $bg-hover;
+    border-radius: $radius-full;
+    transition: all $transition-normal;
+
+    &::before,
+    &::after {
+      background-color: $text-secondary;
+    }
+
+    &:hover {
+      background-color: $danger-bg;
+
+      &::before,
+      &::after {
+        background-color: $danger-light;
+      }
+    }
+  }
+}
+
+// =============================================================================
+// MODAL BODY
+// =============================================================================
+
+.modal-card-body {
+  @include modal-body;
+  background-color: $bg-secondary !important;
+  color: $text-primary;
+  @include scrollbar-thin;
+
+  // Form sections
+  .field {
+    margin-bottom: $space-4;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  // Section dividers
+  .modal-section {
+    padding: $space-4 0;
+    border-bottom: 1px solid $border-subtle;
+
+    &:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    &:first-child {
+      padding-top: 0;
+    }
+  }
+
+  .modal-section-title {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: $text-secondary;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: $space-3;
+  }
+
+  // Info boxes
+  .modal-info-box {
+    padding: $space-3 $space-4;
+    background: $bg-surface;
+    border: 1px solid $border-subtle;
+    border-radius: $radius-md;
+    font-size: $font-size-sm;
+    color: $text-secondary;
+
+    &.is-warning {
+      background: $warning-bg;
+      border-color: $warning-border;
+      color: $warning-light;
+    }
+
+    &.is-danger {
+      background: $danger-bg;
+      border-color: $danger-border;
+      color: $danger-light;
+    }
+
+    &.is-success {
+      background: $success-bg;
+      border-color: $success-border;
+      color: $success-light;
+    }
+
+    &.is-info {
+      background: $info-bg;
+      border-color: $info-border;
+      color: $info-light;
+    }
+  }
+}
+
+// =============================================================================
+// MODAL FOOTER
+// =============================================================================
+
+.modal-card-foot {
+  @include modal-footer;
+  background-color: $bg-elevated !important;
+  border-top: 1px solid $border-subtle !important;
+  border-radius: 0 0 $modal-card-radius $modal-card-radius;
+  justify-content: flex-end !important;
+
+  .button {
+    min-width: 100px;
+
+    &:not(:last-child) {
+      margin-right: $space-3;
+    }
+  }
+
+  // Left-aligned items
+  .modal-foot-left {
+    margin-right: auto;
+  }
+}
+
+// =============================================================================
+// MODAL CLOSE BUTTON (standalone)
+// =============================================================================
+
+.modal-close {
+  position: fixed;
+  right: 20px;
+  top: 20px;
+  background: $bg-hover !important;
+  border-radius: $radius-full;
+  width: 36px;
+  height: 36px;
+  transition: all $transition-normal;
+
+  &::before,
+  &::after {
+    background-color: $text-secondary !important;
+  }
+
+  &:hover {
+    background: $danger-bg !important;
+    transform: rotate(90deg);
+
+    &::before,
+    &::after {
+      background-color: $danger-light !important;
+    }
+  }
+}
+
+// =============================================================================
+// FORM STYLES WITHIN MODALS
+// =============================================================================
+
+.modal-card-body {
+  // Labels
+  .label {
+    color: $text-secondary !important;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    margin-bottom: $space-2;
+  }
+
+  // Help text
+  .help {
+    font-size: $font-size-xs;
+    color: $text-muted;
+    margin-top: $space-1;
+
+    &.is-danger {
+      color: $danger-light;
+    }
+
+    &.is-success {
+      color: $success-light;
+    }
+  }
+
+  // Input groups
+  .field.has-addons {
+    .control {
+      &:not(:last-child) {
+        .input,
+        .button,
+        .select select {
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+      }
+
+      &:not(:first-child) {
+        .input,
+        .button,
+        .select select {
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0;
+          margin-left: -1px;
+        }
+      }
+    }
+  }
+
+  // Horizontal fields
+  .field.is-horizontal {
+    .field-label {
+      flex-basis: 140px;
+      flex-grow: 0;
+      margin-right: $space-4;
+
+      .label {
+        text-align: right;
+      }
+    }
+
+    .field-body {
+      flex-grow: 1;
+    }
+  }
+
+  // Grouped fields
+  .field.is-grouped {
+    gap: $space-3;
+
+    .control {
+      flex-shrink: 1;
+    }
+  }
+}
+
+// =============================================================================
+// MODAL TABS
+// =============================================================================
+
+.modal-card-body .tabs {
+  margin-bottom: $space-4;
+
+  ul {
+    border-bottom-color: $border-subtle;
+  }
+
+  li {
+    a {
+      color: $text-secondary;
+      border-bottom-color: transparent;
+      padding: $space-2 $space-4;
+      border-radius: $radius-sm $radius-sm 0 0;
+      transition: all $transition-normal;
+
+      &:hover {
+        color: $text-primary;
+        background: $bg-hover;
+        border-bottom-color: $border-default;
+      }
+    }
+
+    &.is-active a {
+      color: $yellow-primary !important;
+      border-bottom-color: $yellow-primary !important;
+      background: transparent;
+    }
+  }
+}
+
+// =============================================================================
+// MODAL SPECIFIC OVERRIDES
+// =============================================================================
+
+// Login modal
+.modal-login {
+  .modal-card {
+    width: 400px;
+  }
+
+  .modal-card-body {
+    padding: $space-6;
+  }
+
+  .login-logo {
+    text-align: center;
+    margin-bottom: $space-5;
+
+    img {
+      max-width: 120px;
+    }
+  }
+}
+
+// Settings modal
+.modal-settings {
+  .modal-card {
+    width: 700px;
+    max-height: 80vh;
+  }
+
+  .settings-sidebar {
+    width: 180px;
+    border-right: 1px solid $border-subtle;
+    padding: $space-4;
+  }
+
+  .settings-content {
+    flex: 1;
+    padding: $space-5;
+    overflow-y: auto;
+  }
+}
+
+// Log modal
+.modal-log {
+  .modal-card {
+    width: 900px;
+    height: 80vh;
+  }
+
+  .log-content {
+    font-family: $font-family-mono;
+    font-size: $font-size-sm;
+    line-height: $line-height-relaxed;
+    background: $bg-base;
+    padding: $space-4;
+    border-radius: $radius-md;
+    overflow: auto;
+    height: 100%;
+  }
+}
+
+// Sharing modal (QR code)
+.modal-sharing {
+  .qr-container {
+    display: flex;
+    justify-content: center;
+    padding: $space-5;
+    background: white;
+    border-radius: $radius-lg;
+    margin: $space-4 0;
+  }
+}
