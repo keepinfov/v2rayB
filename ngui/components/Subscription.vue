@@ -1,59 +1,85 @@
 <script lang="ts" setup>
 const { t } = useI18n()
 
-const columns = [
-  { key: 'id', label: 'ID', width: 70 },
-  { key: 'host', label: t('subscription.host'), width: 220 },
-  { key: 'remarks', label: t('subscription.remarks'), width: 120 },
-  { key: 'status', label: t('subscription.timeLastUpdate'), width: 180 }
+const headers = [
+  { title: 'ID', key: 'id', width: 70 },
+  { title: t('subscription.host'), key: 'host' },
+  { title: t('subscription.remarks'), key: 'remarks' },
+  { title: t('subscription.timeLastUpdate'), key: 'status' },
+  { title: t('subscription.numberServers'), key: 'servers.length', width: 100 },
+  { title: t('operations.name'), key: 'actions', sortable: false, width: 200 }
 ]
 
-let selectRows = $ref<any[]>([])
-const handleSelectionChange = (val: any) => { selectRows = val }
+const selectRows = ref<any[]>([])
+const isUpdating = ref(false)
 
-let isUpdating = $ref(false)
-const updateSubscription = async(row: any) => {
-  isUpdating = true
+const updateSubscription = async (row: any) => {
+  isUpdating.value = true
   const { data } = await useV2Fetch('subscription').put({ id: row.id, _type: row._type }).json()
-  isUpdating = false
+  isUpdating.value = false
 
-  if (data.value.code === 'SUCCESS')
-    ElMessage.success({ message: t('common.success'), duration: 5000 })
+  if (data.value.code === 'SUCCESS') {
+    useSnackbar(t('common.success'), 'success')
+  }
 }
 
-const removeSubscription = async(row: any) => {
+const removeSubscription = async () => {
   const { data } = await useV2Fetch('touch').delete({
-    touches: selectRows.map((x) => { return { id: x.id, _type: x._type } })
+    touches: selectRows.value.map(x => ({ id: x.id, _type: x._type }))
   }).json()
 
-  if (data.value.code === 'SUCCESS')
+  if (data.value.code === 'SUCCESS') {
     proxies.value.subs = data.value.data.touch.subscriptions
+    selectRows.value = []
+  }
 }
 </script>
 
 <template>
-  <OperateImport />
+  <v-card color="surface-container">
+    <v-toolbar color="transparent" density="compact">
+      <v-toolbar-title>Subscriptions</v-toolbar-title>
+      <v-spacer />
+      <OperateImport />
+      <v-btn
+        v-if="selectRows.length > 0"
+        variant="tonal"
+        color="error"
+        class="ml-2"
+        @click="removeSubscription"
+      >
+        <v-icon start>mdi-delete</v-icon>
+        {{ t('operations.delete') }} ({{ selectRows.length }})
+      </v-btn>
+    </v-toolbar>
 
-  <ElButton
-    v-if="!(Array.isArray(selectRows) && selectRows.length === 0)"
-    class="ml-2"
-    @click="removeSubscription(selectRows)"
-  >
-    {{ t('operations.delete') }}
-  </ElButton>
-
-  <ElTable :data="proxies.subs" @selection-change="handleSelectionChange">
-    <ElTableColumn type="selection" width="55" />
-    <ElTableColumn v-for="c in columns" :key="c.key" :prop="c.key" :label="c.label" :min-width="c.width" />
-    <ElTableColumn property="servers.length" :label="t('subscription.numberServers')" min-width="70" />
-    <ElTableColumn :label="t('operations.name')" min-width="240">
-      <template #default="scope">
-        <ElButton size="small" :loading="isUpdating" @click="updateSubscription(scope.row)">
-          <UnoIcon v-if="!isUpdating" class="ri:refresh-line mr-1" /> {{ t('operations.update') }}
-        </ElButton>
-        <OperateRemark :data="scope.row" />
-        <OperateShare :data="scope" />
+    <v-data-table
+      v-model="selectRows"
+      :headers="headers"
+      :items="proxies.subs"
+      item-value="id"
+      show-select
+      class="bg-transparent"
+    >
+      <template #item.servers.length="{ item }">
+        <v-chip size="small" color="primary" variant="tonal">
+          {{ item.servers?.length || 0 }}
+        </v-chip>
       </template>
-    </ElTableColumn>
-  </ElTable>
+
+      <template #item.actions="{ item }">
+        <div class="d-flex ga-1">
+          <v-btn
+            icon="mdi-refresh"
+            size="small"
+            variant="text"
+            :loading="isUpdating"
+            @click="updateSubscription(item)"
+          />
+          <OperateRemark :data="item" />
+          <OperateShare :data="{ row: item }" />
+        </div>
+      </template>
+    </v-data-table>
+  </v-card>
 </template>

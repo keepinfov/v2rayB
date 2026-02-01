@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 import { useQRCode } from '@vueuse/integrations/useQRCode'
-const { data, subID } = defineProps<{ data: any, subID?: number }>()
 
+const { data, subID } = defineProps<{ data: any, subID?: number }>()
 const { $index, row } = data
 
-let isVisible = $ref(false)
-let qrcode = ref('')
+const isVisible = ref(false)
+const qrcode = ref('')
 
-const shareSubscription = async() => {
+const shareSubscription = async () => {
   const params = JSON.stringify({
     id: row.id,
     _type: row._type,
@@ -15,21 +15,26 @@ const shareSubscription = async() => {
   })
 
   const { data } = await useV2Fetch(`sharingAddress?touch=${params}`).get().json()
-
-  qrcode = useQRCode(data.value.data.sharingAddress)
-  isVisible = true
+  qrcode.value = useQRCode(data.value.data.sharingAddress).value
+  isVisible.value = true
 }
 </script>
 
 <template>
-  <ElButton size="small" @click="shareSubscription">
-    <UnoIcon class="ri:share-fill mr-1" /> {{ $t('operations.share') }}
-  </ElButton>
-  <ElDialog v-model="isVisible" :title="$t('operations.import')" width="250">
-    <template #header="{ titleClass }">
-      <div :class="titleClass">{{ row._type.toUpperCase() }}</div>
-    </template>
+  <v-btn icon="mdi-share-variant" size="small" variant="text" @click="shareSubscription" />
 
-    <img :src="qrcode">
-  </ElDialog>
+  <v-dialog v-model="isVisible" max-width="300">
+    <v-card class="text-center">
+      <v-card-title>{{ row._type?.toUpperCase() }}</v-card-title>
+      <v-card-text>
+        <v-img :src="qrcode" width="200" class="mx-auto rounded-lg" />
+      </v-card-text>
+      <v-card-actions>
+        <v-spacer />
+        <v-btn variant="text" @click="isVisible = false">
+          Close
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>

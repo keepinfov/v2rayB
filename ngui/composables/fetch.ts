@@ -1,5 +1,4 @@
 import { nanoid } from 'nanoid'
-import { ElMessage } from 'element-plus'
 import { createFetch } from '@vueuse/core'
 
 export const useV2Fetch = createFetch({
@@ -10,7 +9,7 @@ export const useV2Fetch = createFetch({
       if (user.value.token) {
         options.headers = {
           ...options.headers,
-          'Authorization': user.value.token,
+          Authorization: user.value.token,
           'X-V2raya-Request-Id': nanoid()
         }
       }
@@ -18,14 +17,16 @@ export const useV2Fetch = createFetch({
       return { options }
     },
     afterFetch({ data }) {
-      if (data.code === 'FAIL')
-        ElMessage.error({ message: data?.message })
+      if (data.code === 'FAIL') {
+        useSnackbar(data?.message, 'error')
+      }
 
       return { data }
     },
     onFetchError({ error }) {
-      if (error)
-        ElMessage.error({ message: error?.message })
+      if (error) {
+        useSnackbar(error?.message, 'error')
+      }
 
       return { error }
     }

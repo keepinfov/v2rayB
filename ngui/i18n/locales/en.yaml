@@ -1,0 +1,264 @@
+common:
+  outboundSetting: Outbound Settings
+  setting: Settings
+  about: About
+  loggedAs: 'Logged in as {username}'
+  v2rayCoreStatus: v2ray-core Status
+  checkRunning: Checking
+  isRunning: Running
+  notRunning: Ready
+  notLogin: Not Logged In
+  latest: Latest
+  local: Local
+  success: Success
+  fail: Failed
+  message: Message
+  none: None
+  optional: Optional
+  loadBalance: Load Balance
+  log: Logs
+welcome:
+  title: Welcome
+  docker: 'v2rayA is running in Docker, Version: {version}'
+  default: 'v2rayA service is running, Version: {version}'
+  newVersion: 'New version available: {version}'
+  messages:
+    - You haven't created or imported any servers or subscriptions yet.
+    - You can import via server link or subscription URL, or create servers manually.
+v2ray:
+  start: Start
+  stop: Stop
+server:
+  name: Name
+  address: Address
+  protocol: Protocol
+  latency: Latency
+  lastSeenTime: Last Seen
+  lastTryTime: Last Test
+  messages:
+    notAllowInsecure: 'According to {name} documentation, AllowInsecure is not allowed when using {name}'
+    notRecommend: 'According to {name} documentation, AllowInsecure is not recommended when using {name}'
+InSecureConfirm:
+  title: Insecure Configuration Detected
+  message: The configuration has AllowInsecure set to true. Unless you know what you're doing, this may lead to data leakage. Continue?
+  confirm: I understand the risks
+  cancel: Cancel
+subscription:
+  host: Host
+  remarks: Remarks
+  timeLastUpdate: Last Updated
+  numberServers: Servers
+operations:
+  name: Actions
+  update: Update
+  modify: Edit
+  share: Share
+  view: View
+  delete: Delete
+  create: Create
+  import: Import
+  inBatch: Batch
+  connect: Connect
+  disconnect: Disconnect
+  select: Select
+  login: Login
+  logout: Logout
+  configure: Configure
+  cancel: Cancel
+  confirm: Confirm
+  confirm2: Confirm
+  saveApply: Save & Apply
+  save: Save
+  copyLink: Copy Link
+  helpManual: Help
+  'yes': 'Yes'
+  'no': 'No'
+  switchSite: Switch Site
+  addOutbound: Add Outbound
+register:
+  title: Create Admin Account
+  messages:
+    - Please remember your admin credentials for logging into this panel.
+    - Account data is stored locally. We don't upload any information.
+    - If you forget your password, use v2raya --reset-password to reset.
+login:
+  title: Login
+  username: Username
+  password: Password
+setting:
+  transparentProxy: Transparent Proxy
+  transparentType: Proxy Implementation
+  pacMode: Rule Port Mode
+  preventDnsSpoofing: Prevent DNS Spoofing
+  specialMode: Special Mode
+  mux: Multiplexing
+  autoUpdateSub: Auto Update Subscriptions
+  autoUpdateGfwlist: Auto Update GFWList
+  preferModeWhenUpdate: Prefer When Updating
+  ipForwardOn: IP Forward
+  portSharingOn: Port Sharing
+  concurrency: Max Concurrency
+  options:
+    global: Global Proxy
+    direct: Direct
+    pac: Follow Rules
+    whitelistCn: China Whitelist
+    gfwlist: GFWList Mode
+    sameAsPacMode: Same as Rule Port
+    customRouting: Custom Routing
+    antiDnsHijack: Anti DNS Hijack (Fast)
+    forwardDnsRequest: Forward DNS
+    doh: DoH (DNS-over-HTTPS)
+    default: System Default
+    'on': Enabled
+    'off': Disabled
+    updateSubWhenStart: Update on Start
+    updateSubAtIntervals: Update Interval (hours)
+    updateGfwlistWhenStart: Update GFWList on Start
+    updateGfwlistAtIntervals: GFWList Update Interval (hours)
+    dependTransparentMode: Follow Transparent Proxy
+    closed: Disabled
+    advanced: Advanced
+    leastPing: Least Latency
+  messages:
+    gfwlist: This shows local file modification time, may differ from latest version
+    transparentProxy: Global proxy routes all TCP traffic through V2RayA. Enable LAN sharing for other devices.
+    transparentType: 'tproxy: supports UDP, not docker. redirect: docker friendly, no UDP, requires port 53.'
+    pacMode: Sets routing mode for rule port. Default port is 20172 (HTTP).
+    preventDnsSpoofing: 'Forward DNS: proxy DNS requests. DoH (v2ray-core 4.22.0+): DNS over HTTPS.'
+    specialMode: 'supervisor: monitors DNS pollution. fakedns: speeds up resolution.'
+    tcpFastOpen: Speeds up connections but may increase detection. May cause issues if unsupported.
+    mux: Reduces handshakes but affects throughput. Only supports vmess. May cause disconnections.
+    confirmEgressPorts: 'Setting transparent proxy. Whitelist - TCP: {tcpPorts}, UDP: {udpPorts}'
+    grpcShouldWithTls: gRPC requires TLS
+    ssPluginImpl: 'Default: simple-obfs uses equivalent transport, v2ray-plugin uses chain. Chain: forwards to plugin. Equivalent: handled by core.'
+customAddressPort:
+  title: Address & Port
+  serviceAddress: Service Address
+  portSocks5: SOCKS5 Port
+  portHttp: HTTP Port
+  portSocks5WithPac: SOCKS5 Port (with rules)
+  portHttpWithPac: HTTP Port (with rules)
+  portVmess: VMess Port (with rules)
+  portVmessLink: VMess Link
+  messages:
+    - 'To change backend address (default 0.0.0.0:2017), set V2RAYA_ADDRESS or use --address.'
+    - 'Docker: modify port mappings if not using --privileged --network host.'
+    - 'Docker: port detection may be inaccurate. Ensure ports are available.'
+    - 'Set port to 0 to disable.'
+customRouting:
+  title: Custom Routing Rules
+  defaultRoutingRule: Default Routing Rule
+  sameAsDefaultRule: Same as Default
+  appendRule: Append Rule
+  direct: Direct
+  proxy: Proxy
+  block: Block
+  rule: Rule
+  domainFile: Domain File
+  typeRule: Rule Type
+  messages:
+    '0': 'Place SiteDat files in {V2RayLocationAsset} for auto-detection'
+    '1': 'Create SiteDat: github.com/ToutyRater/V2Ray-SiteDAT'
+    '2': Hold Ctrl to multi-select tags.
+    noSiteDatFileFound: 'No siteDat files found in {V2RayLocationAsset}'
+    emptyRuleNotPermitted: Rules cannot have empty tags
+doh:
+  title: Configure DoH Server
+  dohPriorityList: DoH Priority List
+  messages:
+    - DoH (DNS over HTTPS) prevents DNS pollution. Some providers may be blocked or polluted themselves.
+    - 'Good options: Alibaba DNS, GeekDNS, Rubyfish'
+    - 'Taiwan: quad101 (dns.twnic.tw)'
+    - 'USA: Cloudflare (1.0.0.1)'
+    - 'List: dnscrypt.info/public-servers'
+    - 'Self-host for best performance: github.com/facebookexperimental/doh-proxy'
+    - Leave empty to restore defaults (1-2 entries recommended)
+dns:
+  title: Configure DNS Server
+  internalQueryServers: Internal DNS Servers
+  externalQueryServers: External DNS Servers
+  messages:
+    - '"@:dns.internalQueryServers" for domestic domains, "@:dns.externalQueryServers" for foreign domains.'
+    - 'Leave "@:dns.externalQueryServers" empty to use "@:dns.internalQueryServers" for all.'
+egressPortWhitelist:
+  title: Egress Port Whitelist
+  tcpPortWhitelist: TCP Whitelist
+  udpPortWhitelist: UDP Whitelist
+  messages:
+    - 'If running v2rayA on server A connected to proxy server B:'
+    - 'Transparent proxy replaces source IP with proxy server IP, causing rejected connections for incoming requests.'
+    - 'Whitelist service ports (e.g., SSH 22, v2rayA {v2rayaPort}) to bypass proxy.'
+    - 'Skip if not serving external clients or only serving LAN.'
+    - 'Format: 22 for port 22, 20170:20172 for range.'
+configureServer:
+  title: Configure Server
+  servername: Server Name
+  port: Port
+  forceTLS: Force TLS
+  noObfuscation: None
+  httpObfuscation: HTTP
+  srtpObfuscation: SRTP (Video Call)
+  utpObfuscation: uTP (BitTorrent)
+  wechatVideoObfuscation: WeChat Video
+  dtlsObfuscation: DTLS 1.2
+  wireguardObfuscation: WireGuard
+  hostObfuscation: Host
+  pathObfuscation: Path
+  seedObfuscation: Seed
+  username: Username
+  password: Password
+  origin: Original
+configureSubscription:
+  title: Subscription Settings
+import:
+  message: 'Enter server link or subscription URL:'
+  batchMessage: 'One link per line:'
+  qrcodeError: No valid QR code found
+delete:
+  title: Confirm Delete
+  message: Are you sure you want to delete these servers/subscriptions? This cannot be undone.
+latency:
+  message: Latency testing may take a while, please wait
+version:
+  higherVersionNeeded: 'This operation requires v2rayA version higher than {version}'
+  v2rayInvalid: 'geosite.dat, geoip.dat or v2ray-core may not be installed correctly'
+  v2rayNotV5: 'v2ray-core v5 detected. Please use v5 or downgrade v2rayA to v1.5'
+about:
+  title: About v2rayB
+  description: v2rayB is a web client for V2Ray.
+  ports:
+    - '2017: v2rayA backend'
+    - '20170: SOCKS5'
+    - '20171: HTTP'
+    - '20172: HTTP with rules'
+    - '32345: tproxy (transparent proxy)'
+  links:
+    issues: github.com/v2rayA/v2rayA/issues
+    docs: v2raya.org
+axios:
+  messages:
+    optimizeBackend: Adjust backend address?
+    noBackendFound: 'No v2rayA service found at {url}. Ensure v2rayA is running.'
+    cannotCommunicate:
+      - Cannot communicate. If service is running, your browser may block HTTP from HTTPS sites. Try HTTP alternative.
+      - Cannot communicate. Firefox blocks HTTP from HTTPS. Try Chrome or HTTP site.
+  urls:
+    usage: 'https://v2raya.org/'
+routingA:
+  messages:
+    - Click "Help" for documentation
+outbound:
+  addMessage: 'Enter name for new outbound:'
+  deleteMessage: 'Are you sure you want to delete outbound "{outboundName}"? This cannot be undone.'
+driver:
+  welcome:
+    - Import server first
+    - No servers yet. Import or create servers here.
+  tabs:
+    - Subscriptions & Servers
+    - Manage your subscriptions and servers here.
+log:
+  logModalTitle: View Logs
+  refreshInterval: Refresh Interval
+  seconds: seconds

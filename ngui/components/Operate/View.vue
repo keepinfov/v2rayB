@@ -1,12 +1,13 @@
 <script lang="ts" setup>
 import { parseURL } from 'ufo'
+
 const { data: row, subID } = defineProps<{ data: any, subID: number }>()
 
-let isVisible = $ref(false)
-let serverInfo = $ref<any>()
+const isVisible = ref(false)
+const serverInfo = ref<any>()
 
-const viewServer = async() => {
-  isVisible = true
+const viewServer = async () => {
+  isVisible.value = true
   const params = JSON.stringify({
     id: row.id,
     _type: row._type,
@@ -15,132 +16,117 @@ const viewServer = async() => {
 
   const { data } = await useV2Fetch(`sharingAddress?touch=${params}`).get().json()
 
-  /* ss://BASE64(method:password)@server:port#name */
-  /* ssr://server:port:proto:method:obfs:URLBASE64(password)/?remarks=URLBASE64(remarks)&protoparam=URLBASE64(protoparam)&obfsparam=URLBASE64(obfsparam)) */
-  /* trojan://password@server:port?allowInsecure=1&sni=sni#URIESCAPE(name) */
+  let info: any = parseURL(data.value.data.sharingAddress)
 
-  serverInfo = parseURL(data.value.data.sharingAddress)
-
-  serverInfo = {
-    ...serverInfo,
-    protocol: serverInfo.protocol.slice(0, -1),
-    name: decodeURIComponent(serverInfo.hash).slice(1)
+  info = {
+    ...info,
+    protocol: info.protocol.slice(0, -1),
+    name: decodeURIComponent(info.hash).slice(1)
   }
 
-  switch (serverInfo.protocol) {
+  switch (info.protocol) {
     case 'ss': {
-      const auth = atob(serverInfo.auth).split(':')
-      const address = serverInfo.host.split(':')
-
-      serverInfo = {
-        ...serverInfo,
+      const auth = atob(info.auth).split(':')
+      const address = info.host.split(':')
+      info = {
+        ...info,
         host: address[0],
         port: address[1],
         method: auth[0],
         password: auth[1]
       }
-
-      delete serverInfo.auth
+      delete info.auth
       break
     }
     case 'trojan': {
-      const address = serverInfo.host.split(':')
-
-      serverInfo = {
-        ...serverInfo,
+      const address = info.host.split(':')
+      info = {
+        ...info,
         host: address[0],
         port: address[1],
-        password: serverInfo.auth,
-        name: decodeURIComponent(serverInfo.hash).slice(1)
+        password: info.auth,
+        name: decodeURIComponent(info.hash).slice(1)
       }
-
-      delete serverInfo.auth
+      delete info.auth
       break
     }
     case 'ssr': {
-      const auth = atob(serverInfo.auth).split(':')
-      const address = serverInfo.host.split(':')
-
-      serverInfo = {
-        ...serverInfo,
+      const auth = atob(info.auth).split(':')
+      const address = info.host.split(':')
+      info = {
+        ...info,
         host: address[0],
         port: address[1],
         method: auth[0],
         password: auth[1],
-        protocol: serverInfo.protocol,
-        obfs: serverInfo.obfs,
-        name: decodeURIComponent(serverInfo.hash).slice(1)
+        protocol: info.protocol,
+        obfs: info.obfs,
+        name: decodeURIComponent(info.hash).slice(1)
       }
-
-      delete serverInfo.auth
+      delete info.auth
       break
     }
     case 'vless': {
-      const auth = atob(serverInfo.auth).split(':')
-      const address = serverInfo.host.split(':')
-
-      serverInfo = {
-        ...serverInfo,
+      const auth = atob(info.auth).split(':')
+      const address = info.host.split(':')
+      info = {
+        ...info,
         host: address[0],
         port: address[1],
         method: auth[0],
         password: auth[1],
-        name: decodeURIComponent(serverInfo.hash).slice(1)
+        name: decodeURIComponent(info.hash).slice(1)
       }
-
-      delete serverInfo.auth
+      delete info.auth
       break
     }
     case 'vmess': {
-      const parsed: {
-        ps: string
-        add: string
-        port: string
-        id: string
-        aid: string
-        scy: string
-        net: string
-        type: string
-        host: string
-        sni: string
-        path: string
-        tls: string
-        allowInsecure: boolean
-        v: boolean
-        protocol: string
-      } = JSON.parse(atob(serverInfo.host))
-      serverInfo = {
-        ...serverInfo,
+      const parsed: any = JSON.parse(atob(info.host))
+      info = {
+        ...info,
         name: parsed.ps,
         ...parsed
       }
-
-      delete serverInfo.host
-      delete serverInfo.ps
+      delete info.host
+      delete info.ps
       break
     }
-    default: break
+    default:
+      break
   }
 
-  delete serverInfo.hash
-  Object.keys(serverInfo).forEach((key) => { if (serverInfo[key] === '') delete serverInfo[key] })
+  delete info.hash
+  Object.keys(info).forEach((key) => {
+    if (info[key] === '') delete info[key]
+  })
+
+  serverInfo.value = info
 }
 </script>
 
 <template>
-  <ElButton size="small" class="mr-3" @click="viewServer">
-    <UnoIcon class="ri:file-code-line mr-1" />{{ $t("operations.view") }}
-  </ElButton>
+  <v-btn icon="mdi-information-outline" size="small" variant="text" @click="viewServer" />
 
-  <ElDialog v-model="isVisible">
-    <ElForm>
-      <ElFormItem
-        v-for="(v, k) in serverInfo"
-        :key="k"
-        :label="k.toString()"
-      >
-        <ElInput :value="v" disabled />
-      </ElFormItem>
-    </ElForm>
-  </ElDialog>
+  <v-dialog v-model="isVisible" max-width="500">
+    <v-card>
+      <v-card-title>Server Details</v-card-title>
+      <v-card-text>
+        <v-text-field
+          v-for="(v, k) in serverInfo"
+          :key="k"
+          :label="k.toString()"
+          :model-value="v"
+          readonly
+          density="compact"
+          class="mb-2"
+        />
+      </v-card-text>
+      <v-card-actions>
+        <v-spacer />
+        <v-btn variant="text" @click="isVisible = false">
+          Close
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>

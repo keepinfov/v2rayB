@@ -1,6 +1,71 @@
+<script lang="ts" setup>
+const route = useRoute()
+
+const navItems = [
+  { to: '/', icon: 'mdi-home', title: 'Dashboard' },
+  { to: '/setting', icon: 'mdi-cog', title: 'Settings' },
+  { to: '/log', icon: 'mdi-text-box-outline', title: 'Logs' },
+  { to: '/about', icon: 'mdi-information-outline', title: 'About' }
+]
+</script>
+
 <template>
-  <Header />
-  <div class="mx-6">
-    <slot />
-  </div>
+  <v-app-bar color="surface-container" elevation="0" density="comfortable">
+    <template #prepend>
+      <v-app-bar-nav-icon class="d-lg-none" />
+    </template>
+
+    <v-app-bar-title>
+      <NuxtLink to="/" class="text-decoration-none text-on-surface font-weight-bold">
+        v2rayB
+      </NuxtLink>
+    </v-app-bar-title>
+
+    <template #append>
+      <div class="d-flex align-center ga-2">
+        <OperateBoot />
+        <OperateOutbound />
+      </div>
+    </template>
+  </v-app-bar>
+
+  <v-navigation-rail color="surface-container" permanent class="d-none d-lg-flex">
+    <template #prepend>
+      <v-avatar color="primary" size="40" class="my-4">
+        <span class="text-h6 font-weight-bold text-on-primary">v2</span>
+      </v-avatar>
+    </template>
+
+    <v-list density="compact" nav>
+      <v-list-item
+        v-for="item in navItems"
+        :key="item.to"
+        :to="item.to"
+        :prepend-icon="item.icon"
+        :title="item.title"
+        :active="route.path === item.to"
+        rounded="lg"
+        color="primary"
+      />
+    </v-list>
+  </v-navigation-rail>
+
+  <v-bottom-navigation color="surface-container" class="d-lg-none" grow>
+    <v-btn v-for="item in navItems" :key="item.to" :to="item.to" :value="item.to">
+      <v-icon>{{ item.icon }}</v-icon>
+      <span class="text-caption">{{ item.title }}</span>
+    </v-btn>
+  </v-bottom-navigation>
+
+  <v-main class="bg-background">
+    <v-container fluid class="pa-4 pa-lg-6">
+      <slot />
+    </v-container>
+  </v-main>
 </template>
+
+<style scoped>
+.v-navigation-rail {
+  border-right: 1px solid rgb(var(--v-theme-outline-variant));
+}
+</style>

@@ -1,15 +1,21 @@
+<script lang="ts" setup>
+const snackbar = useSnackbarState()
+</script>
+
 <template>
-  <div>
+  <v-app>
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
-  </div>
+
+    <v-snackbar v-model="snackbar.show" :color="snackbar.color" :timeout="3000" location="bottom right">
+      {{ snackbar.text }}
+    </v-snackbar>
+  </v-app>
 </template>
 
 <style>
-@import 'element-plus/theme-chalk/dark/css-vars.css';
-
-.el-table .el-table__cell{
-  z-index: unset!important;
+html {
+  overflow-y: auto;
 }
 </style>

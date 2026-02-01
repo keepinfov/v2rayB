@@ -1,41 +1,62 @@
 <script lang="ts" setup>
 const { t } = useI18n()
 
-const input = $ref('')
+const input = ref('')
+const isVisible = ref(false)
+const isImporting = ref(false)
+const isBatch = ref(false)
 
-let isVisible = $ref(false)
-let isImporting = $ref(false)
-const ifMulite = $ref(false)
-
-const handleClickImportConfirm = async() => {
-  isImporting = true
-  const { data } = await useV2Fetch('import').post({ url: input }).json()
-  isImporting = false
+const handleClickImportConfirm = async () => {
+  isImporting.value = true
+  const { data } = await useV2Fetch('import').post({ url: input.value }).json()
+  isImporting.value = false
 
   if (data.value.code === 'SUCCESS') {
     proxies.value.subs = data.value.data.touch.subscriptions
-    ElMessage.success(t('common.success'))
-    isVisible = false
+    useSnackbar(t('common.success'), 'success')
+    isVisible.value = false
   }
 }
 </script>
 
 <template>
-  <ElButton @click="isVisible = true">
-    {{ t("operations.import") }}
-  </ElButton>
+  <v-btn variant="tonal" color="primary" @click="isVisible = true">
+    <v-icon start>mdi-import</v-icon>
+    {{ t('operations.import') }}
+  </v-btn>
 
-  <ElDialog v-model="isVisible" :title="$t('operations.import')">
-    {{ $t('import.message') }}
-    <ElInput v-model="input" :type="ifMulite ? 'textarea' : 'url'" />
-    <template #footer>
-      <span class="dialog-footer">
-        <ElButton @click="ifMulite = true">{{ $t('operations.inBatch') }}</ElButton>
-        <ElButton @click="isVisible = false">{{ $t('operations.cancel') }}</ElButton>
-        <ElButton type="primary" :loading="isImporting" @click="handleClickImportConfirm">
-          {{ $t("operations.confirm") }}
-        </ElButton>
-      </span>
-    </template>
-  </ElDialog>
+  <v-dialog v-model="isVisible" max-width="500">
+    <v-card>
+      <v-card-title>{{ $t('operations.import') }}</v-card-title>
+      <v-card-text>
+        <p class="text-body-2 mb-4">{{ $t('import.message') }}</p>
+        <v-textarea
+          v-if="isBatch"
+          v-model="input"
+          :label="$t('import.batchMessage')"
+          rows="5"
+          auto-grow
+        />
+        <v-text-field
+          v-else
+          v-model="input"
+          label="URL"
+          type="url"
+          prepend-inner-icon="mdi-link"
+        />
+      </v-card-text>
+      <v-card-actions>
+        <v-btn variant="text" @click="isBatch = !isBatch">
+          {{ isBatch ? 'Single' : $t('operations.inBatch') }}
+        </v-btn>
+        <v-spacer />
+        <v-btn variant="text" @click="isVisible = false">
+          {{ $t('operations.cancel') }}
+        </v-btn>
+        <v-btn color="primary" variant="tonal" :loading="isImporting" @click="handleClickImportConfirm">
+          {{ $t('operations.confirm') }}
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>

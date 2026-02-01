@@ -3,53 +3,72 @@ if (user.value.exist) navigateTo('/login')
 
 const { t } = useI18n()
 
-const username = $ref('')
-const password = $ref('')
+const username = ref('')
+const password = ref('')
+const loading = ref(false)
 
 async function signup() {
-  const { data } = await useV2Fetch<any>('account').post({ username, password }).json()
+  loading.value = true
+  const { data } = await useV2Fetch<any>('account').post({ username: username.value, password: password.value }).json()
+  loading.value = false
 
   if (data.value.code !== 'SUCCESS') {
-    ElMessage.warning({ message: data.value.message, duration: 5000 })
+    useSnackbar(data.value.message, 'warning')
   } else {
     user.value.exist = true
     user.value.token = data.value.data.token
-    ElMessage.success(t('common.success'))
+    useSnackbar(t('common.success'), 'success')
     navigateTo('/')
   }
 }
 </script>
 
 <template>
-  <div class="mx-auto w-96">
-    <h1 class="text-2xl mb-6">{{ t('register.title') }}</h1>
+  <div class="d-flex justify-center align-center" style="min-height: 80vh">
+    <v-card class="pa-6" width="400" color="surface-container">
+      <v-card-title class="text-h5 font-weight-bold text-center mb-4">
+        v2rayB
+      </v-card-title>
 
-    <ElForm label-width="auto">
-      <ElFormItem :label="t('login.username')">
-        <ElInput v-model="username" autofocus />
-      </ElFormItem>
+      <v-card-subtitle class="text-center mb-6">
+        {{ t('register.title') }}
+      </v-card-subtitle>
 
-      <ElFormItem :label="t('login.password')">
-        <ElInput v-model="password" type="password" max-length="36" show-password />
-      </ElFormItem>
+      <v-form @submit.prevent="signup">
+        <v-text-field
+          v-model="username"
+          :label="t('login.username')"
+          prepend-inner-icon="mdi-account"
+          autofocus
+          class="mb-2"
+        />
 
-      <ElFormItem>
-        <ElButton type="primary" class="flex mx-auto" @click="signup">{{ t("operations.create") }}</ElButton>
-      </ElFormItem>
-    </ElForm>
+        <v-text-field
+          v-model="password"
+          :label="t('login.password')"
+          type="password"
+          prepend-inner-icon="mdi-lock"
+          maxlength="36"
+          class="mb-4"
+        />
 
-    <div class="mt-4 bg-gray-200 p-4 rounded-sm" />
+        <v-btn
+          type="submit"
+          color="primary"
+          block
+          size="large"
+          :loading="loading"
+          :disabled="!username || !password"
+        >
+          {{ t('operations.create') }}
+        </v-btn>
+      </v-form>
 
-    <ElAlert type="info" show-icon :closable="false">
-      <p>{{ t("register.messages.0") }}</p>
-      <p>{{ t("register.messages.1") }}</p>
-      <p>{{ t("register.messages.2") }}</p>
-    </ElAlert>
+      <v-alert type="info" variant="tonal" class="mt-6" density="compact">
+        <p v-for="(msg, i) in [0, 1, 2]" :key="i" class="text-body-2 mb-1">
+          {{ t(`register.messages.${msg}`) }}
+        </p>
+      </v-alert>
+    </v-card>
   </div>
 </template>
-
-<style>
-.va-input-wrapper--labeled .va-input-wrapper__label {
-  height: 14px;
-}
-</style>

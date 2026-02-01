@@ -3,52 +3,73 @@ if (!user.value.exist) navigateTo('/signup')
 
 const { t } = useI18n()
 
-const username = $ref('')
-const password = $ref('')
+const username = ref('')
+const password = ref('')
+const loading = ref(false)
 
 async function login() {
-  const { data } = await useV2Fetch<any>('login').post({ username, password }).json()
+  loading.value = true
+  const { data } = await useV2Fetch<any>('login').post({ username: username.value, password: password.value }).json()
+  loading.value = false
 
   if (data.value.code !== 'SUCCESS') {
-    ElMessage.warning({ message: data.value.message, duration: 5000 })
+    useSnackbar(data.value.message, 'warning')
   } else {
     user.value.token = data.value.data.token
-    ElMessage.success(t('common.success'))
+    useSnackbar(t('common.success'), 'success')
     navigateTo('/')
   }
 }
 </script>
 
 <template>
-  <div class="mx-auto w-96">
-    <h1 class="text-2xl mb-6">{{ `${t('login.title')} - v2rayA` }}</h1>
+  <div class="d-flex justify-center align-center" style="min-height: 80vh">
+    <v-card class="pa-6" width="400" color="surface-container">
+      <v-card-title class="text-h5 font-weight-bold text-center mb-4">
+        v2rayB
+      </v-card-title>
 
-    <ElForm label-width="auto">
-      <ElFormItem :label="t('login.username')">
-        <ElInput v-model="username" autofocus />
-      </ElFormItem>
+      <v-card-subtitle class="text-center mb-6">
+        {{ t('login.title') }}
+      </v-card-subtitle>
 
-      <ElFormItem :label="t('login.password')">
-        <ElInput v-model="password" type="password" show-password />
-      </ElFormItem>
+      <v-form @submit.prevent="login">
+        <v-text-field
+          v-model="username"
+          :label="t('login.username')"
+          prepend-inner-icon="mdi-account"
+          autofocus
+          class="mb-2"
+        />
 
-      <ElFormItem>
-        <ElButton type="primary" class="flex mx-auto" :disabled="username === '' || password === ''" @click="login">
-          {{ t("operations.login") }}
-        </ElButton>
-      </ElFormItem>
+        <v-text-field
+          v-model="password"
+          :label="t('login.password')"
+          type="password"
+          prepend-inner-icon="mdi-lock"
+          class="mb-4"
+        />
 
-      <ElAlert type="info" show-icon :closable="false">
-        If you forget your password, you can reset it by exec <code>v2raya --reset-password</code> and restarting v2rayA.
+        <v-btn
+          type="submit"
+          color="primary"
+          block
+          size="large"
+          :loading="loading"
+          :disabled="!username || !password"
+        >
+          {{ t('operations.login') }}
+        </v-btn>
+      </v-form>
 
-        <a @click="user.exist = false">Already reset password</a>
-      </ElAlert>
-    </ElForm>
+      <v-alert type="info" variant="tonal" class="mt-6" density="compact">
+        <p class="text-body-2 mb-2">
+          Forgot password? Run <code>v2raya --reset-password</code> and restart.
+        </p>
+        <v-btn variant="text" size="small" color="primary" @click="user.exist = false">
+          Already reset
+        </v-btn>
+      </v-alert>
+    </v-card>
   </div>
 </template>
-
-<style>
-.va-input-wrapper--labeled .va-input-wrapper__label {
-  height: 14px;
-}
-</style>
