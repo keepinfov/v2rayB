@@ -187,10 +187,13 @@
               example = [ "--log-level=debug" ];
               description = "Extra arguments to pass to v2rayb";
             };
+
+            desktop = lib.mkEnableOption "v2rayB desktop client";
           };
 
           config = lib.mkIf cfg.enable {
-            environment.systemPackages = [ (cfg.package.override { v2ray = cfg.cliPackage; }) ];
+            environment.systemPackages = [ (cfg.package.override { v2ray = cfg.cliPackage; }) ]
+              ++ lib.optional cfg.desktop self.packages.${pkgs.system}.v2rayb-desktop;
 
             systemd.services.v2rayb = {
               description = "v2rayB Service";
