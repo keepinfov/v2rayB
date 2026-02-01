@@ -9,4 +9,5 @@
 /config.json
 /vendor
 /main
-/server/router/web
+/server/router/web/*
+!/server/router/web/.gitkeep
