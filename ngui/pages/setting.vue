@@ -7,194 +7,276 @@ let setting = $ref<any>()
 const { data } = await useV2Fetch<any>('setting').json()
 
 system.value.gfwlist = data.value.data.localGFWListVersion
-
 setting = data.value.data.setting
 
 const { data: { value: { data: { remoteGFWListVersion } } } }
   = await useV2Fetch<any>('remoteGFWListVersion').json()
 
-const updateGFWList = async() => {
+const updateGFWList = async () => {
   const { data } = await useV2Fetch<any>('gfwList').put().json()
   if (data.value.code === 'SUCCESS') {
     system.value.gfwlist = data.value.data.localGFWListVersion
-
-    ElMessage.success(t('common.success'))
+    useSnackbar(t('common.success'), 'success')
   }
 }
 
-const updateSetting = async() => {
+const updateSetting = async () => {
   const { data } = await useV2Fetch<any>('setting').put(setting).json()
-  if (data.value.code === 'SUCCESS')
-    ElMessage.success(t('common.success'))
+  if (data.value.code === 'SUCCESS') {
+    useSnackbar(t('common.success'), 'success')
+  }
 }
+
+const transparentOptions = [
+  { value: 'close', title: t('setting.options.off') },
+  { value: 'proxy', title: `${t('setting.options.on')}: ${t('setting.options.global')}` },
+  { value: 'whitelist', title: `${t('setting.options.on')}: ${t('setting.options.whitelistCn')}` },
+  { value: 'gfwlist', title: `${t('setting.options.on')}: ${t('setting.options.gfwlist')}` },
+  { value: 'pac', title: `${t('setting.options.on')}: ${t('setting.options.sameAsPacMode')}` }
+]
+
+const transparentTypeOptions = [
+  { value: 'redirect', title: 'redirect' },
+  { value: 'tproxy', title: 'tproxy' },
+  { value: 'system_proxy', title: 'system proxy' }
+]
+
+const pacModeOptions = [
+  { value: 'whitelist', title: t('setting.options.whitelistCn') },
+  { value: 'gfwlist', title: t('setting.options.gfwlist') },
+  { value: 'routingA', title: 'RoutingA' }
+]
+
+const antipollutionOptions = [
+  { value: 'closed', title: t('setting.options.closed') },
+  { value: 'none', title: t('setting.options.antiDnsHijack') },
+  { value: 'dnsforward', title: t('setting.options.forwardDnsRequest') },
+  { value: 'doh', title: t('setting.options.doh') },
+  { value: 'advanced', title: t('setting.options.advanced') }
+]
+
+const specialModeOptions = [
+  { value: 'none', title: t('setting.options.closed') },
+  { value: 'supervisor', title: 'supervisor' },
+  { value: 'fakedns', title: 'fakedns' }
+]
+
+const tcpFastOpenOptions = [
+  { value: 'default', title: t('setting.options.default') },
+  { value: 'yes', title: t('setting.options.on') },
+  { value: 'no', title: t('setting.options.off') }
+]
+
+const muxOptions = [
+  { value: 'no', title: t('setting.options.off') },
+  { value: 'yes', title: t('setting.options.on') }
+]
+
+const autoUpdateOptions = [
+  { value: 'none', title: t('setting.options.off') },
+  { value: 'auto_update', title: t('setting.options.updateGfwlistWhenStart') },
+  { value: 'auto_update_at_intervals', title: t('setting.options.updateGfwlistAtIntervals') }
+]
+
+const subAutoUpdateOptions = [
+  { value: 'none', title: t('setting.options.off') },
+  { value: 'auto_update', title: t('setting.options.updateSubWhenStart') },
+  { value: 'auto_update_at_intervals', title: t('setting.options.updateSubAtIntervals') }
+]
 </script>
 
 <template>
-  <div class="flex-col mx-auto w-108">
-    <div>
-      <div>GFWList</div>
-      <div>{{ $t('common.latest') }}:</div>
-      <ElLink href="https://github.com/v2ray-a/dist-v2ray-rules-dat/releases">
-        {{ remoteGFWListVersion }}
-      </ElLink>
+  <div class="mx-auto" style="max-width: 600px">
+    <v-card class="mb-4" color="surface-container">
+      <v-card-title class="d-flex align-center">
+        <v-icon start>mdi-shield-check</v-icon>
+        GFWList
+      </v-card-title>
+      <v-card-text>
+        <div class="d-flex align-center justify-space-between">
+          <div>
+            <div class="text-body-2 text-on-surface-variant">{{ $t('common.latest') }}</div>
+            <a
+              href="https://github.com/v2ray-a/dist-v2ray-rules-dat/releases"
+              target="_blank"
+              class="text-primary"
+            >
+              {{ remoteGFWListVersion }}
+            </a>
+          </div>
+          <div>
+            <div class="text-body-2 text-on-surface-variant">{{ $t('common.local') }}</div>
+            <div>{{ system.gfwlist }}</div>
+          </div>
+          <v-btn variant="tonal" color="primary" @click="updateGFWList">
+            {{ $t('operations.update') }}
+          </v-btn>
+        </div>
+      </v-card-text>
+    </v-card>
 
-      <div>{{ $t('common.local') }}:</div>
-      <div>{{ system.gfwlist }}</div>
-      <ElButton size="small" @click="updateGFWList">{{ $t('operations.update') }}</ElButton>
-    </div>
+    <v-card class="mb-4" color="surface-container">
+      <v-card-title class="d-flex align-center">
+        <v-icon start>mdi-web</v-icon>
+        {{ $t('setting.transparentProxy') }}
+      </v-card-title>
+      <v-card-text>
+        <v-select
+          v-model="setting.transparent"
+          :items="transparentOptions"
+          item-title="title"
+          item-value="value"
+          :label="$t('setting.transparentProxy')"
+          class="mb-4"
+        />
 
-    <div>
-      <div>{{ $t('setting.transparentProxy') }}</div>
-      <ElSelect v-model="setting.transparent" size="small">
-        <ElOption value="close" :label="$t('setting.options.off')" />
-        <ElOption value="proxy" :label="`${$t('setting.options.on')}:${$t('setting.options.global')}`" />
-        <ElOption value="whitelist" :label="`${$t('setting.options.on')}:${$t('setting.options.whitelistCn')}`" />
-        <ElOption value="gfwlist" :label="`${$t('setting.options.on')}:${$t('setting.options.gfwlist')}`" />
-        <ElOption value="pac" :label="`${$t('setting.options.on')}:${$t('setting.options.sameAsPacMode')}`" />
-      </ElSelect>
+        <div class="d-flex ga-4 mb-4">
+          <v-switch
+            v-if="!system.lite"
+            v-model="setting.ipforward"
+            :label="$t('setting.ipForwardOn')"
+            hide-details
+          />
+          <v-switch
+            v-model="setting.portSharing"
+            :label="$t('setting.portSharingOn')"
+            hide-details
+          />
+        </div>
 
-      <ElCheckboxButton v-show="!system.lite" v-model="setting.ipforward">
-        {{ $t('setting.ipForwardOn') }}
-      </ElCheckboxButton>
+        <v-select
+          v-if="setting.transparent !== 'close'"
+          v-model="setting.transparentType"
+          :items="transparentTypeOptions.filter(o => system.lite ? o.value === 'system_proxy' : true)"
+          item-title="title"
+          item-value="value"
+          :label="$t('setting.transparentType')"
+        />
+      </v-card-text>
+    </v-card>
 
-      <ElCheckboxButton v-model="setting.portSharing">
-        {{ $t('setting.portSharingOn') }}
-      </ElCheckboxButton>
-    </div>
+    <v-card class="mb-4" color="surface-container">
+      <v-card-title class="d-flex align-center">
+        <v-icon start>mdi-routes</v-icon>
+        {{ $t('setting.pacMode') }}
+      </v-card-title>
+      <v-card-text>
+        <v-select
+          v-model="setting.pacMode"
+          :items="pacModeOptions"
+          item-title="title"
+          item-value="value"
+          :label="$t('setting.pacMode')"
+        />
+      </v-card-text>
+    </v-card>
 
-    <div v-if="setting.transparent !== 'close'">
-      <div>{{ $t('setting.transparentType') }}</div>
-      <ElSelect v-model="setting.transparentType" size="small">
-        <ElOption v-show="!system.lite" value="redirect">redirect</ElOption>
-        <ElOption v-show="!system.lite" value="tproxy">tproxy</ElOption>
-        <ElOption value="system_proxy">system proxy</ElOption>
-      </ElSelect>
-    </div>
+    <v-card class="mb-4" color="surface-container">
+      <v-card-title class="d-flex align-center">
+        <v-icon start>mdi-dns</v-icon>
+        {{ $t('setting.preventDnsSpoofing') }}
+      </v-card-title>
+      <v-card-text>
+        <v-select
+          v-model="setting.antipollution"
+          :items="antipollutionOptions"
+          item-title="title"
+          item-value="value"
+          :label="$t('setting.preventDnsSpoofing')"
+        />
 
-    <div>
-      <div>{{ $t('setting.pacMode') }}</div>
-      <ElSelect v-model="setting.pacMode" size="small">
-        <ElOption value="whitelist" :label="$t('setting.options.whitelistCn')" />
-        <ElOption value="gfwlist" :label="$t('setting.options.gfwlist')" />
-        <!-- <ElOption value="custom" :label="$t('setting.options.customRouting')" /> -->
-        <ElOption value="routingA" label="RoutingA" />
-      </ElSelect>
+        <v-select
+          v-if="setting.showSpecialMode"
+          v-model="setting.specialMode"
+          :items="specialModeOptions.filter(o => setting.antipollution === 'closed' ? o.value !== 'fakedns' : true)"
+          item-title="title"
+          item-value="value"
+          :label="$t('setting.specialMode')"
+        />
+      </v-card-text>
+    </v-card>
 
-      <ElButton v-if="setting.pacMode === 'custom'">{{ $t('operations.configure') }}</ElButton>
-      <ElButton v-if="setting.pacMode === 'routingA'">{{ $t('operations.configure') }}</ElButton>
-    </div>
+    <v-card class="mb-4" color="surface-container">
+      <v-card-title class="d-flex align-center">
+        <v-icon start>mdi-tune</v-icon>
+        Network
+      </v-card-title>
+      <v-card-text>
+        <v-select
+          v-model="setting.tcpFastOpen"
+          :items="tcpFastOpenOptions"
+          item-title="title"
+          item-value="value"
+          label="TCP Fast Open"
+          class="mb-4"
+        />
 
-    <div>
-      <div>{{ $t('setting.preventDnsSpoofing') }}</div>
-      <ElSelect v-model="setting.antipollution" size="small">
-        <ElOption value="closed" :label="$t('setting.options.closed')" />
-        <ElOption value="none" :label=" $t('setting.options.antiDnsHijack')" />
-        <ElOption value="dnsforward" :label="$t('setting.options.forwardDnsRequest')" />
-        <ElOption value="doh" :label="$t('setting.options.doh')" />
-        <ElOption value="advanced" :label="$t('setting.options.advanced')" />
-      </ElSelect>
+        <v-select
+          v-model="setting.muxOn"
+          :items="muxOptions"
+          item-title="title"
+          item-value="value"
+          :label="$t('setting.mux')"
+          class="mb-4"
+        />
 
-      <ElButton v-if="setting.antipollution === 'advanced'">{{ $t('operations.configure') }}</ElButton>
-    </div>
+        <v-text-field
+          v-if="setting.muxOn === 'yes'"
+          v-model="setting.mux"
+          :label="$t('setting.concurrency')"
+          type="number"
+          min="1"
+          max="1024"
+        />
+      </v-card-text>
+    </v-card>
 
-    <div v-if="setting.showSpecialMode">
-      <div>{{ $t('setting.specialMode') }}</div>
-      <ElSelect v-model="setting.specialMode" size="small">
-        <ElOption value="none" :label="$t('setting.options.closed')" />
-        <ElOption value="supervisor">supervisor</ElOption>
-        <ElOption v-show="setting.antipollution !== 'closed'" value="fakedns">
-          fakedns
-        </ElOption>
-      </ElSelect>
-    </div>
+    <v-card class="mb-4" color="surface-container">
+      <v-card-title class="d-flex align-center">
+        <v-icon start>mdi-update</v-icon>
+        Auto Update
+      </v-card-title>
+      <v-card-text>
+        <v-select
+          v-if="setting.pacMode === 'gfwlist' || setting.transparent === 'gfwlist'"
+          v-model="setting.pacAutoUpdateMode"
+          :items="autoUpdateOptions"
+          item-title="title"
+          item-value="value"
+          :label="$t('setting.autoUpdateGfwlist')"
+          class="mb-4"
+        />
 
-    <div>
-      <div>TCPFastOpen</div>
-      <ElSelect v-model="setting.tcpFastOpen" size="small">
-        <ElOption value="default" :label="$t('setting.options.default')" />
-        <ElOption value="yes" :label="$t('setting.options.on')" />
-        <ElOption value="no" :label="$t('setting.options.off')" />
-      </ElSelect>
-    </div>
-
-    <div>
-      <div>{{ $t('setting.mux') }}</div>
-      <ElSelect v-model="setting.muxOn" size="small">
-        <ElOption value="no" :label="$t('setting.options.off')" />
-        <ElOption value="yes" :label="$t('setting.options.on')" />
-      </ElSelect>
-      <ElInput
-        v-if="setting.muxOn === 'yes'"
-        ref="muxinput" v-model="setting.mux"
-        :placeholder="$t('setting.concurrency')"
-        type="number" min="1" max="1024"
-      />
-    </div>
-
-    <div v-show="setting.pacMode === 'gfwlist' || setting.transparent === 'gfwlist'">
-      <div>{{ $t('setting.options.off') }}</div>
-      <ElSelect v-model="setting.pacAutoUpdateMode" size="small">
-        <ElOption value="none" :label="$t('setting.options.off')" />
-        <ElOption value="auto_update" :label="$t('setting.options.updateGfwlistWhenStart')" />
-        <ElOption value="auto_update_at_intervals" :label="$t('setting.options.updateGfwlistAtIntervals')" />
-
-        <ElInput
+        <v-text-field
           v-if="setting.pacAutoUpdateMode === 'auto_update_at_intervals'"
-          ref="autoUpdatePacInput"
           v-model="setting.pacAutoUpdateIntervalHour"
-          type="number" min="1"
+          label="Interval (hours)"
+          type="number"
+          min="1"
+          class="mb-4"
         />
-      </ElSelect>
-    </div>
 
-    <div>
-      <div>{{ $t('setting.autoUpdateSub') }}</div>
-      <ElSelect v-model="setting.subscriptionAutoUpdateMode" size="small">
-        <ElOption value="none" :label="$t('setting.options.off')" />
-        <ElOption value="auto_update" :label="$t('setting.options.updateSubWhenStart')" />
-        <ElOption value="auto_update_at_intervals" :label="$t('setting.options.updateSubAtIntervals')" />
-      </ElSelect>
-
-      <ElInput
-        v-if="setting.subscriptionAutoUpdateMode === 'auto_update_at_intervals'"
-        ref="autoUpdateSubInput"
-        v-model="setting.subscriptionAutoUpdateIntervalHour"
-        type="number" min="1"
-      />
-    </div>
-
-    <div>
-      <div>{{ $t('setting.preferModeWhenUpdate') }}</div>
-      <ElSelect v-model="setting.proxyModeWhenSubscribe" size="small">
-        <ElOption
-          value="direct"
-          :label="setting.transparent === 'close' || setting.lite
-            ? $t('setting.options.direct')
-            : $t('setting.options.dependTransparentMode')
-          "
+        <v-select
+          v-model="setting.subscriptionAutoUpdateMode"
+          :items="subAutoUpdateOptions"
+          item-title="title"
+          item-value="value"
+          :label="$t('setting.autoUpdateSub')"
+          class="mb-4"
         />
-        <ElOption value="proxy" :label="$t('setting.options.global')" />
-        <ElOption value="pac" :label="$t('setting.options.pac')" />
-      </ElSelect>
-    </div>
 
-    <ElButton @click="updateSetting">
+        <v-text-field
+          v-if="setting.subscriptionAutoUpdateMode === 'auto_update_at_intervals'"
+          v-model="setting.subscriptionAutoUpdateIntervalHour"
+          label="Interval (hours)"
+          type="number"
+          min="1"
+        />
+      </v-card-text>
+    </v-card>
+
+    <v-btn color="primary" size="large" block @click="updateSetting">
       {{ $t('operations.saveApply') }}
-    </ElButton>
+    </v-btn>
   </div>
 </template>
-
-<style scoped>
-div {
-  @apply flex space-x-2 my-1 justify-items-baseline;
-}
-</style>
-
-<style>
-.el-checkbox-button__inner {
-  padding: 4px 12px;
-  border-left-style: solid;
-  border-left-width: 1px;
-  border-left-color: rgb(229, 231, 235);
-}
-</style>

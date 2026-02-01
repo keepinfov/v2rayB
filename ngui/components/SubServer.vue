@@ -3,31 +3,49 @@ const { t } = useI18n()
 
 const { data, id } = defineProps<{ data: any[], id: number }>()
 
-const columns = [
-  { key: 'id', label: 'ID', width: 70 },
-  { key: 'name', label: t('server.name') },
-  { key: 'address', label: t('server.address') },
-  { key: 'net', label: t('server.protocol') },
-  { key: 'pingLatency', label: t('server.latency') }
+const headers = [
+  { title: 'ID', key: 'id', width: 70 },
+  { title: t('server.name'), key: 'name' },
+  { title: t('server.address'), key: 'address' },
+  { title: t('server.protocol'), key: 'net', width: 100 },
+  { title: t('server.latency'), key: 'pingLatency', width: 100 },
+  { title: t('operations.name'), key: 'actions', sortable: false, width: 180 }
 ]
 
 let selectRows = $ref<any[]>([])
-const handleSelectionChange = (val: any) => { selectRows = val }
 </script>
 
 <template>
-  <OperateLatency :data="selectRows" type="ping" />
-  <OperateLatency :data="selectRows" type="http" />
+  <v-card color="surface-container">
+    <v-toolbar color="transparent" density="compact">
+      <v-toolbar-title>Servers</v-toolbar-title>
+      <v-spacer />
+      <OperateLatency :data="selectRows" type="ping" />
+      <OperateLatency :data="selectRows" type="http" />
+    </v-toolbar>
 
-  <ElTable :data="data" @selection-change="handleSelectionChange">
-    <ElTableColumn type="selection" width="55" />
-    <ElTableColumn v-for="c in columns" :key="c.key" :prop="c.key" :label="c.label" :width="c.width" />
-    <ElTableColumn :label="t('operations.name')" min-width="240">
-      <template #default="scope">
-        <OperateConnect :data="scope.row" :sub-i-d="id" />
-        <OperateView :data="scope.row" :sub-i-d="id" />
-        <OperateShare :data="scope" :sub-i-d="id" />
+    <v-data-table
+      v-model="selectRows"
+      :headers="headers"
+      :items="data"
+      item-value="id"
+      show-select
+      class="bg-transparent"
+    >
+      <template #item.pingLatency="{ value }">
+        <v-chip v-if="value" size="small" :color="value < 200 ? 'success' : value < 500 ? 'warning' : 'error'" variant="tonal">
+          {{ value }}ms
+        </v-chip>
+        <span v-else class="text-on-surface-variant">-</span>
       </template>
-    </ElTableColumn>
-  </ElTable>
+
+      <template #item.actions="{ item }">
+        <div class="d-flex ga-1">
+          <OperateConnect :data="item" :sub-i-d="id" />
+          <OperateView :data="item" :sub-i-d="id" />
+          <OperateShare :data="{ row: item }" :sub-i-d="id" />
+        </div>
+      </template>
+    </v-data-table>
+  </v-card>
 </template>
