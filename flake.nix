@@ -1,5 +1,5 @@
 {
-  description = "v2rayB - v2rayA fork with custom web UI";
+  description = "v2rayB - v2rayA fork with Material Design 3 UI";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -10,29 +10,38 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs { inherit system; };
-        version = "2.2.8";
+        version = "2.2.9";
 
-        # Build the web GUI with yarn
-        gui = pkgs.stdenv.mkDerivation {
+        gui = pkgs.buildNpmPackage {
           pname = "v2rayb-gui";
           inherit version;
-          src = ./gui;
+          src = ./ngui;
 
-          offlineCache = pkgs.fetchYarnDeps {
-            yarnLock = ./gui/yarn.lock;
-            hash = "sha256-SNs+RuLK1eLmbX1wBziQoP/2gijTH/GibaI7GNnCBBg=";
+          npmDepsHash = "sha256-dcv6f6oQwqJ0PwS8I9jyHljmVGxce2u9K0BMbzWscpM=";
+
+          npmFlags = [ "--legacy-peer-deps" ];
+
+          buildPhase = ''
+            runHook preBuild
+            export NUXT_TELEMETRY_DISABLED=1
+            export CI=1
+            export TERM=dumb
+            npm run build
+            runHook postBuild
+          '';
+
+          installPhase = ''
+            runHook preInstall
+            mkdir -p $out
+            cp -r .output/public/* $out/
+            runHook postInstall
+          '';
+
+          meta = {
+            description = "v2rayB web GUI (Material Design 3)";
           };
-
-          env.OUTPUT_DIR = placeholder "out";
-
-          nativeBuildInputs = with pkgs; [
-            yarnConfigHook
-            yarnBuildHook
-            nodejs
-          ];
         };
 
-        # Assets for v2ray (geoip, geosite)
         assetsDir = pkgs.symlinkJoin {
           name = "v2rayb-assets";
           paths = with pkgs; [
@@ -41,7 +50,6 @@
           ];
         };
 
-        # Main v2rayB service
         v2rayb = pkgs.buildGoModule rec {
           pname = "v2rayb";
           inherit version;
@@ -74,7 +82,6 @@
 
           passthru = {
             inherit gui;
-            # Allow overriding v2ray with xray
             override = args: v2rayb.overrideAttrs (old: {
               postInstall = ''
                 mv $out/bin/v2rayA $out/bin/v2rayb
@@ -157,7 +164,7 @@
 
             address = lib.mkOption {
               type = lib.types.str;
-              default = "127.0.0.1:50541";
+              default = "localhost:50541";
               description = "Listen address for the web interface";
             };
 
