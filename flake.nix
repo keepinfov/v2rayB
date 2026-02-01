@@ -26,7 +26,7 @@
             export NUXT_TELEMETRY_DISABLED=1
             export CI=1
             export TERM=dumb
-            npm run build
+            npm run generate
             runHook postBuild
           '';
 
