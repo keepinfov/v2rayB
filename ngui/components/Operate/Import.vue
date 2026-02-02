@@ -14,9 +14,17 @@ const handleClickImportConfirm = async () => {
   if (data.value.code === 'SUCCESS') {
     proxies.value.subs = data.value.data.touch.subscriptions
     useSnackbar(t('common.success'), 'success')
+    input.value = ''
     isVisible.value = false
   }
 }
+
+watch(isVisible, (visible) => {
+  if (!visible) {
+    input.value = ''
+    isBatch.value = false
+  }
+})
 </script>
 
 <template>
@@ -47,7 +55,7 @@ const handleClickImportConfirm = async () => {
       </v-card-text>
       <v-card-actions>
         <v-btn variant="text" @click="isBatch = !isBatch">
-          {{ isBatch ? 'Single' : $t('operations.inBatch') }}
+          {{ isBatch ? t('operations.single') : $t('operations.inBatch') }}
         </v-btn>
         <v-spacer />
         <v-btn variant="text" @click="isVisible = false">
