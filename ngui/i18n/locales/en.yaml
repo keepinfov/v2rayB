@@ -3,6 +3,8 @@ common:
   setting: Settings
   about: About
   loggedAs: 'Logged in as {username}'
+  servers: Servers
+  subscriptions: Subscriptions
   v2rayCoreStatus: v2ray-core Status
   checkRunning: Checking
   isRunning: Running
@@ -33,6 +35,7 @@ server:
   address: Address
   protocol: Protocol
   latency: Latency
+  details: Server Details
   lastSeenTime: Last Seen
   lastTryTime: Last Test
   messages:
@@ -67,6 +70,8 @@ operations:
   cancel: Cancel
   confirm: Confirm
   confirm2: Confirm
+  close: Close
+  single: Single
   saveApply: Save & Apply
   save: Save
   copyLink: Copy Link
@@ -89,6 +94,9 @@ setting:
   transparentProxy: Transparent Proxy
   transparentType: Proxy Implementation
   pacMode: Rule Port Mode
+  network: Network
+  autoUpdate: Auto Update
+  intervalHours: Interval (hours)
   preventDnsSpoofing: Prevent DNS Spoofing
   specialMode: Special Mode
   mux: Multiplexing
@@ -262,3 +270,8 @@ log:
   logModalTitle: View Logs
   refreshInterval: Refresh Interval
   seconds: seconds
+  title: Logs
+  waiting: Waiting for logs...
+  connected: Connected
+  disconnected: Disconnected
+  connecting: Connecting
