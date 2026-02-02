@@ -86,194 +86,204 @@ const subAutoUpdateOptions = [
 </script>
 
 <template>
-  <div class="mx-auto settings-container">
-    <v-card class="mb-4" color="surface-container">
-      <v-card-title class="d-flex align-center">
-        <v-icon start>mdi-shield-check</v-icon>
-        GFWList
-      </v-card-title>
-      <v-card-text>
-        <div class="d-flex align-center justify-space-between">
-          <div>
-            <div class="text-body-2 text-on-surface-variant">{{ $t('common.latest') }}</div>
-            <a
-              href="https://github.com/v2ray-a/dist-v2ray-rules-dat/releases"
-              target="_blank"
-              class="text-primary"
-            >
-              {{ remoteGFWListVersion }}
-            </a>
-          </div>
-          <div>
-            <div class="text-body-2 text-on-surface-variant">{{ $t('common.local') }}</div>
-            <div>{{ system.gfwlist }}</div>
-          </div>
-          <v-btn variant="tonal" color="primary" @click="updateGFWList">
-            {{ $t('operations.update') }}
-          </v-btn>
-        </div>
-      </v-card-text>
-    </v-card>
+  <div class="settings-container">
+    <v-row>
+      <v-col cols="12" lg="6">
+        <v-card class="mb-4" color="surface-container">
+          <v-card-title class="d-flex align-center">
+            <v-icon start>mdi-shield-check</v-icon>
+            GFWList
+          </v-card-title>
+          <v-card-text>
+            <div class="d-flex align-center justify-space-between flex-wrap ga-4">
+              <div>
+                <div class="text-body-2 text-on-surface-variant">{{ $t('common.latest') }}</div>
+                <a
+                  href="https://github.com/v2ray-a/dist-v2ray-rules-dat/releases"
+                  target="_blank"
+                  class="text-primary"
+                >
+                  {{ remoteGFWListVersion }}
+                </a>
+              </div>
+              <div>
+                <div class="text-body-2 text-on-surface-variant">{{ $t('common.local') }}</div>
+                <div>{{ system.gfwlist }}</div>
+              </div>
+              <v-btn variant="tonal" color="primary" @click="updateGFWList">
+                {{ $t('operations.update') }}
+              </v-btn>
+            </div>
+          </v-card-text>
+        </v-card>
 
-    <v-card class="mb-4" color="surface-container">
-      <v-card-title class="d-flex align-center">
-        <v-icon start>mdi-web</v-icon>
-        {{ $t('setting.transparentProxy') }}
-      </v-card-title>
-      <v-card-text>
-        <v-select
-          v-model="setting.transparent"
-          :items="transparentOptions"
-          item-title="title"
-          item-value="value"
-          :label="$t('setting.transparentProxy')"
-          class="mb-4"
-        />
+        <v-card class="mb-4" color="surface-container">
+          <v-card-title class="d-flex align-center">
+            <v-icon start>mdi-web</v-icon>
+            {{ $t('setting.transparentProxy') }}
+          </v-card-title>
+          <v-card-text>
+            <v-select
+              v-model="setting.transparent"
+              :items="transparentOptions"
+              item-title="title"
+              item-value="value"
+              :label="$t('setting.transparentProxy')"
+              class="mb-4"
+            />
 
-        <div class="d-flex ga-4 mb-4">
-          <v-switch
-            v-if="!system.lite"
-            v-model="setting.ipforward"
-            :label="$t('setting.ipForwardOn')"
-            hide-details
-          />
-          <v-switch
-            v-model="setting.portSharing"
-            :label="$t('setting.portSharingOn')"
-            hide-details
-          />
-        </div>
+            <div class="d-flex ga-4 mb-4 flex-wrap">
+              <v-switch
+                v-if="!system.lite"
+                v-model="setting.ipforward"
+                :label="$t('setting.ipForwardOn')"
+                hide-details
+              />
+              <v-switch
+                v-model="setting.portSharing"
+                :label="$t('setting.portSharingOn')"
+                hide-details
+              />
+            </div>
 
-        <v-select
-          v-if="setting.transparent !== 'close'"
-          v-model="setting.transparentType"
-          :items="transparentTypeOptions.filter(o => system.lite ? o.value === 'system_proxy' : true)"
-          item-title="title"
-          item-value="value"
-          :label="$t('setting.transparentType')"
-        />
-      </v-card-text>
-    </v-card>
+            <v-select
+              v-if="setting.transparent !== 'close'"
+              v-model="setting.transparentType"
+              :items="transparentTypeOptions.filter(o => system.lite ? o.value === 'system_proxy' : true)"
+              item-title="title"
+              item-value="value"
+              :label="$t('setting.transparentType')"
+            />
+          </v-card-text>
+        </v-card>
 
-    <v-card class="mb-4" color="surface-container">
-      <v-card-title class="d-flex align-center">
-        <v-icon start>mdi-routes</v-icon>
-        {{ $t('setting.pacMode') }}
-      </v-card-title>
-      <v-card-text>
-        <v-select
-          v-model="setting.pacMode"
-          :items="pacModeOptions"
-          item-title="title"
-          item-value="value"
-          :label="$t('setting.pacMode')"
-        />
-      </v-card-text>
-    </v-card>
+        <v-card class="mb-4" color="surface-container">
+          <v-card-title class="d-flex align-center">
+            <v-icon start>mdi-routes</v-icon>
+            {{ $t('setting.pacMode') }}
+          </v-card-title>
+          <v-card-text>
+            <v-select
+              v-model="setting.pacMode"
+              :items="pacModeOptions"
+              item-title="title"
+              item-value="value"
+              :label="$t('setting.pacMode')"
+            />
+          </v-card-text>
+        </v-card>
+      </v-col>
 
-    <v-card class="mb-4" color="surface-container">
-      <v-card-title class="d-flex align-center">
-        <v-icon start>mdi-dns</v-icon>
-        {{ $t('setting.preventDnsSpoofing') }}
-      </v-card-title>
-      <v-card-text>
-        <v-select
-          v-model="setting.antipollution"
-          :items="antipollutionOptions"
-          item-title="title"
-          item-value="value"
-          :label="$t('setting.preventDnsSpoofing')"
-        />
+      <v-col cols="12" lg="6">
+        <v-card class="mb-4" color="surface-container">
+          <v-card-title class="d-flex align-center">
+            <v-icon start>mdi-dns</v-icon>
+            {{ $t('setting.preventDnsSpoofing') }}
+          </v-card-title>
+          <v-card-text>
+            <v-select
+              v-model="setting.antipollution"
+              :items="antipollutionOptions"
+              item-title="title"
+              item-value="value"
+              :label="$t('setting.preventDnsSpoofing')"
+              class="mb-4"
+            />
 
-        <v-select
-          v-if="setting.showSpecialMode"
-          v-model="setting.specialMode"
-          :items="specialModeOptions.filter(o => setting.antipollution === 'closed' ? o.value !== 'fakedns' : true)"
-          item-title="title"
-          item-value="value"
-          :label="$t('setting.specialMode')"
-        />
-      </v-card-text>
-    </v-card>
+            <v-select
+              v-if="setting.showSpecialMode"
+              v-model="setting.specialMode"
+              :items="specialModeOptions.filter(o => setting.antipollution === 'closed' ? o.value !== 'fakedns' : true)"
+              item-title="title"
+              item-value="value"
+              :label="$t('setting.specialMode')"
+            />
+          </v-card-text>
+        </v-card>
 
-    <v-card class="mb-4" color="surface-container">
-      <v-card-title class="d-flex align-center">
-        <v-icon start>mdi-tune</v-icon>
-        {{ $t('setting.network') }}
-      </v-card-title>
-      <v-card-text>
-        <v-select
-          v-model="setting.tcpFastOpen"
-          :items="tcpFastOpenOptions"
-          item-title="title"
-          item-value="value"
-          label="TCP Fast Open"
-          class="mb-4"
-        />
+        <v-card class="mb-4" color="surface-container">
+          <v-card-title class="d-flex align-center">
+            <v-icon start>mdi-tune</v-icon>
+            {{ $t('setting.network') }}
+          </v-card-title>
+          <v-card-text>
+            <v-row>
+              <v-col cols="12" sm="6">
+                <v-select
+                  v-model="setting.tcpFastOpen"
+                  :items="tcpFastOpenOptions"
+                  item-title="title"
+                  item-value="value"
+                  label="TCP Fast Open"
+                />
+              </v-col>
+              <v-col cols="12" sm="6">
+                <v-select
+                  v-model="setting.muxOn"
+                  :items="muxOptions"
+                  item-title="title"
+                  item-value="value"
+                  :label="$t('setting.mux')"
+                />
+              </v-col>
+            </v-row>
 
-        <v-select
-          v-model="setting.muxOn"
-          :items="muxOptions"
-          item-title="title"
-          item-value="value"
-          :label="$t('setting.mux')"
-          class="mb-4"
-        />
+            <v-text-field
+              v-if="setting.muxOn === 'yes'"
+              v-model="setting.mux"
+              :label="$t('setting.concurrency')"
+              type="number"
+              min="1"
+              max="1024"
+            />
+          </v-card-text>
+        </v-card>
 
-        <v-text-field
-          v-if="setting.muxOn === 'yes'"
-          v-model="setting.mux"
-          :label="$t('setting.concurrency')"
-          type="number"
-          min="1"
-          max="1024"
-        />
-      </v-card-text>
-    </v-card>
+        <v-card class="mb-4" color="surface-container">
+          <v-card-title class="d-flex align-center">
+            <v-icon start>mdi-update</v-icon>
+            {{ $t('setting.autoUpdate') }}
+          </v-card-title>
+          <v-card-text>
+            <v-select
+              v-if="setting.pacMode === 'gfwlist' || setting.transparent === 'gfwlist'"
+              v-model="setting.pacAutoUpdateMode"
+              :items="autoUpdateOptions"
+              item-title="title"
+              item-value="value"
+              :label="$t('setting.autoUpdateGfwlist')"
+              class="mb-4"
+            />
 
-    <v-card class="mb-4" color="surface-container">
-      <v-card-title class="d-flex align-center">
-        <v-icon start>mdi-update</v-icon>
-        {{ $t('setting.autoUpdate') }}
-      </v-card-title>
-      <v-card-text>
-        <v-select
-          v-if="setting.pacMode === 'gfwlist' || setting.transparent === 'gfwlist'"
-          v-model="setting.pacAutoUpdateMode"
-          :items="autoUpdateOptions"
-          item-title="title"
-          item-value="value"
-          :label="$t('setting.autoUpdateGfwlist')"
-          class="mb-4"
-        />
+            <v-text-field
+              v-if="setting.pacAutoUpdateMode === 'auto_update_at_intervals'"
+              v-model="setting.pacAutoUpdateIntervalHour"
+              :label="$t('setting.intervalHours')"
+              type="number"
+              min="1"
+              class="mb-4"
+            />
 
-        <v-text-field
-          v-if="setting.pacAutoUpdateMode === 'auto_update_at_intervals'"
-          v-model="setting.pacAutoUpdateIntervalHour"
-          :label="$t('setting.intervalHours')"
-          type="number"
-          min="1"
-          class="mb-4"
-        />
+            <v-select
+              v-model="setting.subscriptionAutoUpdateMode"
+              :items="subAutoUpdateOptions"
+              item-title="title"
+              item-value="value"
+              :label="$t('setting.autoUpdateSub')"
+              class="mb-4"
+            />
 
-        <v-select
-          v-model="setting.subscriptionAutoUpdateMode"
-          :items="subAutoUpdateOptions"
-          item-title="title"
-          item-value="value"
-          :label="$t('setting.autoUpdateSub')"
-          class="mb-4"
-        />
-
-        <v-text-field
-          v-if="setting.subscriptionAutoUpdateMode === 'auto_update_at_intervals'"
-          v-model="setting.subscriptionAutoUpdateIntervalHour"
-          :label="$t('setting.intervalHours')"
-          type="number"
-          min="1"
-        />
-      </v-card-text>
-    </v-card>
+            <v-text-field
+              v-if="setting.subscriptionAutoUpdateMode === 'auto_update_at_intervals'"
+              v-model="setting.subscriptionAutoUpdateIntervalHour"
+              :label="$t('setting.intervalHours')"
+              type="number"
+              min="1"
+            />
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
 
     <v-btn color="primary" size="large" block @click="updateSetting">
       {{ $t('operations.saveApply') }}
@@ -283,6 +293,7 @@ const subAutoUpdateOptions = [
 
 <style scoped>
 .settings-container {
-  max-width: 600px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 </style>
