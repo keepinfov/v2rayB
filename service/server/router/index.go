@@ -64,7 +64,7 @@ func ServeGUI(r *gin.Engine) {
 		if err != nil {
 			log.Fatal("fs.Sub: %v", err)
 		}
-		ss := http.StripPrefix("/static", statigz.FileServer(webFS.(fs.ReadDirFS)))
+		ss := statigz.FileServer(webFS.(fs.ReadDirFS))
 		r.GET("/static/*w", func(c *gin.Context) {
 			ss.ServeHTTP(c.Writer, c.Request)
 		})
