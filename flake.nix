@@ -205,8 +205,8 @@
 
               serviceConfig = {
                 User = "root";
-                ExecStart = "${lib.getExe (cfg.package.override { v2ray = cfg.cliPackage; })} --address ${cfg.address} --log-disable-timestamp ${lib.concatStringsSep " " cfg.extraArgs}";
-                Environment = [ "V2RAYA_LOG_FILE=/var/log/v2rayb/v2rayb.log" ];
+                ExecStart = "${lib.getExe (cfg.package.override { v2ray = cfg.cliPackage; })} --address ${cfg.address} --log-disable-timestamp --log-level=debug ${lib.concatStringsSep " " cfg.extraArgs}";
+                Environment = [ "V2RAYA_LOG_FILE=/var/log/v2rayb/v2rayb.log" "V2RAYA_LOG_LEVEL=debug" ];
                 LimitNPROC = 500;
                 LimitNOFILE = 1000000;
                 Restart = "on-failure";
