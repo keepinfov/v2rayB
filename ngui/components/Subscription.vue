@@ -38,7 +38,7 @@ const removeSubscription = async () => {
 <template>
   <v-card color="surface-container">
     <v-toolbar color="transparent" density="compact">
-      <v-toolbar-title>Subscriptions</v-toolbar-title>
+      <v-toolbar-title>{{ t('common.subscriptions') }}</v-toolbar-title>
       <v-spacer />
       <OperateImport />
       <v-btn
@@ -77,7 +77,7 @@ const removeSubscription = async () => {
             @click="updateSubscription(item)"
           />
           <OperateRemark :data="item" />
-          <OperateShare :data="{ row: item }" />
+          <OperateShare :data="item" />
         </div>
       </template>
     </v-data-table>

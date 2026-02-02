@@ -2,6 +2,7 @@
 import { parseURL } from 'ufo'
 
 const { data: row, subID } = defineProps<{ data: any, subID: number }>()
+const { t } = useI18n()
 
 const isVisible = ref(false)
 const serverInfo = ref<any>()
@@ -109,7 +110,7 @@ const viewServer = async () => {
 
   <v-dialog v-model="isVisible" max-width="500">
     <v-card>
-      <v-card-title>Server Details</v-card-title>
+      <v-card-title>{{ t('server.details') }}</v-card-title>
       <v-card-text>
         <v-text-field
           v-for="(v, k) in serverInfo"
@@ -124,7 +125,7 @@ const viewServer = async () => {
       <v-card-actions>
         <v-spacer />
         <v-btn variant="text" @click="isVisible = false">
-          Close
+          {{ t('operations.close') }}
         </v-btn>
       </v-card-actions>
     </v-card>

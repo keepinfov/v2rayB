@@ -1,17 +1,24 @@
 <script lang="ts" setup>
 import { useQRCode } from '@vueuse/integrations/useQRCode'
 
-const { data, subID } = defineProps<{ data: any, subID?: number }>()
-const { $index, row } = data
+const { data: row, subID } = defineProps<{ data: any, subID?: number }>()
+const { t } = useI18n()
 
 const isVisible = ref(false)
 const qrcode = ref('')
 
-const shareSubscription = async () => {
+const shareItem = async () => {
+  let subIndex: number
+  if (row._type === 'subscription') {
+    subIndex = proxies.value.subs.findIndex((s: any) => s.id === row.id)
+  } else {
+    subIndex = (subID ?? 0) - 1
+  }
+
   const params = JSON.stringify({
     id: row.id,
     _type: row._type,
-    sub: row._type === 'subscription' ? $index : subID! - 1
+    sub: subIndex
   })
 
   const { data } = await useV2Fetch(`sharingAddress?touch=${params}`).get().json()
@@ -21,7 +28,7 @@ const shareSubscription = async () => {
 </script>
 
 <template>
-  <v-btn icon="mdi-share-variant" size="small" variant="text" @click="shareSubscription" />
+  <v-btn icon="mdi-share-variant" size="small" variant="text" @click="shareItem" />
 
   <v-dialog v-model="isVisible" max-width="300">
     <v-card class="text-center">
@@ -32,7 +39,7 @@ const shareSubscription = async () => {
       <v-card-actions>
         <v-spacer />
         <v-btn variant="text" @click="isVisible = false">
-          Close
+          {{ t('operations.close') }}
         </v-btn>
       </v-card-actions>
     </v-card>

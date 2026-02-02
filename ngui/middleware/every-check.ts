@@ -1,5 +1,3 @@
-import type { MessageParams } from 'element-plus'
-
 export default defineNuxtRouteMiddleware(async() => {
   const nuxtApp = useNuxtApp()
   const { t } = nuxtApp.$i18n
@@ -11,28 +9,23 @@ export default defineNuxtRouteMiddleware(async() => {
     system.value.version = data.value.data.version
     system.value.lite = data.value.data.lite
 
-    let messageConf: MessageParams = {
-      message: t(system.value.docker ? 'welcome.docker' : 'welcome.default', {
-        version: system.value.version
-      }),
-      duration: 3000
-    }
+    let message = t(system.value.docker ? 'welcome.docker' : 'welcome.default', {
+      version: system.value.version
+    })
+    let color: 'success' | 'info' = 'info'
 
     if (data.value.data.foundNew) {
-      messageConf = {
-        duration: 5000,
-        type: 'success',
-        message: `${messageConf.message}. ${t('welcome.newVersion', {
-          version: data.value.data.remoteVersion
-        })}`
-      }
+      message = `${message}. ${t('welcome.newVersion', {
+        version: data.value.data.remoteVersion
+      })}`
+      color = 'success'
     }
 
-    ElMessage(messageConf)
+    useSnackbar(message, color)
 
     if (data.value.data.serviceValid === false)
-      ElMessage.error({ message: t('version.v2rayInvalid'), duration: 10000 })
+      useSnackbar(t('version.v2rayInvalid'), 'error')
     else if (!data.value.data.v5)
-      ElMessage.error({ message: t('version.v2rayNotV5'), duration: 10000 })
+      useSnackbar(t('version.v2rayNotV5'), 'error')
   }
 })

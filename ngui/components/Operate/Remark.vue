@@ -4,6 +4,12 @@ const { data: row } = defineProps<{ data: any }>()
 const input = ref('')
 const isVisible = ref(false)
 
+watch(isVisible, (visible) => {
+  if (visible) {
+    input.value = row.remarks || ''
+  }
+})
+
 const remarkSubscription = async (remark: string) => {
   const { data } = await useV2Fetch('subscription').patch({
     subscription: {
