@@ -100,9 +100,13 @@ export const darkTheme = {
     'on-error': m3Colors.error[20],
     'surface-container': m3Colors.neutral[12],
     'surface-container-low': m3Colors.neutral[10],
+    'surface-container-lowest': m3Colors.neutral[4],
     'surface-container-high': m3Colors.neutral[17],
     'surface-container-highest': m3Colors.neutral[22],
     outline: m3Colors.neutral[40],
-    'outline-variant': m3Colors.neutral[30]
+    'outline-variant': m3Colors.neutral[30],
+    'on-tertiary': m3Colors.tertiary[10],
+    'on-info': '#001D35',
+    'on-success': '#002204'
   }
 }
