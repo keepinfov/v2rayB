@@ -1,11 +1,12 @@
 <script lang="ts" setup>
+const { t } = useI18n()
 const route = useRoute()
 
 const navItems = [
-  { to: '/', icon: 'mdi-home', title: 'Dashboard' },
-  { to: '/setting', icon: 'mdi-cog', title: 'Settings' },
-  { to: '/log', icon: 'mdi-text-box-outline', title: 'Logs' },
-  { to: '/about', icon: 'mdi-information-outline', title: 'About' }
+  { to: '/', icon: 'mdi-home', title: t('common.dashboard') },
+  { to: '/setting', icon: 'mdi-cog', title: t('common.setting') },
+  { to: '/log', icon: 'mdi-text-box-outline', title: t('common.log') },
+  { to: '/about', icon: 'mdi-information-outline', title: t('common.about') }
 ]
 </script>
 
@@ -29,14 +30,14 @@ const navItems = [
     </template>
   </v-app-bar>
 
-  <v-navigation-rail color="surface-container" permanent class="d-none d-lg-flex">
+  <v-navigation-rail color="surface-container" permanent class="d-none d-lg-flex nav-rail">
     <template #prepend>
       <v-avatar color="primary" size="40" class="my-4">
         <span class="text-h6 font-weight-bold text-on-primary">v2</span>
       </v-avatar>
     </template>
 
-    <v-list density="compact" nav>
+    <v-list density="compact" nav class="px-2">
       <v-list-item
         v-for="item in navItems"
         :key="item.to"
@@ -46,6 +47,7 @@ const navItems = [
         :active="route.path === item.to"
         rounded="lg"
         color="primary"
+        class="mb-1"
       />
     </v-list>
   </v-navigation-rail>
@@ -58,14 +60,27 @@ const navItems = [
   </v-bottom-navigation>
 
   <v-main class="bg-background">
-    <v-container fluid class="pa-4 pa-lg-6">
+    <v-container fluid class="main-container pa-4 pa-lg-6">
       <slot />
     </v-container>
   </v-main>
 </template>
 
 <style scoped>
-.v-navigation-rail {
+.nav-rail {
   border-right: 1px solid rgb(var(--v-theme-outline-variant));
+}
+
+.main-container {
+  max-width: 1600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 1920px) {
+  .main-container {
+    padding-left: 48px !important;
+    padding-right: 48px !important;
+  }
 }
 </style>

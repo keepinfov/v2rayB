@@ -5,6 +5,8 @@ common:
   loggedAs: 'Logged in as {username}'
   servers: Servers
   subscriptions: Subscriptions
+  dashboard: Dashboard
+  log: Logs
   v2rayCoreStatus: v2ray-core Status
   checkRunning: Checking
   isRunning: Running
