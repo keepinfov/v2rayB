@@ -86,7 +86,7 @@ const subAutoUpdateOptions = [
 </script>
 
 <template>
-  <div class="mx-auto" style="max-width: 600px">
+  <div class="mx-auto settings-container">
     <v-card class="mb-4" color="surface-container">
       <v-card-title class="d-flex align-center">
         <v-icon start>mdi-shield-check</v-icon>
@@ -199,7 +199,7 @@ const subAutoUpdateOptions = [
     <v-card class="mb-4" color="surface-container">
       <v-card-title class="d-flex align-center">
         <v-icon start>mdi-tune</v-icon>
-        Network
+        {{ $t('setting.network') }}
       </v-card-title>
       <v-card-text>
         <v-select
@@ -234,7 +234,7 @@ const subAutoUpdateOptions = [
     <v-card class="mb-4" color="surface-container">
       <v-card-title class="d-flex align-center">
         <v-icon start>mdi-update</v-icon>
-        Auto Update
+        {{ $t('setting.autoUpdate') }}
       </v-card-title>
       <v-card-text>
         <v-select
@@ -250,7 +250,7 @@ const subAutoUpdateOptions = [
         <v-text-field
           v-if="setting.pacAutoUpdateMode === 'auto_update_at_intervals'"
           v-model="setting.pacAutoUpdateIntervalHour"
-          label="Interval (hours)"
+          :label="$t('setting.intervalHours')"
           type="number"
           min="1"
           class="mb-4"
@@ -268,7 +268,7 @@ const subAutoUpdateOptions = [
         <v-text-field
           v-if="setting.subscriptionAutoUpdateMode === 'auto_update_at_intervals'"
           v-model="setting.subscriptionAutoUpdateIntervalHour"
-          label="Interval (hours)"
+          :label="$t('setting.intervalHours')"
           type="number"
           min="1"
         />
@@ -280,3 +280,9 @@ const subAutoUpdateOptions = [
     </v-btn>
   </div>
 </template>
+
+<style scoped>
+.settings-container {
+  max-width: 600px;
+}
+</style>

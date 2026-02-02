@@ -23,8 +23,8 @@ async function login() {
 </script>
 
 <template>
-  <div class="d-flex justify-center align-center" style="min-height: 80vh">
-    <v-card class="pa-6" width="400" color="surface-container">
+  <div class="d-flex justify-center align-center auth-container">
+    <v-card class="pa-6" max-width="400" width="100%" color="surface-container">
       <v-card-title class="text-h5 font-weight-bold text-center mb-4">
         v2rayB
       </v-card-title>
@@ -73,3 +73,9 @@ async function login() {
     </v-card>
   </div>
 </template>
+
+<style scoped>
+.auth-container {
+  min-height: 80vh;
+}
+</style>
