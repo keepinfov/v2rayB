@@ -69,6 +69,7 @@
           nativeBuildInputs = [ pkgs.makeWrapper ];
 
           preBuild = ''
+            rm -rf server/router/web
             cp -a ${gui} server/router/web
           '';
 
