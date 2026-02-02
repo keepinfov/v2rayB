@@ -3,6 +3,9 @@ import { darkTheme } from './theme/colors'
 
 export default defineNuxtConfig({
   ssr: false,
+  app: {
+    buildAssetsDir: '/static/'
+  },
   modules: [
     '@vueuse/nuxt',
     '@unocss/nuxt',
