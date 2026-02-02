@@ -108,7 +108,7 @@ const viewServer = async () => {
 <template>
   <v-btn icon="mdi-information-outline" size="small" variant="text" @click="viewServer" />
 
-  <v-dialog v-model="isVisible" max-width="500">
+  <v-dialog v-model="isVisible" max-width="600">
     <v-card>
       <v-card-title>{{ t('server.details') }}</v-card-title>
       <v-card-text>

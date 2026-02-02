@@ -30,7 +30,7 @@ const shareItem = async () => {
 <template>
   <v-btn icon="mdi-share-variant" size="small" variant="text" @click="shareItem" />
 
-  <v-dialog v-model="isVisible" max-width="300">
+  <v-dialog v-model="isVisible" max-width="400">
     <v-card class="text-center">
       <v-card-title>{{ row._type?.toUpperCase() }}</v-card-title>
       <v-card-text>

@@ -33,7 +33,7 @@ watch(isVisible, (visible) => {
     {{ t('operations.import') }}
   </v-btn>
 
-  <v-dialog v-model="isVisible" max-width="500">
+  <v-dialog v-model="isVisible" max-width="600">
     <v-card>
       <v-card-title>{{ $t('operations.import') }}</v-card-title>
       <v-card-text>
