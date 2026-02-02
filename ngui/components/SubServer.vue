@@ -18,7 +18,7 @@ let selectRows = $ref<any[]>([])
 <template>
   <v-card color="surface-container">
     <v-toolbar color="transparent" density="compact">
-      <v-toolbar-title>Servers</v-toolbar-title>
+      <v-toolbar-title>{{ t('common.servers') }}</v-toolbar-title>
       <v-spacer />
       <OperateLatency :data="selectRows" type="ping" />
       <OperateLatency :data="selectRows" type="http" />
@@ -43,7 +43,7 @@ let selectRows = $ref<any[]>([])
         <div class="d-flex ga-1">
           <OperateConnect :data="item" :sub-i-d="id" />
           <OperateView :data="item" :sub-i-d="id" />
-          <OperateShare :data="{ row: item }" :sub-i-d="id" />
+          <OperateShare :data="item" :sub-i-d="id" />
         </div>
       </template>
     </v-data-table>
