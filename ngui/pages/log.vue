@@ -4,10 +4,10 @@ import { parseURL } from 'ufo'
 definePageMeta({ middleware: ['auth'] })
 
 const { t } = useI18n()
-const message = $ref<string[]>([])
+const message = ref<string[]>([])
 const logContainer = ref<HTMLElement | null>(null)
-const connectionStatus = $ref<'connecting' | 'connected' | 'disconnected'>('connecting')
-const autoScroll = $ref(true)
+const connectionStatus = ref<'connecting' | 'connected' | 'disconnected'>('connecting')
+const autoScroll = ref(true)
 
 let socket: WebSocket | null = null
 let reconnectTimer: ReturnType<typeof setTimeout> | null = null
@@ -20,12 +20,12 @@ const connect = () => {
   socket = new WebSocket(wsUrl)
 
   socket.onopen = () => {
-    connectionStatus = 'connected'
+    connectionStatus.value = 'connected'
   }
 
   socket.onmessage = (msg) => {
-    message.push(msg.data)
-    if (autoScroll) {
+    message.value.push(msg.data)
+    if (autoScroll.value) {
       nextTick(() => {
         if (logContainer.value) {
           logContainer.value.scrollTop = logContainer.value.scrollHeight
@@ -35,13 +35,13 @@ const connect = () => {
   }
 
   socket.onerror = () => {
-    connectionStatus = 'disconnected'
+    connectionStatus.value = 'disconnected'
   }
 
   socket.onclose = () => {
-    connectionStatus = 'disconnected'
+    connectionStatus.value = 'disconnected'
     reconnectTimer = setTimeout(() => {
-      connectionStatus = 'connecting'
+      connectionStatus.value = 'connecting'
       connect()
     }, 3000)
   }
@@ -55,7 +55,7 @@ onUnmounted(() => {
 })
 
 const clearLogs = () => {
-  message.length = 0
+  message.value.length = 0
 }
 
 const getLogClass = (line: string) => {

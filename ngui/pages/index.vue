@@ -3,8 +3,8 @@ definePageMeta({ middleware: ['auth', 'every-check'] })
 
 const { t } = useI18n()
 const currentTab = ref('subscription')
-let loading = $ref(true)
-let error = $ref<string | null>(null)
+const loading = ref(true)
+const error = ref<string | null>(null)
 
 const loadData = async () => {
   try {
@@ -19,9 +19,9 @@ const loadData = async () => {
       proxies.value.servers = touchRes.data.value.data.touch.servers || []
     }
   } catch (e) {
-    error = 'Failed to load data'
+    error.value = 'Failed to load data'
   } finally {
-    loading = false
+    loading.value = false
   }
 }
 

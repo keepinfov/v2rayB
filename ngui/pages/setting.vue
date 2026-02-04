@@ -3,10 +3,10 @@ definePageMeta({ middleware: ['auth'] })
 
 const { t } = useI18n()
 
-let setting = $ref<any>(null)
-let loading = $ref(true)
-let error = $ref<string | null>(null)
-let remoteGFWListVersion = $ref<string>('')
+const setting = ref<any>(null)
+const loading = ref(true)
+const error = ref<string | null>(null)
+const remoteGFWListVersion = ref<string>('')
 
 const loadSettings = async () => {
   try {
@@ -15,15 +15,15 @@ const loadSettings = async () => {
 
     if (settingRes.data.value?.data) {
       system.value.gfwlist = settingRes.data.value.data.localGFWListVersion
-      setting = settingRes.data.value.data.setting
+      setting.value = settingRes.data.value.data.setting
     }
     if (remoteRes.data.value?.data?.remoteGFWListVersion) {
-      remoteGFWListVersion = remoteRes.data.value.data.remoteGFWListVersion
+      remoteGFWListVersion.value = remoteRes.data.value.data.remoteGFWListVersion
     }
   } catch (e) {
-    error = 'Failed to load settings'
+    error.value = 'Failed to load settings'
   } finally {
-    loading = false
+    loading.value = false
   }
 }
 

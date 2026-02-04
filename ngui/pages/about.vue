@@ -1,20 +1,20 @@
 <script lang="ts" setup>
 const { t } = useI18n()
 
-let loading = $ref(true)
-let version = $ref('Unknown')
+const loading = ref(true)
+const version = ref('Unknown')
 
 const loadVersion = async () => {
   try {
     const { data } = await useV2Fetch<any>('version').json()
     if (data.value?.data?.version) {
-      version = data.value.data.version
-      system.value.version = version
+      version.value = data.value.data.version
+      system.value.version = version.value
     }
   } catch (e) {
-    version = 'Unknown'
+    version.value = 'Unknown'
   } finally {
-    loading = false
+    loading.value = false
   }
 }
 
