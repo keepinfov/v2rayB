@@ -30,27 +30,35 @@ const navItems = [
     </template>
   </v-app-bar>
 
-  <v-navigation-rail color="surface-container" permanent class="d-none d-lg-flex nav-rail">
-    <template #prepend>
-      <v-avatar color="primary" size="40" class="my-4">
-        <span class="text-h6 font-weight-bold text-on-primary">v2</span>
-      </v-avatar>
-    </template>
+  <v-layout>
+    <v-navigation-rail color="surface-container" permanent class="d-none d-lg-flex nav-rail">
+      <template #prepend>
+        <v-avatar color="primary" size="40" class="my-4">
+          <span class="text-h6 font-weight-bold text-on-primary">v2</span>
+        </v-avatar>
+      </template>
 
-    <v-list density="compact" nav class="px-2">
-      <v-list-item
-        v-for="item in navItems"
-        :key="item.to"
-        :to="item.to"
-        :prepend-icon="item.icon"
-        :title="item.title"
-        :active="route.path === item.to"
-        rounded="lg"
-        color="primary"
-        class="mb-1"
-      />
-    </v-list>
-  </v-navigation-rail>
+      <v-list density="compact" nav class="px-2">
+        <v-list-item
+          v-for="item in navItems"
+          :key="item.to"
+          :to="item.to"
+          :prepend-icon="item.icon"
+          :title="item.title"
+          :active="route.path === item.to"
+          rounded="lg"
+          color="primary"
+          class="mb-1"
+        />
+      </v-list>
+    </v-navigation-rail>
+
+    <v-main class="bg-background">
+      <v-container fluid class="main-container pa-4 pa-lg-6">
+        <slot />
+      </v-container>
+    </v-main>
+  </v-layout>
 
   <v-bottom-navigation color="surface-container" class="d-lg-none" grow>
     <v-btn v-for="item in navItems" :key="item.to" :to="item.to" :value="item.to">
@@ -58,12 +66,6 @@ const navItems = [
       <span class="text-caption">{{ item.title }}</span>
     </v-btn>
   </v-bottom-navigation>
-
-  <v-main class="bg-background">
-    <v-container fluid class="main-container pa-4 pa-lg-6">
-      <slot />
-    </v-container>
-  </v-main>
 </template>
 
 <style scoped>
