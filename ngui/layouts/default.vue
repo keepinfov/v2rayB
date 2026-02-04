@@ -11,26 +11,26 @@ const navItems = [
 </script>
 
 <template>
-  <v-app-bar color="surface-container" elevation="0" density="comfortable">
-    <template #prepend>
-      <v-app-bar-nav-icon class="d-lg-none" />
-    </template>
-
-    <v-app-bar-title>
-      <NuxtLink to="/" class="text-decoration-none text-on-surface font-weight-bold">
-        v2rayB
-      </NuxtLink>
-    </v-app-bar-title>
-
-    <template #append>
-      <div class="d-flex align-center ga-2">
-        <OperateBoot />
-        <OperateOutbound />
-      </div>
-    </template>
-  </v-app-bar>
-
   <v-layout>
+    <v-app-bar color="surface-container" elevation="0" density="comfortable">
+      <template #prepend>
+        <v-app-bar-nav-icon class="d-lg-none" />
+      </template>
+
+      <v-app-bar-title>
+        <NuxtLink to="/" class="text-decoration-none text-on-surface font-weight-bold">
+          v2rayB
+        </NuxtLink>
+      </v-app-bar-title>
+
+      <template #append>
+        <div class="d-flex align-center ga-2">
+          <OperateBoot />
+          <OperateOutbound />
+        </div>
+      </template>
+    </v-app-bar>
+
     <v-navigation-rail color="surface-container" permanent class="d-none d-lg-flex nav-rail">
       <template #prepend>
         <v-avatar color="primary" size="40" class="my-4">
