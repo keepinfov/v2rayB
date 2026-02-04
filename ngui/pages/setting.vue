@@ -3,14 +3,31 @@ definePageMeta({ middleware: ['auth'] })
 
 const { t } = useI18n()
 
-let setting = $ref<any>()
-const { data: { value: { data: settingData } } } = await useV2Fetch<any>('setting').json()
+let setting = $ref<any>(null)
+let loading = $ref(true)
+let error = $ref<string | null>(null)
+let remoteGFWListVersion = $ref<string>('')
 
-system.value.gfwlist = settingData.localGFWListVersion
-setting = settingData.setting
+const loadSettings = async () => {
+  try {
+    const settingRes = await useV2Fetch<any>('setting').json()
+    const remoteRes = await useV2Fetch<any>('remoteGFWListVersion').json()
 
-const { data: { value: { data: { remoteGFWListVersion } } } }
-  = await useV2Fetch<any>('remoteGFWListVersion').json()
+    if (settingRes.data.value?.data) {
+      system.value.gfwlist = settingRes.data.value.data.localGFWListVersion
+      setting = settingRes.data.value.data.setting
+    }
+    if (remoteRes.data.value?.data?.remoteGFWListVersion) {
+      remoteGFWListVersion = remoteRes.data.value.data.remoteGFWListVersion
+    }
+  } catch (e) {
+    error = 'Failed to load settings'
+  } finally {
+    loading = false
+  }
+}
+
+loadSettings()
 
 const updateGFWList = async () => {
   const { data } = await useV2Fetch<any>('gfwList').put().json()
@@ -87,6 +104,17 @@ const subAutoUpdateOptions = [
 
 <template>
   <div class="settings-container">
+    <template v-if="loading">
+      <div class="d-flex justify-center align-center py-16">
+        <v-progress-circular indeterminate color="primary" size="48" />
+      </div>
+    </template>
+
+    <template v-else-if="error">
+      <v-alert type="error" class="mb-4">{{ error }}</v-alert>
+    </template>
+
+    <template v-else-if="setting">
     <v-row>
       <v-col cols="12" lg="6">
         <v-card class="mb-4" color="surface-container">
@@ -288,6 +316,7 @@ const subAutoUpdateOptions = [
     <v-btn color="primary" size="large" block @click="updateSetting">
       {{ $t('operations.saveApply') }}
     </v-btn>
+    </template>
   </div>
 </template>
 
