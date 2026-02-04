@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 const { t } = useI18n()
 
-const { data, id } = defineProps<{ data: any[], id: number }>()
+const props = defineProps<{ data: any[], id: number }>()
 
 const headers = [
   { title: 'ID', key: 'id', width: 80, align: 'center' as const },
@@ -12,7 +12,7 @@ const headers = [
   { title: t('operations.name'), key: 'actions', sortable: false, width: 160, align: 'center' as const }
 ]
 
-let selectRows = $ref<any[]>([])
+const selectRows = ref<any[]>([])
 </script>
 
 <template>
@@ -31,7 +31,7 @@ let selectRows = $ref<any[]>([])
     <v-data-table
       v-model="selectRows"
       :headers="headers"
-      :items="data"
+      :items="props.data"
       item-value="id"
       show-select
       hover
@@ -61,9 +61,9 @@ let selectRows = $ref<any[]>([])
 
       <template #item.actions="{ item }">
         <div class="d-flex justify-center ga-1">
-          <OperateConnect :data="item" :sub-i-d="id" />
-          <OperateView :data="item" :sub-i-d="id" />
-          <OperateShare :data="item" :sub-i-d="id" />
+          <OperateConnect :data="item" :sub-i-d="props.id" />
+          <OperateView :data="item" :sub-i-d="props.id" />
+          <OperateShare :data="item" :sub-i-d="props.id" />
         </div>
       </template>
     </v-data-table>

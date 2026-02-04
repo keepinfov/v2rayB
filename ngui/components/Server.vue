@@ -10,7 +10,7 @@ const headers = [
   { title: t('operations.name'), key: 'actions', sortable: false, width: 160, align: 'center' as const }
 ]
 
-let selectRows = $ref<any[]>([])
+const selectRows = ref<any[]>([])
 </script>
 
 <template>

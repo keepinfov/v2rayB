@@ -65,7 +65,7 @@ const navItems = [
     </v-navigation-rail>
 
     <v-main class="bg-background">
-      <v-container fluid class="main-container pa-4 pa-lg-6">
+      <v-container fluid class="main-container pa-4 pa-md-6 pa-lg-8">
         <slot />
       </v-container>
     </v-main>
@@ -87,15 +87,14 @@ const navItems = [
 }
 
 .main-container {
-  max-width: 1600px;
+  max-width: 1400px;
   margin-left: auto;
   margin-right: auto;
 }
 
-@media (min-width: 1920px) {
+@media (min-width: 1280px) {
   .main-container {
-    padding-left: 48px !important;
-    padding-right: 48px !important;
+    padding-top: 32px !important;
   }
 }
 </style>

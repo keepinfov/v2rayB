@@ -77,9 +77,11 @@ loadVersion()
       <v-card-text class="text-body-2 text-on-surface-variant text-left">
         <p class="font-weight-medium mb-2">Default ports:</p>
         <ul class="mb-4">
-          <li v-for="(port, i) in t('about.ports', [], { returnObjects: true })" :key="i">
-            {{ port }}
-          </li>
+          <li>2017: v2rayB backend</li>
+          <li>20170: SOCKS5</li>
+          <li>20171: HTTP</li>
+          <li>20172: HTTP with rules</li>
+          <li>32345: tproxy (transparent proxy)</li>
         </ul>
         <p>
           Issues: <a href="https://github.com/keepinfov/v2rayB/issues" target="_blank" class="text-primary">github.com/keepinfov/v2rayB/issues</a>
