@@ -4,6 +4,8 @@ export const system = useLocalStorage('system', {
   connect: '',
   docker: false,
   version: '',
+  latestVersion: '',
+  updateAvailable: false,
   lite: 'false',
   gfwlist: ''
 })
