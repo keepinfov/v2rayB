@@ -19,6 +19,7 @@ const updateSubscription = async (row: any) => {
   isUpdating.value = false
 
   if (data.value.code === 'SUCCESS') {
+    proxies.value.subs = data.value.data.touch.subscriptions
     useSnackbar(t('common.success'), 'success')
   }
 }
