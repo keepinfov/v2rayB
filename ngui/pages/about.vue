@@ -27,7 +27,7 @@ const version = data.value?.data?.version || 'Unknown'
 
       <div class="d-flex justify-center ga-2 mb-4">
         <v-btn
-          href="https://github.com/v2rayA/v2rayA"
+          href="https://github.com/keepinfov/v2rayB"
           target="_blank"
           variant="outlined"
           prepend-icon="mdi-star"
@@ -35,7 +35,7 @@ const version = data.value?.data?.version || 'Unknown'
           Star
         </v-btn>
         <v-btn
-          href="https://github.com/v2rayA/v2rayA/fork"
+          href="https://github.com/keepinfov/v2rayB/fork"
           target="_blank"
           variant="outlined"
           prepend-icon="mdi-source-fork"
@@ -63,13 +63,13 @@ const version = data.value?.data?.version || 'Unknown'
       <v-divider class="my-4" />
 
       <v-btn
-        href="https://v2raya.org"
+        href="https://github.com/keepinfov/v2rayB"
         target="_blank"
         color="primary"
         variant="tonal"
-        prepend-icon="mdi-book-open-variant"
+        prepend-icon="mdi-github"
       >
-        Documentation
+        GitHub
       </v-btn>
     </v-card>
   </div>

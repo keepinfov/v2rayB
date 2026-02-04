@@ -22,8 +22,8 @@ common:
   loadBalance: Load Balance
 welcome:
   title: Welcome
-  docker: 'v2rayA is running in Docker, Version: {version}'
-  default: 'v2rayA service is running, Version: {version}'
+  docker: 'v2rayB is running in Docker, Version: {version}'
+  default: 'v2rayB service is running, Version: {version}'
   newVersion: 'New version available: {version}'
   messages:
     - You haven't created or imported any servers or subscriptions yet.
@@ -131,7 +131,7 @@ setting:
     leastPing: Least Latency
   messages:
     gfwlist: This shows local file modification time, may differ from latest version
-    transparentProxy: Global proxy routes all TCP traffic through V2RayA. Enable LAN sharing for other devices.
+    transparentProxy: Global proxy routes all TCP traffic through v2rayB. Enable LAN sharing for other devices.
     transparentType: 'tproxy: supports UDP, not docker. redirect: docker friendly, no UDP, requires port 53.'
     pacMode: Sets routing mode for rule port. Default port is 20172 (HTTP).
     preventDnsSpoofing: 'Forward DNS: proxy DNS requests. DoH (v2ray-core 4.22.0+): DNS over HTTPS.'
@@ -195,9 +195,9 @@ egressPortWhitelist:
   tcpPortWhitelist: TCP Whitelist
   udpPortWhitelist: UDP Whitelist
   messages:
-    - 'If running v2rayA on server A connected to proxy server B:'
+    - 'If running v2rayB on server A connected to proxy server B:'
     - 'Transparent proxy replaces source IP with proxy server IP, causing rejected connections for incoming requests.'
-    - 'Whitelist service ports (e.g., SSH 22, v2rayA {v2rayaPort}) to bypass proxy.'
+    - 'Whitelist service ports (e.g., SSH 22, v2rayB {v2rayaPort}) to bypass proxy.'
     - 'Skip if not serving external clients or only serving LAN.'
     - 'Format: 22 for port 22, 20170:20172 for range.'
 configureServer:
@@ -230,25 +230,25 @@ delete:
 latency:
   message: Latency testing may take a while, please wait
 version:
-  higherVersionNeeded: 'This operation requires v2rayA version higher than {version}'
+  higherVersionNeeded: 'This operation requires v2rayB version higher than {version}'
   v2rayInvalid: 'geosite.dat, geoip.dat or v2ray-core may not be installed correctly'
-  v2rayNotV5: 'v2ray-core v5 detected. Please use v5 or downgrade v2rayA to v1.5'
+  v2rayNotV5: 'v2ray-core v5 detected. Please use v5 or downgrade v2rayB to v1.5'
 about:
   title: About v2rayB
   description: v2rayB is a web client for V2Ray.
   ports:
-    - '2017: v2rayA backend'
+    - '2017: v2rayB backend'
     - '20170: SOCKS5'
     - '20171: HTTP'
     - '20172: HTTP with rules'
     - '32345: tproxy (transparent proxy)'
   links:
-    issues: github.com/v2rayA/v2rayA/issues
+    issues: github.com/keepinfov/v2rayB/issues
     docs: v2raya.org
 axios:
   messages:
     optimizeBackend: Adjust backend address?
-    noBackendFound: 'No v2rayA service found at {url}. Ensure v2rayA is running.'
+    noBackendFound: 'No v2rayB service found at {url}. Ensure v2rayB is running.'
     cannotCommunicate:
       - Cannot communicate. If service is running, your browser may block HTTP from HTTPS sites. Try HTTP alternative.
       - Cannot communicate. Firefox blocks HTTP from HTTPS. Try Chrome or HTTP site.
