@@ -4,10 +4,10 @@ definePageMeta({ middleware: ['auth'] })
 const { t } = useI18n()
 
 let setting = $ref<any>()
-const { data } = await useV2Fetch<any>('setting').json()
+const { data: { value: { data: settingData } } } = await useV2Fetch<any>('setting').json()
 
-system.value.gfwlist = data.value.data.localGFWListVersion
-setting = data.value.data.setting
+system.value.gfwlist = settingData.localGFWListVersion
+setting = settingData.setting
 
 const { data: { value: { data: { remoteGFWListVersion } } } }
   = await useV2Fetch<any>('remoteGFWListVersion').json()
