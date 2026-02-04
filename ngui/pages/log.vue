@@ -15,7 +15,7 @@ let reconnectTimer: ReturnType<typeof setTimeout> | null = null
 const connect = () => {
   const parsed = parseURL(system.value.api)
   const protocol = parsed.protocol === 'https:' ? 'wss:' : 'ws:'
-  const wsUrl = `${protocol}//${parsed.host}${parsed.pathname}/api/message?Authorization=${encodeURIComponent(user.value.token)}`
+  const wsUrl = `${protocol}//${parsed.host}/api/message?Authorization=${encodeURIComponent(user.value.token)}`
 
   socket = new WebSocket(wsUrl)
 
