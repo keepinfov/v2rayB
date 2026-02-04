@@ -21,6 +21,17 @@ const navItems = [
         <NuxtLink to="/" class="text-decoration-none text-on-surface font-weight-bold">
           v2rayB
         </NuxtLink>
+        <v-chip
+          v-if="system.updateAvailable"
+          size="x-small"
+          color="success"
+          variant="flat"
+          class="ml-2"
+          href="https://github.com/keepinfov/v2rayB/releases"
+          target="_blank"
+        >
+          {{ system.latestVersion }}
+        </v-chip>
       </v-app-bar-title>
 
       <template #append>
@@ -71,6 +82,8 @@ const navItems = [
 <style scoped>
 .nav-rail {
   border-right: 1px solid rgb(var(--v-theme-outline-variant));
+  margin-top: 48px;
+  height: calc(100vh - 48px);
 }
 
 .main-container {
