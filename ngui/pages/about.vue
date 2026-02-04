@@ -1,12 +1,29 @@
 <script lang="ts" setup>
 const { t } = useI18n()
-const { data } = await useV2Fetch<any>('version').json()
-const version = data.value?.data?.version || 'Unknown'
+
+let loading = $ref(true)
+let version = $ref('Unknown')
+
+const loadVersion = async () => {
+  try {
+    const { data } = await useV2Fetch<any>('version').json()
+    if (data.value?.data?.version) {
+      version = data.value.data.version
+      system.value.version = version
+    }
+  } catch (e) {
+    version = 'Unknown'
+  } finally {
+    loading = false
+  }
+}
+
+loadVersion()
 </script>
 
 <template>
-  <div class="d-flex justify-center">
-    <v-card class="pa-6 text-center" color="surface-container" max-width="480">
+  <div class="about-container">
+    <v-card class="pa-6 text-center" color="surface-container" max-width="500">
       <v-avatar color="primary" size="80" class="mb-4">
         <span class="text-h4 font-weight-bold text-on-primary">v2</span>
       </v-avatar>
@@ -15,13 +32,26 @@ const version = data.value?.data?.version || 'Unknown'
         v2rayB
       </v-card-title>
 
-      <v-card-subtitle>
+      <v-card-subtitle class="mt-2">
         {{ t('about.description') }}
       </v-card-subtitle>
 
-      <v-chip color="primary" variant="tonal" class="my-4">
-        Version {{ version }}
-      </v-chip>
+      <div class="d-flex justify-center ga-2 my-4">
+        <v-chip color="primary" variant="tonal">
+          <v-icon start size="small">mdi-tag</v-icon>
+          v{{ loading ? '...' : version }}
+        </v-chip>
+        <v-chip
+          v-if="system.updateAvailable"
+          color="success"
+          variant="tonal"
+          href="https://github.com/keepinfov/v2rayB/releases"
+          target="_blank"
+        >
+          <v-icon start size="small">mdi-update</v-icon>
+          {{ system.latestVersion }} available
+        </v-chip>
+      </div>
 
       <v-divider class="my-4" />
 
@@ -45,7 +75,6 @@ const version = data.value?.data?.version || 'Unknown'
       </div>
 
       <v-card-text class="text-body-2 text-on-surface-variant text-left">
-        <p class="mb-4">{{ t('about.description') }}</p>
         <p class="font-weight-medium mb-2">Default ports:</p>
         <ul class="mb-4">
           <li v-for="(port, i) in t('about.ports', [], { returnObjects: true })" :key="i">
@@ -53,10 +82,7 @@ const version = data.value?.data?.version || 'Unknown'
           </li>
         </ul>
         <p>
-          Issues: <a :href="`https://${t('about.links.issues')}`" target="_blank">{{ t('about.links.issues') }}</a>
-        </p>
-        <p>
-          Docs: <a :href="`https://${t('about.links.docs')}`" target="_blank">{{ t('about.links.docs') }}</a>
+          Issues: <a href="https://github.com/keepinfov/v2rayB/issues" target="_blank" class="text-primary">github.com/keepinfov/v2rayB/issues</a>
         </p>
       </v-card-text>
 
@@ -74,3 +100,13 @@ const version = data.value?.data?.version || 'Unknown'
     </v-card>
   </div>
 </template>
+
+<style scoped>
+.about-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: calc(100vh - 200px);
+  padding-top: 24px;
+}
+</style>
