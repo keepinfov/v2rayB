@@ -20,7 +20,6 @@ common:
   none: None
   optional: Optional
   loadBalance: Load Balance
-  log: Logs
 welcome:
   title: Welcome
   docker: 'v2rayA is running in Docker, Version: {version}'
