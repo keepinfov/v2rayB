@@ -19,7 +19,7 @@ const navItems = [
 
       <v-app-bar-title>
         <NuxtLink to="/" class="text-decoration-none text-on-surface font-weight-bold">
-          v2rayB
+          {{ APP_NAME }}
         </NuxtLink>
         <v-chip
           v-if="system.updateAvailable"
@@ -27,7 +27,7 @@ const navItems = [
           color="success"
           variant="flat"
           class="ml-2"
-          href="https://github.com/keepinfov/v2rayB/releases"
+          :href="GITHUB_RELEASES"
           target="_blank"
         >
           {{ system.latestVersion }}
@@ -45,7 +45,7 @@ const navItems = [
     <v-navigation-rail color="surface-container" permanent class="d-none d-lg-flex nav-rail">
       <template #prepend>
         <v-avatar color="primary" size="40" class="my-4">
-          <span class="text-h6 font-weight-bold text-on-primary">v2</span>
+          <span class="text-h6 font-weight-bold text-on-primary">{{ APP_SHORT }}</span>
         </v-avatar>
       </template>
 

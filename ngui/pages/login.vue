@@ -26,7 +26,7 @@ async function login() {
   <div class="d-flex justify-center align-center auth-container">
     <v-card class="pa-6" max-width="400" width="100%" color="surface-container">
       <v-card-title class="text-h5 font-weight-bold text-center mb-4">
-        v2rayB
+        {{ APP_NAME }}
       </v-card-title>
 
       <v-card-subtitle class="text-center mb-6">
