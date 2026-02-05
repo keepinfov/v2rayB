@@ -3,7 +3,7 @@ use tauri::{webview::WebviewWindowBuilder, WebviewUrl};
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
-    let port = env::var("V2RAYB_PORT").unwrap_or_else(|_| "50541".to_string());
+    let port = env::var("V2RAYB_PORT").unwrap_or_else(|_| "2017".to_string());
     let url = format!("http://localhost:{}", port);
 
     tauri::Builder::default()
