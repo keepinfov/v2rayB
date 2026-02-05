@@ -5,8 +5,9 @@ export default defineNuxtRouteMiddleware(async() => {
   const { data } = await useV2Fetch<any>('version').json()
 
   if (data.value?.code === 'SUCCESS') {
+    const apiVersion = data.value.data.version
     system.value.docker = data.value.data.dockerMode
-    system.value.version = data.value.data.version
+    system.value.version = apiVersion
     system.value.lite = data.value.data.lite
 
     if (data.value.data.foundNew && data.value.data.remoteVersion) {
@@ -17,7 +18,7 @@ export default defineNuxtRouteMiddleware(async() => {
     }
 
     let message = t(system.value.docker ? 'welcome.docker' : 'welcome.default', {
-      version: system.value.version
+      version: apiVersion
     })
     let color: 'success' | 'info' = 'info'
 

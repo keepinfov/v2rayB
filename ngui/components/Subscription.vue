@@ -25,13 +25,16 @@ const updateSubscription = async (row: any) => {
 }
 
 const removeSubscription = async () => {
+  if (selectRows.value.length === 0) return
+
   const { data } = await useV2Fetch('touch').delete({
     touches: selectRows.value.map(x => ({ id: x.id, _type: x._type }))
   }).json()
 
-  if (data.value.code === 'SUCCESS') {
-    proxies.value.subs = data.value.data.touch.subscriptions
+  if (data.value?.code === 'SUCCESS') {
+    proxies.value.subs = data.value.data.touch.subscriptions || []
     selectRows.value = []
+    useSnackbar(t('common.success'), 'success')
   }
 }
 </script>

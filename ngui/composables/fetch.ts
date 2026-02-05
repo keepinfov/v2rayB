@@ -16,16 +16,24 @@ export const useV2Fetch = createFetch({
 
       return { options }
     },
-    afterFetch({ data }) {
+    afterFetch({ data, response }) {
       if (data.code === 'FAIL') {
-        useSnackbar(data?.message, 'error')
+        const url = response.url || ''
+        const isLatencyTest = url.includes('Latency')
+        if (!isLatencyTest) {
+          useSnackbar(data?.message, 'error')
+        }
       }
 
       return { data }
     },
-    onFetchError({ error }) {
+    onFetchError({ error, response }) {
       if (error) {
-        useSnackbar(error?.message, 'error')
+        const url = response?.url || ''
+        const isLatencyTest = url.includes('Latency')
+        if (!isLatencyTest) {
+          useSnackbar(error?.message, 'error')
+        }
       }
 
       return { error }

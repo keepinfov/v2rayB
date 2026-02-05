@@ -11,6 +11,20 @@ const headers = [
 ]
 
 const selectRows = ref<any[]>([])
+
+const removeServers = async () => {
+  if (selectRows.value.length === 0) return
+
+  const { data } = await useV2Fetch('touch').delete({
+    touches: selectRows.value.map(x => ({ id: x.id, _type: 'server' }))
+  }).json()
+
+  if (data.value?.code === 'SUCCESS') {
+    proxies.value.servers = data.value.data.touch.servers || []
+    selectRows.value = []
+    useSnackbar(t('common.success'), 'success')
+  }
+}
 </script>
 
 <template>
@@ -21,6 +35,16 @@ const selectRows = ref<any[]>([])
       <div class="d-flex ga-2">
         <OperateLatency :data="selectRows" type="ping" />
         <OperateLatency :data="selectRows" type="http" />
+        <v-btn
+          v-if="selectRows.length > 0"
+          variant="tonal"
+          color="error"
+          size="small"
+          @click="removeServers"
+        >
+          <v-icon start>mdi-delete</v-icon>
+          {{ t('operations.delete') }} ({{ selectRows.length }})
+        </v-btn>
       </div>
     </v-toolbar>
 
