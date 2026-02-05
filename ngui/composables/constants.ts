@@ -10,5 +10,5 @@ export const DEFAULT_PORTS = {
   socks5: 20170,
   http: 20171,
   httpWithRules: 20172,
-  tproxy: 32345
+  tproxy: 52345
 }
