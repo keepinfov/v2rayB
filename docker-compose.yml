@@ -1,16 +1,19 @@
 version: "3.8"
 services:
-  v2rayb-dev:
+  v2rayb:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: v2rayb-dev
+    image: v2rayb:latest
+    container_name: v2rayb
+    restart: unless-stopped
     privileged: true
     network_mode: host
     volumes:
-      - ./service:/build/service:ro
+      - v2rayb-data:/etc/v2rayb
       - /lib/modules:/lib/modules:ro
-      - /etc/resolv.conf:/etc/resolv.conf:ro
     environment:
       - V2RAYB_ADDRESS=0.0.0.0:2017
-    command: ["--lite"]
+
+volumes:
+  v2rayb-data:
