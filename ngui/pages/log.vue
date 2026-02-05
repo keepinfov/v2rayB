@@ -24,7 +24,16 @@ const connect = () => {
   }
 
   socket.onmessage = (msg) => {
-    message.value.push(msg.data)
+    let logLine = msg.data
+    try {
+      const parsed = JSON.parse(msg.data)
+      logLine = typeof parsed.body === 'string'
+        ? parsed.body
+        : JSON.stringify(parsed.body)
+    } catch {
+      // Keep raw data if not valid JSON
+    }
+    message.value.push(logLine)
     if (autoScroll.value) {
       nextTick(() => {
         if (logContainer.value) {
