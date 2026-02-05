@@ -29,6 +29,15 @@ export default defineNuxtPlugin((app) => {
       },
       VDataTable: {
         hover: true
+      },
+      VDialog: {
+        transition: 'dialog-transition'
+      },
+      VMenu: {
+        transition: 'scale-transition'
+      },
+      VSnackbar: {
+        timeout: 3000
       }
     }
   })

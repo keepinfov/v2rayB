@@ -18,4 +18,17 @@ const snackbar = useSnackbarState()
 html {
   overflow-y: auto;
 }
+
+.v-enter-active,
+.v-leave-active,
+.fade-transition-enter-active,
+.fade-transition-leave-active,
+.scale-transition-enter-active,
+.scale-transition-leave-active,
+.dialog-transition-enter-active,
+.dialog-transition-leave-active,
+.slide-y-transition-enter-active,
+.slide-y-transition-leave-active {
+  transition-duration: 150ms !important;
+}
 </style>
